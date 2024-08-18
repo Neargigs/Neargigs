@@ -23,7 +23,7 @@ const Navbar = () => {
         hover:text-black mr-3
         lg:hidden"
         ></i>
-        <Link to="/" className="logo d-flex align-items-center">
+        <Link to="/dashboard" className="logo d-flex align-items-center">
           {/* <img
             style={{ borderRadius: "5px" }}
             src={logo}

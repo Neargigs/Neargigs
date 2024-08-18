@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "../views/Home";
 import Navbar from "../components/Navbar";
-import Quizcategory from "../components/Quizcategory";
+import Quizcategory from "./Sidenav";
 import Settings from "../views/Settings";
-import Genius from "../views/Allquiz";
-import Topquiz from "../components/Topquiz";
+import Topquiz from "./Giglist";
 import Footer from "../components/Footer";
-import QuizInfo from "../components/QuizInfo";
-import Leaderboard from "../components/leaderboard/Leaderboard";
+import QuizInfo from "./Gigdetails";
+import Referrals from "./referrals/Referrals.jsx";
 import Connectwallet from "../components/walletconnect/Connectwallet";
 // Css files
 import "../assets/vendor/simple-datatables/style.css";
@@ -42,9 +41,8 @@ const Approutes = () => {
               <Route path="/Wallet" element={<Topquiz />} />
               <Route path="/Profile" element={<Settings />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/genius" element={<Genius />} />
               <Route path="/quizInfo" element={<QuizInfo />} />
-              <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/referrals" element={<Referrals />} />
             </Routes>
           </div>
         </section>

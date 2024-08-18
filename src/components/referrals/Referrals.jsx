@@ -1,8 +1,8 @@
 import React from "react";
-import Topgenius from "./Topgenius";
-import Toporganizer from "./Toporganizer";
+import Topgenius from "./Referredusers";
+import Toporganizer from "./Withdrawals";
 
-const Leaderboard = () => {
+const Referrals = () => {
   return (
     <>
       <div className="col-xl-12">
@@ -60,4 +60,4 @@ const Leaderboard = () => {
   );
 };
 
-export default Leaderboard;
+export default Referrals;

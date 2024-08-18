@@ -35,7 +35,7 @@ const tableData = [
   },
 ];
 
-const Paticipants = () => {
+const Moregigs = () => {
   return (
     <div className="col-lg-12">
       <h1 className="card-title">PARTICIPANTS</h1>
@@ -87,4 +87,4 @@ const Paticipants = () => {
   );
 };
 
-export default Paticipants;
+export default Moregigs;

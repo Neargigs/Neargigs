@@ -4,7 +4,7 @@ import useimage from "../assets/address.jpg";
 import Modal from "./Modal";
 import { BsCheckCircle } from "react-icons/bs";
 import Quiztheory from "./Quiztheory";
-import Paticipants from "./Paticipants";
+import Paticipants from "./Moregigs";
 
 const cardData = [
   {
@@ -27,7 +27,7 @@ const cardData = [
   },
 ];
 
-const QuizInfo = () => {
+const Gigdetails = () => {
   const [isGamemodalOpen, setIsGamemodalOpen] = useState(false);
 
   const handleGamemodalClick = () => {
@@ -147,4 +147,4 @@ const QuizInfo = () => {
   );
 };
 
-export default QuizInfo;
+export default Gigdetails;

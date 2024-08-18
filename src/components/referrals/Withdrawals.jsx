@@ -36,7 +36,7 @@ const tableData = [
   },
 ];
 
-const Toporganizer = () => {
+const Withdrawals = () => {
   return (
     <div style={{ borderRadius: "5px", overflowX: "auto" }} className="col-12">
       <table className="responsive-table">
@@ -108,4 +108,4 @@ const Toporganizer = () => {
   );
 };
 
-export default Toporganizer;
+export default Withdrawals;

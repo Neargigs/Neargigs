@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-const Quizcategory = ({ activeLink, setActive }) => {
+const Sidenav = ({ activeLink, setActive }) => {
   const quizcategory = [
     { id: 1, name: "Science", icon: "bi-binoculars" },
     { id: 2, name: "Art", icon: "bi-palette" },
@@ -14,7 +14,7 @@ const Quizcategory = ({ activeLink, setActive }) => {
   const userlist = [
     { id: 1, name: "Wallet", icon: "bi-wallet" },
     { id: 2, name: "Notification", icon: "bi-bell" },
-    { id: 3, name: "Leaderboard", icon: "bi-award" },
+    { id: 3, name: "Referrals", icon: "bi-award" },
     { id: 4, name: "Profile", icon: "bi-person" },
   ];
 
@@ -32,7 +32,7 @@ const Quizcategory = ({ activeLink, setActive }) => {
     <aside id="sidebar" className={`sidebar ${"ml-[300px]"}`}>
       <ul className="sidebar-nav" id="sidebar-nav">
         <li className="nav-item">
-          <Link className="nav-link gap-1 collapsed" to="/">
+          <Link className="nav-link gap-1 collapsed" to="/dashboard">
             <i className="bi bi-house"></i>
             <span>Home</span>
           </Link>
@@ -41,9 +41,11 @@ const Quizcategory = ({ activeLink, setActive }) => {
           <li key={quiz.id} className="nav-item">
             <Link
               className={`nav-link gap-1 collapsed ${
-                isActive(`/${quiz.name.toLowerCase()}`) ? "active" : ""
+                isActive(`/dashboard/${quiz.name.toLowerCase()}`)
+                  ? "active"
+                  : ""
               }`}
-              to={`/${quiz.name.toLowerCase()}`}
+              to={`/dashboard/${quiz.name.toLowerCase()}`}
             >
               <i className={`bi ${quiz.icon}`}></i>
               <span>{quiz.name}</span>
@@ -57,10 +59,12 @@ const Quizcategory = ({ activeLink, setActive }) => {
           <li key={user.id} className="nav-item">
             <Link
               className={`nav-link scrollto ${
-                isActive(`/${user.name.toLowerCase()}`) ? "active" : ""
+                isActive(`/dashboard/${user.name.toLowerCase()}`)
+                  ? "active"
+                  : ""
               }`}
               onClick={() => setActive(`/${user.name.toLowerCase()}`)}
-              to={`/${user.name.toLowerCase()}`}
+              to={`/dashboard/${user.name.toLowerCase()}`}
             >
               <i className={`bi ${user.icon}`}></i>
               <span>{user.name}</span>
@@ -72,4 +76,4 @@ const Quizcategory = ({ activeLink, setActive }) => {
   );
 };
 
-export default Quizcategory;
+export default Sidenav;

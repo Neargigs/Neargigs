@@ -36,7 +36,7 @@ const cardData = [
   },
 ];
 
-const Topquiz = () => {
+const Giglist = () => {
   return (
     <>
       <div className="col-lg-12">
@@ -53,7 +53,7 @@ const Topquiz = () => {
                     style={{ background: "#213743" }}
                     className="card info-card revenue-card"
                   >
-                    <Link to="/quizInfo">
+                    <Link to="/dashboard/quizInfo">
                       <div className="card-body">
                         <div className="d-flex align-items-center">
                           <div className="">
@@ -115,4 +115,4 @@ const Topquiz = () => {
   );
 };
 
-export default Topquiz;
+export default Giglist;
