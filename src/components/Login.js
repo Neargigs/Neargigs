@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/img/btc.png";
+import logo from "../assets/img/ngig-logo.png";
 import { Toaster, toast } from "sonner";
 
 const Login = () => {
@@ -42,7 +42,7 @@ const Login = () => {
               <h2>Login</h2>
             </div>
             <div>
-              <span style={{ color: "green" }}>Welcome back!</span>
+              <span style={{ color: "white" }}>Welcome back!</span>
             </div>
           </div>
           <div>
@@ -71,6 +71,7 @@ const Login = () => {
             <button
               style={{ width: "100%" }}
               type="submit"
+              id="optionbut"
               onClick={handleSubmit}
             >
               Login

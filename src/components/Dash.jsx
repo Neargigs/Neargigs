@@ -27,7 +27,7 @@ const cardData = [
   { name: "Petter collins", reward: "40", level: "6", id: 6 },
 ];
 
-const Genius = () => {
+const Dash = () => {
   const [isGamemodalOpen, setIsGamemodalOpen] = useState(false);
 
   const handleGamemodalClick = () => {
@@ -234,4 +234,4 @@ const Genius = () => {
   );
 };
 
-export default Genius;
+export default Dash;

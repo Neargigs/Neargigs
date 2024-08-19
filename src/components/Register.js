@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/img/btc.png";
+import logo from "../assets/img/ngig-logo.png";
 import { Toaster, toast } from "sonner";
 
 const Register = () => {
@@ -50,13 +50,8 @@ const Register = () => {
         </div>
 
         <div className="auth-box">
-          <div className="d-flex justify-content-between align-items-center">
-            <div>
-              <h2>Register</h2>
-            </div>
-            <div>
-              <span style={{ color: "green" }}>Step 1/2</span>
-            </div>
+          <div>
+            <h2>Register</h2>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -103,7 +98,9 @@ const Register = () => {
                 onChange={handleInputChange}
               />
             </div>
-            <button type="submit">Proceed</button>
+            <button id="optionbut" type="submit">
+              Sign Up
+            </button>
           </form>
           <p>
             Already have an account? <Link to="/login">Login</Link>

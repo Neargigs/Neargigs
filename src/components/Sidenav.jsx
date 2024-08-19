@@ -2,20 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Sidenav = ({ activeLink, setActive }) => {
-  const quizcategory = [
-    { id: 1, name: "Science", icon: "bi-binoculars" },
-    { id: 2, name: "Art", icon: "bi-palette" },
-    { id: 3, name: "Commerce", icon: "bi-cash" },
-    { id: 4, name: "Blockchain", icon: "bi-boxes" },
-    { id: 5, name: "History", icon: "bi-book" },
-    { id: 6, name: "Sport", icon: "bi-dribbble" },
+  const gigcategory = [
+    { id: 1, name: "Freelance Jobs", icon: "bi-briefcase" },
+    { id: 2, name: "Full-time Jobs", icon: "bi-briefcase-fill" },
+    { id: 3, name: "My Gigs", icon: "bi-clipboard-check" },
+    { id: 4, name: "My Freelance Jobs", icon: "bi-briefcase" },
+    { id: 5, name: "My Full-time Jobs", icon: "bi-briefcase-fill" },
   ];
 
   const userlist = [
     { id: 1, name: "Wallet", icon: "bi-wallet" },
-    { id: 2, name: "Notification", icon: "bi-bell" },
-    { id: 3, name: "Referrals", icon: "bi-award" },
-    { id: 4, name: "Profile", icon: "bi-person" },
+    { id: 2, name: "Governance", icon: "bi-bank" },
+    { id: 3, name: "Referrals", icon: "bi-people" },
+    { id: 4, name: "Settings", icon: "bi-gear" },
   ];
 
   const location = useLocation();
@@ -34,10 +33,10 @@ const Sidenav = ({ activeLink, setActive }) => {
         <li className="nav-item">
           <Link className="nav-link gap-1 collapsed" to="/dashboard">
             <i className="bi bi-house"></i>
-            <span>Home</span>
+            <span>Dashboard</span>
           </Link>
         </li>
-        {quizcategory.map((quiz) => (
+        {gigcategory.map((quiz) => (
           <li key={quiz.id} className="nav-item">
             <Link
               className={`nav-link gap-1 collapsed ${

@@ -44,7 +44,7 @@ const Sidebar = () => {
                 <img id="balance" src={theta} alt="" />
               </div>
               <div className="ps-3">
-                <h6>{thetaBalance} THETA</h6>
+                <h6>{thetaBalance} NGIG</h6>
               </div>
             </div>
             <hr />
@@ -53,7 +53,7 @@ const Sidebar = () => {
                 <img id="balance" src={tfuel} alt="" />
               </div>
               <div className="ps-3">
-                <h6>{tfuelBalance} TFUEL</h6>
+                <h6>{tfuelBalance} NEAR</h6>
               </div>
             </div>
           </div>

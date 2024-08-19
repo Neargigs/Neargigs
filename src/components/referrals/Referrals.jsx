@@ -6,7 +6,7 @@ const Referrals = () => {
   return (
     <>
       <div className="col-xl-12">
-        <h5 className="card-title">Leatherboard</h5>
+        <h5 className="card-title">Referrals</h5>
         <div className="row">
           <div className="leaderboard">
             <ul
@@ -20,7 +20,7 @@ const Referrals = () => {
                   data-toggle="tab"
                   data-target="#game-settings"
                 >
-                  Genius
+                  Referred Users
                 </button>
               </li>
 
@@ -31,7 +31,7 @@ const Referrals = () => {
                   data-toggle="tab"
                   data-target="#game-list"
                 >
-                  Organizer
+                  Withdrawals
                 </button>
               </li>
             </ul>
