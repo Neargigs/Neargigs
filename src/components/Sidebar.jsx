@@ -5,12 +5,12 @@ import tfuel from "../assets/img/tfuel.jpg";
 import useimage from "../assets/address.jpg";
 import Modal from "./Modal";
 
-const Ongoinggm = [
-  { id: 1, title: "Tolujohn Bob", reward: "30", level: "1" },
-  { id: 2, title: "Fabrre don", reward: "15", level: "6" },
-  { id: 3, title: "Naccy colen", reward: "10", level: "3" },
-  { id: 4, title: "Petter collin", reward: "25", level: "5" },
-  { id: 5, title: "Rugberbs", reward: "20", level: "2" },
+const Hiring = [
+  { id: 1, title: "Tolujohn Bob", jobs: "1" },
+  { id: 2, title: "Fabrre don", jobs: "6" },
+  { id: 3, title: "Naccy colen", jobs: "3" },
+  { id: 4, title: "Petter collin", jobs: "5" },
+  { id: 5, title: "Rugberbs", jobs: "2" },
 ];
 
 const Sidebar = () => {
@@ -63,37 +63,40 @@ const Sidebar = () => {
         {/* News & Updates Traffic */}
         <div className="card">
           <div className="card-body pb-0">
-            <h5 className="card-title">Top Genius</h5>
+            <h5 className="card-title">Top Hiring manager</h5>
             <div className="news">
-              {Ongoinggm.map((card) => (
+              {Hiring.map((card) => (
                 <div
                   key={card.id}
                   className="post-item clearfix"
                   style={{
-                    background: "#213743",
-                    borderRadius: "5px",
-                    marginBottom: "10px",
-                    padding: "10px",
+                    borderBottom: "1px solid gray",
+                    paddingBottom: "5px",
                   }}
                 >
-                  <img src={useimage} alt="" />
-                  <h4>
-                    <a href="#">{card.title}</a>
-                  </h4>
-                  <p>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <span style={{ color: "#b1bad3" }}>
-                          Quiz Won: {card.level}
-                        </span>
-                      </div>
-                      <div>
-                        <button onClick={handleGamemodalClick} id="followbtn">
-                          Follow
-                        </button>
-                      </div>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <img
+                        style={{ height: "60px", width: "60px" }}
+                        src={useimage}
+                        alt=""
+                      />
+                      <h4>
+                        <a href="#">{card.title}</a>
+                      </h4>
+                      <span style={{ color: "#b1bad3", marginLeft: "10px" }}>
+                        Jobs: {card.jobs}
+                      </span>
                     </div>
-                  </p>
+                    <div>
+                      <button
+                        onClick={handleGamemodalClick}
+                        className="usbutton"
+                      >
+                        Follow
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>

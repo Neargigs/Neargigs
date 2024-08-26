@@ -24,13 +24,13 @@ const Navbar = () => {
         lg:hidden"
         ></i>
         <Link to="/dashboard" className="logo d-flex align-items-center">
-          {/* <img
+          <img
             style={{ borderRadius: "5px" }}
             src={logo}
             alt=""
             className="h-[90px] w-[70px] object-cover"
-          /> */}
-          
+          />
+
           <span className="d-none d-lg-block">NearGigs</span>
         </Link>
       </div>

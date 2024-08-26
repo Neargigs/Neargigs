@@ -50,7 +50,6 @@ const Approutes = () => {
         </section>
       </main>
 
-      <Connectwallet />
       <Footer />
     </div>
   );

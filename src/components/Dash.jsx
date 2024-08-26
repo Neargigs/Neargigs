@@ -1,164 +1,120 @@
 import React, { useState } from "react";
-import useimage from "../assets/address.jpg";
-import Modal from "./Modal";
+import useImage from "../assets/address.jpg";
 import { Link } from "react-router-dom";
+import Modal from "./Modal"; // Assuming Modal is still required
 
-const Topquiz = [
-  {
-    name: "Meta Quest Presence Platform quiz 2024",
-    reward: "10",
-    level: "1",
-    id: 1,
-  },
-  {
-    name: "Meta Quest Presence Platform quiz 2024",
-    reward: "15",
-    level: "2",
-    id: 2,
-  },
-];
-
-const cardData = [
-  { name: "Jane col", reward: "10", level: "1", id: 1 },
-  { name: "Tolujohn Bob", reward: "15", level: "2", id: 2 },
-  { name: "Fabrre don", reward: "20", level: "3", id: 3 },
-  { name: "Rugberbs", reward: "25", level: "4", id: 4 },
-  { name: "Naccy colen", reward: "30", level: "5", id: 5 },
-  { name: "Petter collins", reward: "40", level: "6", id: 6 },
-];
+const jobData = {
+  active: [
+    {
+      id: 1,
+      title: "Software Engineer",
+      hrName: "John Doe",
+      rating: 4.5,
+      reviews: 120,
+      jobType: "Full-time",
+      datePosted: "17 Aug 2024, 1:11 AM",
+      description:
+        "Develop and maintain web applications using React Design user interfaces and improve user experience Design user interfaces and improve user experience.",
+      amount: "$120,000/year",
+    },
+    {
+      id: 2,
+      title: "Product Manager",
+      hrName: "Jane Smith",
+      rating: 4.0,
+      reviews: 85,
+      jobType: "Remote",
+      datePosted: "16 Aug 2024, 3:30 PM",
+      description: "Lead product development and strategy.",
+      amount: "$100,000/year",
+    },
+  ],
+  draft: [
+    {
+      id: 3,
+      title: "Data Scientist",
+      hrName: "Alice Johnson",
+      rating: 4.8,
+      reviews: 150,
+      jobType: "Part-time",
+      datePosted: "15 Aug 2024, 9:45 AM",
+      description: "Analyze data trends and build predictive models.",
+      amount: "$90,000/year",
+    },
+  ],
+  archive: [
+    {
+      id: 4,
+      title: "UI/UX Designer",
+      hrName: "Michael Brown",
+      rating: 4.2,
+      reviews: 60,
+      jobType: "Full-time",
+      datePosted: "14 Aug 2024, 11:00 AM",
+      description: "Design user interfaces and improve user experience.",
+      amount: "$80,000/year",
+    },
+  ],
+};
 
 const Dash = () => {
-  const [isGamemodalOpen, setIsGamemodalOpen] = useState(false);
-
-  const handleGamemodalClick = () => {
-    setIsGamemodalOpen(true);
-  };
-
-  const handleCloseGamemodal = () => {
-    setIsGamemodalOpen(false);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // claim
-    handleCloseGamemodal();
-  };
+  const [selectedTab, setSelectedTab] = useState("active");
 
   return (
     <>
-      <div className="col-lg-12">
-        <h5 className="card-title">Top Quiz</h5>
+      <div className="job-list">
+        <div className="nav-toggle">
+          <button
+            className={selectedTab === "active" ? "active" : ""}
+            onClick={() => setSelectedTab("active")}
+          >
+            Active
+          </button>
+          <button
+            className={selectedTab === "draft" ? "active" : ""}
+            onClick={() => setSelectedTab("draft")}
+          >
+            Draft
+          </button>
+          <button
+            className={selectedTab === "archive" ? "active" : ""}
+            onClick={() => setSelectedTab("archive")}
+          >
+            Archive
+          </button>
+        </div>
 
         <div className="row">
-          {Topquiz.map((card) => (
-            <div key={card.id} className="col-lg-12">
-              <div
-                style={{ background: "#213743" }}
-                className="card info-card revenue-card"
-              >
-                <Link to="/dashboard/quizInfo">
-                  <div className="card-body">
-                    <div className="d-flex align-items-center">
-                      <div className="">
-                        <img
-                          src={useimage}
-                          style={{
-                            height: "10rem",
-                            width: "100px",
-                            borderRadius: "5px",
-                          }}
-                          alt=""
-                        />
-                      </div>
-                      <div className="ps-3">
-                        <h4>
-                          <a href="#">{card.name}</a>
-                        </h4>
-                        <div className="d-flex justify-content-between align-items-center">
-                          <div>
-                            {/* First tag with icon */}
-                            <span className="badge bg-warning">upcoming</span>
-                          </div>
-                          <div className="d-flex align-items-center">
-                            {/* Second tag with icon */}
-                            <i className="bi bi-globe"> </i>{" "}
-                            <span className="badge me-2">Public</span>
-                          </div>
-                        </div>
-                        <br />
-                        <div className="d-flex justify-content-between align-items-center">
-                          {/* First word with icon */}
-                          <div>
-                            <span style={{ color: "#b1bad3" }}>
-                              3000 STX in prizes
-                            </span>
-                          </div>
-                          {/* Second word */}
-                          <div>
-                            <span style={{ color: "#b1bad3" }}>
-                              300 participants
-                            </span>
-                          </div>
+          {jobData[selectedTab].map((job) => (
+            <div key={job.id} className="col-lg-12">
+              <div className="card job-card">
+                <div className="card-body">
+                  <div className="d-flex flex-wrap justify-content-between align-items-start">
+                    <div className="job-details">
+                      <span className="badge job-type">{job.jobType}</span>
+                      <h4>{job.title}</h4>
+                      <p className="job-date">{job.datePosted}</p>
+                    </div>
+                    <div className="hr-info d-flex align-items-center">
+                      <div className="pe-3 text-left">
+                        <p className="hr-name">{job.hrName}</p>
+                        <span className="rating">
+                          {job.rating} stars ({job.reviews})
+                        </span>
+                        <div className="star-rating">
+                          {"★".repeat(Math.floor(job.rating))}
+                          {"☆".repeat(5 - Math.floor(job.rating))}
                         </div>
                       </div>
+                      <img src={useImage} className="hr-image" alt="HR" />
                     </div>
                   </div>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="col-lg-12">
-        <h5 className="card-title">Top Genius</h5>
-
-        <div className="row">
-          {cardData.map((card) => (
-            <div key={card.id} className="col-lg-6">
-              <div
-                className=""
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <div
-                  style={{
-                    background: "#213743",
-                    paddingTop: "10px",
-                    borderRadius: "5px",
-                  }}
-                  className="card-body pb-0"
-                >
-                  <div className="news">
-                    <div className="post-item clearfix">
-                      <img
-                        style={{
-                          height: "4rem",
-                          width: "70px",
-                          borderRadius: "5px",
-                        }}
-                        src={useimage}
-                        alt=""
-                      />
-                      <h4>
-                        <a href="#">{card.name}</a>
-                      </h4>
-
-                      <p>
-                        <div className="d-flex justify-content-between align-items-center">
-                          {/* First word with icon */}
-                          <div>
-                            <span style={{ color: "#b1bad3" }}>
-                              {" "}
-                              Quiz Won: {card.level}
-                            </span>
-                          </div>
-                          {/* Second word */}
-                          <div>
-                            <button id="followbtn">Follow</button>
-                          </div>
-                        </div>
-                      </p>
-                    </div>
+                  <p className="job-description">{job.description}</p>
+                  <div className="d-flex justify-content-between align-items-center mt-3">
+                    <span className="job-amount">{job.amount}</span>
+                    <button className="btn chat-button">
+                      <i className="bi bi-chat"></i> Chat
+                    </button>
                   </div>
                 </div>
               </div>
@@ -166,70 +122,6 @@ const Dash = () => {
           ))}
         </div>
       </div>
-      <div className="col-lg-12">
-        <h5 className="card-title">Top Organizers</h5>
-
-        <div className="row">
-          {cardData.map((card) => (
-            <div key={card.id} className="col-lg-6">
-              <div
-                className=""
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <div
-                  style={{
-                    background: "#213743",
-                    paddingTop: "10px",
-                    borderRadius: "5px",
-                  }}
-                  className="card-body pb-0"
-                >
-                  <div className="news">
-                    <div className="post-item clearfix">
-                      <img
-                        style={{
-                          height: "4rem",
-                          width: "70px",
-                          borderRadius: "5px",
-                        }}
-                        src={useimage}
-                        alt=""
-                      />
-                      <h4>
-                        <a href="#">{card.name}</a>
-                      </h4>
-
-                      <p>
-                        <div className="d-flex justify-content-between align-items-center">
-                          {/* First word with icon */}
-                          <div>
-                            <span style={{ color: "#b1bad3" }}>
-                              {" "}
-                              Quiz Hosted: {card.level}
-                            </span>
-                          </div>
-                          {/* Second word */}
-                          <div>
-                            <button id="followbtn">Follow</button>
-                          </div>
-                        </div>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <>
-        {/* Render the Gamemodal if isGamemodalOpen is true */}
-        {isGamemodalOpen && (
-          <Modal onClose={handleCloseGamemodal} onSubmit={handleSubmit} />
-        )}
-      </>
     </>
   );
 };

@@ -5,6 +5,34 @@ backgroung: #1a2c38
 
 /* followbtn */
 
+.usbutton {
+  background-color: #213743;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.usbutton:hover {
+  background-color: #5c7e90;
+  color: white;
+}
+
+.walletbtn {
+  background-color: #5c7e90;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.walletbtn:hover {
+  background-color: #213743;
+  color: white;
+}
+
 /*--------------------------------------------------------------
 # General profile
 --------------------------------------------------------------*/
@@ -382,6 +410,160 @@ h6 {
   padding: 0 0 15px 0;
   color: #3e4f6f;
   font-size: 15px;
+}
+/* Job List */
+.job-list {
+  padding: 20px;
+}
+
+.nav-toggle {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 2px solid white;
+  border-radius: 20px;
+}
+
+.nav-toggle button {
+  background-color: #213743;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.nav-toggle button.active {
+  background-color: #ffcc00;
+  color: #213743;
+}
+
+.job-card {
+  background-color: #0f212e;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  position: relative;
+}
+
+.job-card .card-body {
+  padding: 20px;
+}
+
+.job-card .job-description {
+  color: rgb(226, 225, 225);
+}
+
+.job-card .job-type {
+  text-align: left;
+  background-color: #ffcc00;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  color: #213743;
+}
+
+.job-details h4 {
+  margin-bottom: 5px;
+  font-size: 20px;
+  color: white;
+}
+
+.hr-name {
+  color: #e3e6f0;
+  margin-top: 5px;
+}
+
+.job-amount {
+  color: white !important;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.rating {
+  font-size: 10px;
+  color: #798eb3;
+}
+
+.job-date,
+.job-description,
+.job-amount {
+  color: #798eb3;
+}
+
+.hr-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.star-rating {
+  color: gold;
+  font-size: 12px;
+}
+
+.chat-button {
+  background-color: #213743;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.chat-button:hover {
+  background-color: #5c7e90;
+  color: white;
+}
+
+.chat-button i {
+  margin-right: 5px;
+}
+
+.hr-info {
+  display: flex;
+  align-items: center;
+  margin-top: 5px; /* Adjust margin as needed */
+}
+
+@media (max-width: 768px) {
+  .d-flex.flex-wrap.justify-content-between.align-items-start {
+    flex-direction: column; /* Stack title/date and HR info */
+  }
+
+  .job-details {
+    margin-bottom: 15px; /* Space below job details */
+  }
+
+  .hr-info {
+    justify-content: flex-start; /* Align items to the left */
+    margin-top: 0; /* Reset margin-top for responsiveness */
+  }
+
+  .job-card {
+    margin-bottom: 20px;
+  }
+
+  .job-amount {
+    font-size: 1.2rem;
+  }
+
+  .nav-toggle {
+    flex-direction: column;
+  }
+
+  .nav-toggle button {
+    margin-bottom: 10px;
+  }
+
+  .hr-image {
+    margin-left: 0;
+    margin-top: 10px;
+  }
 }
 
 /* Breadcrumbs */
@@ -981,7 +1163,7 @@ h6 {
 
 .dashboard .news h4 {
   font-size: 15px;
-  margin-left: 95px;
+  margin-left: 70px;
   font-weight: bold;
   margin-bottom: 5px;
 }

@@ -4,7 +4,7 @@ import logo from "../../assets/address.jpg";
 import { ethers } from "ethers";
 
 const Connectwallet = () => {
-  const [connected, setConnected] = useState(false);
+  const [connected, setConnected] = useState(true);
   const [account, setAccount] = useState("");
 
   useEffect(() => {
@@ -91,8 +91,12 @@ const Connectwallet = () => {
       {connected ? (
         <ul className="d-flex align-items-center">
           <li className="nav-item">
-            <Link className="nav-link nav-icon" to="/settings">
-              Host
+            <Link
+              style={{ fontSize: "large" }}
+              className="nav-link nav-icon"
+              to="/settings"
+            >
+              Post Gig
             </Link>
           </li>
           <li className="nav-item">
@@ -116,7 +120,7 @@ const Connectwallet = () => {
             <button
               onClick={disconnectWallet}
               type="button"
-              className="btn btn-danger"
+              className="walletbtn"
             >
               Disconnect
             </button>
@@ -125,11 +129,7 @@ const Connectwallet = () => {
       ) : (
         <ul className="d-flex align-items-center">
           <li className="nav-item pe-3">
-            <button
-              onClick={connectWallet}
-              type="button"
-              className="btn btn-primary"
-            >
+            <button onClick={connectWallet} type="button" className="walletbtn">
               Connect Wallet
             </button>
           </li>
