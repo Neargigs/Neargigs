@@ -177,7 +177,7 @@
 .notifications .notification-item {
   display: flex;
   align-items: center;
-  padding: 15px 10px;
+  padding: 5px 5px;
   transition: 0.3s;
 }
 
@@ -190,16 +190,18 @@
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 5px;
+  color: #f6f9ff;
 }
 
 .notifications .notification-item p {
   font-size: 13px;
   margin-bottom: 3px;
-  color: #919191;
+  color: #ccc;
 }
 
 .notifications .notification-item:hover {
-  background-color: #f6f9ff;
+  background-color: #213743;
+  border-radius: 10px;
 }
 
 .messages {
@@ -235,4 +237,70 @@
 
 .messages .message-item:hover {
   background-color: #f6f9ff;
+}
+.walletinfo-box {
+  padding: 20px;
+  background-color: #1e1e2f;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #ffffff;
+}
+
+.wallet-info {
+  flex: 1;
+}
+
+.wallet-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.balance-label {
+  font-size: 16px;
+  color: #b3b3b3;
+  margin-bottom: 5px;
+}
+
+.wallet-manage {
+  text-align: right;
+}
+
+.manage-wallet {
+  font-size: 16px;
+  color: #4db6ac;
+  cursor: pointer;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.manage-wallet i {
+  margin-right: 5px;
+}
+
+.balance-amount {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 576px) {
+  .walletinfo-box {
+    padding: 15px;
+  }
+
+  .wallet-title {
+    font-size: 20px;
+  }
+
+  .balance-label,
+  .balance-amount {
+    font-size: 14px;
+  }
+
+  .manage-wallet {
+    font-size: 14px;
+  }
 }

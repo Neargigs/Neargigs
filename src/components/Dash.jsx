@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useImage from "../assets/address.jpg";
 import { Link } from "react-router-dom";
 import Modal from "./Modal"; // Assuming Modal is still required
+import Notification from "./Notification";
 
 const jobData = {
   active: [
@@ -62,6 +63,7 @@ const Dash = () => {
 
   return (
     <>
+      <Notification />
       <div className="job-list">
         <div className="nav-toggle">
           <button
@@ -120,6 +122,32 @@ const Dash = () => {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+      <div className="col-12">
+        <div className="walletinfo-box card">
+          <div className="d-flex justify-content-between align-items-center">
+            {/* Wallet information section */}
+            <div className="wallet-info" style={{ marginRight: "10px" }}>
+              <h3 className="wallet-title">Wallet</h3>
+              <h5 className="balance-label">Estimated Balance</h5>
+              <h5 className="balance-label">Escrow Balance</h5>
+            </div>
+
+            {/* Wallet management section */}
+            <div className="wallet-manage">
+              <p className="manage-wallet">
+                <i className="bi-wallet"></i> Manage Wallet
+              </p>
+              <h5 className="balance-amount">$00.0</h5>
+              <h5 className="balance-amount">$00.0</h5>
+            </div>
+          </div>
+          <br />
+
+          <button className="walletbtn">
+            <i className="bi bi-wallet"></i> Connect Wallet
+          </button>
         </div>
       </div>
     </>
