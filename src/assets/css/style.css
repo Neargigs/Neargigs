@@ -1,12 +1,16 @@
 /* Notation
 backgroung: #1a2c38
 
+card
+  Not: background-color: #0f212e; 
+  background-color: #213743;
+
 */
 
 /* followbtn */
 
 .usbutton {
-  background-color: #213743;
+  background-color: #0f212e;
   border-radius: 10px;
   color: white;
   border: none;
@@ -327,7 +331,8 @@ h6 {
 
 /* Card */
 .card {
-  background-color: #0f212e;
+  /* background-color: #0f212e; */
+  background-color: #213743;
   margin-bottom: 30px;
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
@@ -441,7 +446,7 @@ h6 {
 }
 
 .job-card {
-  background-color: #0f212e;
+  background-color: #213743;
   margin-bottom: 30px;
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
@@ -508,7 +513,7 @@ h6 {
 }
 
 .chat-button {
-  background-color: #213743;
+  background-color: #0f212e;
   color: white;
   border: none;
   padding: 10px;

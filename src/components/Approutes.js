@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "../views/Home";
 import Navbar from "../components/Navbar";
-import Quizcategory from "./Sidenav";
+import Freelance from "./Freelance.jsx";
+import Sidenav from "./Sidenav";
+import Fulltimejob from "./Fulltimejob.jsx";
+
 import Settings from "../views/Settings";
-import Topquiz from "./Giglist";
+import Topquiz from "./Freelance.jsx";
 import Footer from "../components/Footer";
 import QuizInfo from "./Gigdetails";
 import Referrals from "./referrals/Referrals.jsx";
-import Connectwallet from "../components/walletconnect/Connectwallet";
+
 // Css files
 import "../assets/vendor/simple-datatables/style.css";
 import "../assets/vendor/remixicon/remixicon.css";
@@ -26,12 +29,15 @@ const Approutes = () => {
   return (
     <div className="">
       <Navbar />
-      <Quizcategory activeLink={activeLink} setActive={setActiveLink} />
+      <Sidenav activeLink={activeLink} setActive={setActiveLink} />
       <main id="main" className="main">
         <section className="section dashboard">
           <div className="row">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/freelance" element={<Freelance />} />
+              <Route path="/fulltimejob" element={<Fulltimejob />} />
+
               <Route path="/Home" element={<Topquiz />} />
               <Route path="/Science" element={<Topquiz />} />
               <Route path="/Art" element={<Topquiz />} />

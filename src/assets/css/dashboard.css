@@ -200,7 +200,7 @@
 }
 
 .notifications .notification-item:hover {
-  background-color: #213743;
+  background-color: #0f212e;
   border-radius: 10px;
 }
 
@@ -303,4 +303,264 @@
   .manage-wallet {
     font-size: 14px;
   }
+}
+
+/* Job List Styling */
+.freelance-job-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Job Card Styling */
+.freelance-job-card {
+  background-color: #213743;
+  /* border: 1px solid #ddd; */
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex: 1 1 calc(50% - 20px); /* Two cards in a row with spacing */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: calc(
+    50% - 20px
+  ); /* Ensures cards are 50% of the container width minus the gap */
+}
+
+.freelance-job-card-body {
+  display: flex;
+  padding: 15px;
+}
+
+.freelance-company-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.freelance-job-details {
+  flex-grow: 1;
+}
+
+.freelance-job-title {
+  font-size: 18px;
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.freelance-task-assigner {
+  font-size: 14px;
+  text-align: left;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.freelance-job-description {
+  font-size: 14px;
+  text-align: left;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.freelance-job-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.freelance-job-tags span {
+  background-color: #404c57;
+  color: #fff;
+  text-align: left;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+/* Job Card Footer Styling */
+.freelance-job-card-footer {
+  border-top: 1px solid #ddd;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.freelance-job-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+.freelance-more-info-btn {
+  background-color: transparent;
+  color: #fdc134;
+  padding: 8px 16px;
+  border: 1px solid #fdc134;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.freelance-more-info-btn:hover {
+  background-color: #fdc134;
+  color: white;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .freelance-job-list {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .freelance-job-card {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+}
+/* Filter Section */
+.filter-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 2;
+  flex-wrap: wrap; /* Allows items to wrap into a new line */
+}
+
+.filter-section .search-bar {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: transparent;
+  color: white;
+  border-radius: 20px;
+  margin-right: 10px;
+  min-width: 200px; /* Ensures the input has a minimum width */
+}
+
+.filter-section select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: transparent;
+  color: white;
+  margin-right: 10px;
+  border-radius: 5px;
+  min-width: 120px; /* Ensures the select box has a minimum width */
+}
+
+.filter-section option {
+  padding: 5px;
+  border: transparent;
+  background-color: #ddd;
+  color: black;
+  font-size: large;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .filter-section {
+    flex-direction: column; /* Stacks items vertically on smaller screens */
+    align-items: stretch; /* Ensures children take full width */
+  }
+
+  .filter-section .search-bar,
+  .filter-section select {
+    margin-right: 0; /* Removes right margin for a cleaner look */
+    margin-bottom: 10px; /* Adds spacing between items */
+  }
+}
+
+/* Job List Cards */
+.fulltime-job-list {
+  display: grid;
+  grid-template-columns: 1fr; /* Default to one column */
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .fulltime-job-list {
+    grid-template-columns: 1fr 1fr; /* Two columns on medium and large screens */
+  }
+}
+
+.job-card {
+  background-color: #213743; /* Greenish background */
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  text-align: left;
+  z-index: 2;
+}
+
+.job-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.job-card-header .company-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.job-card-header .job-hr {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  margin-left: 0px;
+}
+.job-card-header .job-title {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  margin-left: 10px;
+}
+
+.job-card-header .job-meta {
+  display: flex;
+  align-items: center;
+}
+
+.job-card-header .job-date {
+  font-size: 12px;
+  color: #ddd;
+  margin-right: 10px;
+}
+
+.job-card-header .save-icon {
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.job-info p {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #ddd;
+}
+
+.job-tags span {
+  display: inline-block;
+  background-color: #404c57;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
 }
