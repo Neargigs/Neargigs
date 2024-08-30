@@ -10,7 +10,7 @@ const Sidenav = ({ activeLink, setActive }) => {
       name: "Full-time Jobs",
       icon: "bi-briefcase-fill",
     },
-    { id: 3, path: "wnj", name: "My Gigs", icon: "bi-clipboard-check" },
+    { id: 3, path: "mygigs", name: "My Gigs", icon: "bi-clipboard-check" },
     {
       id: 4,
       path: "myfreelance",
@@ -19,7 +19,7 @@ const Sidenav = ({ activeLink, setActive }) => {
     },
     {
       id: 5,
-      path: "wnj",
+      path: "myfulltime",
       name: "My Full-time Jobs",
       icon: "bi-briefcase-fill",
     },

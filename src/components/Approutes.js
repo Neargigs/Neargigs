@@ -6,6 +6,8 @@ import Freelance from "./Freelance.jsx";
 import Sidenav from "./Sidenav";
 import Fulltimejob from "./Fulltimejob.jsx";
 import Myfreelance from "./my/Myfreelance.jsx";
+import Myfulltime from "./my/Myfulltime.jsx";
+import Mygigs from "./my/Mygigs.jsx";
 
 import Settings from "../views/Settings";
 import Topquiz from "./Freelance.jsx";
@@ -23,7 +25,6 @@ import "../assets/vendor/bootstrap-icons/bootstrap-icons.css";
 import "../assets/vendor/bootstrap/css/bootstrap.min.css";
 import "../assets/css/style.css";
 
-
 import "../assets/css/dashboard.css";
 
 const Approutes = () => {
@@ -38,6 +39,8 @@ const Approutes = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/freelance" element={<Freelance />} />
+              <Route path="/mygigs" element={<Mygigs />} />
+              <Route path="/myfulltime" element={<Myfulltime />} />
               <Route path="/myfreelance" element={<Myfreelance />} />
               <Route path="/fulltimejob" element={<Fulltimejob />} />
 
