@@ -44,7 +44,7 @@ const Sidebar = () => {
                 <img id="balance" src={near} alt="" />
               </div>
               <div className="ps-3">
-                <h6>{nearBalance} NGIG</h6>
+                <h6>{nearBalance} NEAR</h6>
               </div>
             </div>
             <hr />
@@ -53,7 +53,7 @@ const Sidebar = () => {
                 <img id="balance" src={neargig} alt="" />
               </div>
               <div className="ps-3">
-                <h6>{neargigBalance} NEAR</h6>
+                <h6>{neargigBalance} NGIG</h6>
               </div>
             </div>
           </div>

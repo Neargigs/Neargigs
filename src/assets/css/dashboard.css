@@ -585,3 +585,143 @@
   margin-right: 5px;
   margin-top: 5px;
 }
+/* Wallet styles */
+/* wallet styles */
+
+.wallet-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.wallet-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 300px; /* Sets a minimum width for the columns */
+}
+
+.wallet-card {
+  background-color: #213743;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Ensures full width on smaller screens */
+}
+
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allows wrapping of elements */
+}
+
+.wallet-header h2,
+.wallet-header span {
+  flex: 1; /* Allows headers and spans to stretch */
+  text-align: center;
+}
+.wallet-header h2 {
+  font-size: 25px;
+  text-align: left !important;
+}
+
+.wallet-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.wallet-table th,
+.wallet-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.wallet-table th {
+  font-weight: bold;
+}
+
+.token-logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 50%; /* Makes the token icon circular */
+}
+
+.wallet-buttons {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping of buttons */
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.wallet-button {
+  flex: 1;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.wallet-button i {
+  font-size: 16px;
+}
+
+.transaction-history {
+  margin-top: 40px;
+}
+
+.transaction-table {
+  max-width: 100% !important;
+  /* border-collapse: collapse; */
+  overflow-x: scroll;
+}
+
+.transaction-table th,
+.transaction-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.transaction-table th {
+  font-weight: bold;
+}
+
+.bonus-details p {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.bonus-details span {
+  font-weight: bold;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .wallet-container {
+    flex-direction: column; /* Stacks columns vertically */
+  }
+
+  .wallet-card {
+    width: 100%; /* Full width on smaller screens */
+  }
+
+  .wallet-header h2,
+  .wallet-header span {
+    flex: unset; /* Resets flex property */
+    text-align: left; /* Aligns text to the left */
+  }
+}

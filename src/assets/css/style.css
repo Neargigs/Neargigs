@@ -514,6 +514,7 @@ h6 {
 
 .chat-button {
   background-color: #0f212e;
+  border-radius: 10px;
   color: white;
   border: none;
   padding: 10px;

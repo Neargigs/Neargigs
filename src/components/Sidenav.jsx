@@ -26,7 +26,7 @@ const Sidenav = ({ activeLink, setActive }) => {
   ];
 
   const userlist = [
-    { id: 1, path: "wnj", name: "Wallet", icon: "bi-wallet" },
+    { id: 1, path: "wallet", name: "Wallet", icon: "bi-wallet" },
     { id: 2, path: "wnj", name: "Governance", icon: "bi-bank" },
     { id: 3, path: "wnj", name: "Referrals", icon: "bi-people" },
     { id: 4, path: "wnj", name: "Settings", icon: "bi-gear" },

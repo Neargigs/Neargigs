@@ -14,6 +14,7 @@ import Topquiz from "./Freelance.jsx";
 import Footer from "../components/Footer";
 import QuizInfo from "./Gigdetails";
 import Referrals from "./referrals/Referrals.jsx";
+import Wallet from "./Wallet.jsx";
 
 // Css files
 import "../assets/vendor/simple-datatables/style.css";
@@ -39,6 +40,7 @@ const Approutes = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/freelance" element={<Freelance />} />
+              <Route path="/wallet" element={<Wallet />} />
               <Route path="/mygigs" element={<Mygigs />} />
               <Route path="/myfulltime" element={<Myfulltime />} />
               <Route path="/myfreelance" element={<Myfreelance />} />
