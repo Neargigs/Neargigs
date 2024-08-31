@@ -158,31 +158,35 @@ const Wallet = () => {
       </div>
 
       {/* Transaction History */}
-      <div className="transaction-history">
-        <h2>Transaction History</h2>
-        <table className="transaction-table">
-          <thead>
-            <tr>
-              <th>Type & Date</th>
-              <th>Cryptocurrency</th>
-              <th>Transaction ID</th>
-              <th>Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Render transactions dynamically */}
-            {transactions.map((transaction, index) => (
-              <tr key={index}>
-                <td>
-                  {transaction.type} - {transaction.date}
-                </td>
-                <td>{transaction.cryptocurrency}</td>
-                <td>{transaction.transactionId}</td>
-                <td>{transaction.amount}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="col-lg-12">
+        <div className="transaction-history">
+          <h2>Transaction History</h2>
+          <div style={{ overflowX: "auto" }} className="col-12">
+            <table className="responsive-table">
+              <thead>
+                <tr className="table-header">
+                  <th>Type & Date</th>
+                  <th>Cryptocurrency</th>
+                  <th>Transaction ID</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Render transactions dynamically */}
+                {transactions.map((transaction, index) => (
+                  <tr key={index} className="table-row">
+                    <td>
+                      {transaction.type} - {transaction.date}
+                    </td>
+                    <td>{transaction.cryptocurrency}</td>
+                    <td>{transaction.transactionId}</td>
+                    <td>{transaction.amount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </>
   );
