@@ -1,42 +1,6 @@
 import React, { useState } from "react";
 import near from "../assets/img/nearlogo.jpg";
 import neargig from "../assets/img/neargig-logo.png";
-import Referrals from "./referrals/Referrals";
-
-const tableData = [
-  {
-    genius: "Jane col",
-    geniusimg: neargig,
-    ranking: 1,
-    won: 56,
-    Earn: 400,
-    status: "Star",
-  },
-  {
-    genius: "Tolujohn",
-    geniusimg: neargig,
-    ranking: 2,
-    won: 45,
-    Earn: 120,
-    status: "Star",
-  },
-  {
-    genius: "Fabrre",
-    geniusimg: neargig,
-    ranking: 3,
-    won: 16,
-    Earn: 80,
-    status: "Star",
-  },
-  {
-    genius: "Rugberbs",
-    geniusimg: neargig,
-    ranking: 4,
-    won: 5,
-    Earn: 23,
-    status: "Star",
-  },
-];
 
 const Wallet = () => {
   // Initialize state for transaction data

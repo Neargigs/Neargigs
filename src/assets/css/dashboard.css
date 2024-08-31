@@ -724,3 +724,41 @@
     text-align: left; /* Aligns text to the left */
   }
 }
+
+/* Share Icon */
+.share-container {
+  display: flex;
+  align-items: center;
+}
+
+.share-container p {
+  margin: 0;
+}
+
+.social-icons {
+  margin-left: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.social-icons .icon {
+  background-color: #5c7e90;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.social-icons .icon:hover {
+  background-color: #486172;
+}
+
+/* FontAwesome icon styles */
+.fab {
+  font-size: 14px;
+}

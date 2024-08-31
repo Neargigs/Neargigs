@@ -1,104 +1,67 @@
-import React from "react";
-import pic from "../../assets/address.jpg";
-
-const tableData = [
-  {
-    organizer: "Ninjas",
-    organizerimg: pic,
-    ranking: 1,
-    Host: 10,
-    pool: 40000,
-    status: "Star",
-  },
-  {
-    organizer: "Toxic Aliens",
-    organizerimg: pic,
-    ranking: 2,
-    Host: 8,
-    pool: 1200,
-    status: "Star",
-  },
-  {
-    organizer: "Injective",
-    organizerimg: pic,
-    ranking: 3,
-    Host: 5,
-    pool: 800,
-    status: "Star",
-  },
-  {
-    organizer: "META",
-    organizerimg: pic,
-    ranking: 1,
-    Host: 5,
-    pool: 230,
-    status: "Star",
-  },
-];
+import React, { useState } from "react";
 
 const Withdrawals = () => {
+  // Initialize state for transaction data
+  const [transactions, setTransactions] = useState([
+    {
+      type: "Deposit",
+      date: "2024-08-30",
+      cryptocurrency: "NEAR",
+      transactionId: "0x123456789abcdef",
+      amount: "100 NEAR",
+    },
+    {
+      type: "Withdrawal",
+      date: "2024-08-28",
+      cryptocurrency: "NGIG",
+      transactionId: "0xa1b2c3d4e5f67890",
+      amount: "50 NGIG",
+    },
+    {
+      type: "Swap",
+      date: "2024-08-27",
+      cryptocurrency: "NEAR to NGIG",
+      transactionId: "0xabcdef123456789",
+      amount: "25 NEAR",
+    },
+    {
+      type: "Deposit",
+      date: "2024-08-26",
+      cryptocurrency: "USDT",
+      transactionId: "0x0f9e8d7c6b5a4321",
+      amount: "200 USDT",
+    },
+  ]);
   return (
     <div style={{ borderRadius: "5px", overflowX: "auto" }} className="col-12">
       <table className="responsive-table">
         <thead>
           <tr className="table-header">
-            <th className="col col-1">Ranking</th>
-            <th className="col col-2">Organizer</th>
-
-            <th className="col col-3">Quiz Host</th>
-            <th className="col col-4">Pool</th>
-            <th className="col col-5"></th>
+            <th>Type & Date</th>
+            <th>Cryptocurrency</th>
+            <th>Transaction ID</th>
+            <th>Amount</th>
           </tr>
         </thead>
         <tbody>
-          {tableData.map((row, index) => (
+          {transactions.map((transaction, index) => (
             <tr key={index} className="table-row">
-              <td className="col col-1" data-label="Customer Name">
-                <div className="text-center">
-                  <h5>{row.ranking}</h5>
-                </div>
-              </td>
-              <td
-                className="col col-2"
-                data-label="Job Id"
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <img
-                  src={row.organizerimg}
-                  alt="Product"
-                  id="tableimg"
-                  style={{
-                    marginRight: "10px",
-                    Width: "40px",
-                    Height: "40px",
-                    borderRadius: "50%",
-                  }}
-                />
-                <div style={{ flexGrow: 1 }}>
-                  <h5
-                    style={{
-                      textDecoration: "none",
-                      display: "inline-block",
-
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {row.organizer}
-                  </h5>
-                </div>
+              <td className="col col-4" data-label="Amount">
+                <h6>
+                  {" "}
+                  {transaction.type} - {transaction.date}
+                </h6>
               </td>
 
-              <td className="col col-3" data-label="Amount">
-                <h5>{row.Host}</h5>
+              <td className="col col-2" data-label="Job Ids">
+                <h6>{transaction.cryptocurrency}</h6>
+              </td>
+              <td className="col col-4" data-label="Amount">
+                <h6>{transaction.transactionId}</h6>
               </td>
 
               <td className="col col-4" data-label="Job Ids">
-                <h5>{row.pool}</h5>
-              </td>
-              <td className="col col-5" data-label="Job Id">
-                <button id="followbtn">Follow</button>
+                <h6>{transaction.amount}</h6>
               </td>
             </tr>
           ))}
