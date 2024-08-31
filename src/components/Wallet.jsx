@@ -1,6 +1,42 @@
 import React, { useState } from "react";
 import near from "../assets/img/nearlogo.jpg";
 import neargig from "../assets/img/neargig-logo.png";
+import Referrals from "./referrals/Referrals";
+
+const tableData = [
+  {
+    genius: "Jane col",
+    geniusimg: neargig,
+    ranking: 1,
+    won: 56,
+    Earn: 400,
+    status: "Star",
+  },
+  {
+    genius: "Tolujohn",
+    geniusimg: neargig,
+    ranking: 2,
+    won: 45,
+    Earn: 120,
+    status: "Star",
+  },
+  {
+    genius: "Fabrre",
+    geniusimg: neargig,
+    ranking: 3,
+    won: 16,
+    Earn: 80,
+    status: "Star",
+  },
+  {
+    genius: "Rugberbs",
+    geniusimg: neargig,
+    ranking: 4,
+    won: 5,
+    Earn: 23,
+    status: "Star",
+  },
+];
 
 const Wallet = () => {
   // Initialize state for transaction data
@@ -161,7 +197,10 @@ const Wallet = () => {
       <div className="col-lg-12">
         <div className="transaction-history">
           <h2>Transaction History</h2>
-          <div style={{ overflowX: "auto" }} className="col-12">
+          <div
+            style={{ borderRadius: "5px", overflowX: "auto" }}
+            className="col-12"
+          >
             <table className="responsive-table">
               <thead>
                 <tr className="table-header">
@@ -172,15 +211,25 @@ const Wallet = () => {
                 </tr>
               </thead>
               <tbody>
-                {/* Render transactions dynamically */}
                 {transactions.map((transaction, index) => (
                   <tr key={index} className="table-row">
-                    <td>
-                      {transaction.type} - {transaction.date}
+                    <td className="col col-4" data-label="Amount">
+                      <h6>
+                        {" "}
+                        {transaction.type} - {transaction.date}
+                      </h6>
                     </td>
-                    <td>{transaction.cryptocurrency}</td>
-                    <td>{transaction.transactionId}</td>
-                    <td>{transaction.amount}</td>
+
+                    <td className="col col-2" data-label="Job Ids">
+                      <h6>{transaction.cryptocurrency}</h6>
+                    </td>
+                    <td className="col col-4" data-label="Amount">
+                      <h6>{transaction.transactionId}</h6>
+                    </td>
+
+                    <td className="col col-4" data-label="Job Ids">
+                      <h6>{transaction.amount}</h6>
+                    </td>
                   </tr>
                 ))}
               </tbody>

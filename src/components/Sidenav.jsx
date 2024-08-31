@@ -28,8 +28,8 @@ const Sidenav = ({ activeLink, setActive }) => {
   const userlist = [
     { id: 1, path: "wallet", name: "Wallet", icon: "bi-wallet" },
     { id: 2, path: "wnj", name: "Governance", icon: "bi-bank" },
-    { id: 3, path: "wnj", name: "Referrals", icon: "bi-people" },
-    { id: 4, path: "wnj", name: "Settings", icon: "bi-gear" },
+    { id: 3, path: "referrals", name: "Referrals", icon: "bi-people" },
+    { id: 4, path: "settings", name: "Settings", icon: "bi-gear" },
   ];
 
   const location = useLocation();
@@ -73,12 +73,12 @@ const Sidenav = ({ activeLink, setActive }) => {
           <li key={user.id} className="nav-item">
             <Link
               className={`nav-link scrollto ${
-                isActive(`/dashboard/${user.name.toLowerCase()}`)
+                isActive(`/dashboard/${user.path.toLowerCase()}`)
                   ? "active"
                   : ""
               }`}
               onClick={() => setActive(`/${user.name.toLowerCase()}`)}
-              to={`/dashboard/${user.name.toLowerCase()}`}
+              to={`/dashboard/${user.path.toLowerCase()}`}
             >
               <i className={`bi ${user.icon}`}></i>
               <span>{user.name}</span>
