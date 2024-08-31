@@ -682,9 +682,8 @@
 }
 
 .transaction-table {
-  max-width: 100% !important;
-  /* border-collapse: collapse; */
-  overflow-x: scroll;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .transaction-table th,
