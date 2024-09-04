@@ -1,8 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import profile from "../assets/address.jpg";
 import { Link } from "react-router-dom";
 
 function Profile({ user }) {
+  const [workExperience, setWorkExperience] = useState([
+    {
+      company: "Company A",
+      role: "Developer",
+      years: "2019-2021",
+      currentlyWorking: false,
+      description: "",
+    },
+    {
+      company: "Company B",
+      role: "Designer",
+      years: "2019-2021",
+      currentlyWorking: false,
+      description: "",
+    },
+  ]);
+  const [education, setEducation] = useState([
+    {
+      institution: "University X",
+      graduationYear: "2020",
+      levelOfStudy: "Bachelor",
+      major: "Computer Science",
+    },
+    {
+      institution: "University udus",
+      graduationYear: "2025",
+      levelOfStudy: "Bachelor",
+      major: "Computer Engineer",
+    },
+  ]);
   return (
     <>
       <div className="col-lg-12">
@@ -28,26 +58,83 @@ function Profile({ user }) {
                       <i className="bi bi-linkedin"></i>
                     </a>
                   </div>
+                  <p className="small fst-italic">
+                    I'm an experienced full-stack blockchain developer with a
+                    focus on frontend development, I'm eager to join teams,
+                    contribute my expertise, and offer my skills to enhance its
+                    success. I'd also love to be part of teams for hacks and any
+                    collaborative opportunity.
+                  </p>
                 </div>
               </div>
             </div>
 
             <div className="col-xl-12">
-              <div className="card">
-                <div className="card-body pt-3">
-                  <div className="tab-content pt-2">
-                    <div
-                      className="tab-pane fade show active profile-overview"
-                      id="profile-overview"
-                    >
-                      <h5 className="card-title">About</h5>
-                      <p className="small fst-italic">
-                        I'm an experienced full-stack blockchain developer with
-                        a focus on frontend development, I'm eager to join
-                        teams, contribute my expertise, and offer my skills to
-                        enhance its success. I'd also love to be part of teams
-                        for hacks and any collaborative opportunity.
-                      </p>
+              {/* Work Experience Section */}
+              <div className="card gigprofile-section">
+                <div
+                  style={{ background: "goldenrod", color: "black" }}
+                  className="card-header d-flex justify-content-between align-items-center"
+                >
+                  <h2>Work Experience</h2>
+                </div>
+                <div className="card-body">
+                  <div className="gigprofile-section-content">
+                    <div className="work-experience row">
+                      {workExperience.map((work, index) => (
+                        <div className="col-md-6" key={index}>
+                          <div id="workparam">
+                            <p>
+                              <strong>Company:</strong> {work.company}
+                            </p>
+                            <p>
+                              <strong>Role:</strong> {work.role}
+                            </p>
+                            <p>
+                              <strong>Years:</strong> {work.years}
+                            </p>
+                            <p>
+                              <strong>Description:</strong> {work.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Education Section */}
+              <div className="card gigprofile-section">
+                <div
+                  style={{ background: "goldenrod", color: "black" }}
+                  className="card-header d-flex justify-content-between align-items-center"
+                >
+                  <h2>Education</h2>
+                </div>
+                <div className="card-body">
+                  <div className="gigprofile-section-content">
+                    <div className="work-experience row">
+                      {education.map((edu, index) => (
+                        <div className="col-md-6" key={index}>
+                          <div id="workparam">
+                            <p>
+                              <strong>Institution:</strong> {edu.institution}
+                            </p>
+                            <p>
+                              <strong>Graduation Year:</strong>{" "}
+                              {edu.graduationYear}
+                            </p>
+                            <p>
+                              <strong>Level of Study:</strong>{" "}
+                              {edu.levelOfStudy}
+                            </p>
+                            <p>
+                              <strong>Major:</strong> {edu.major}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
