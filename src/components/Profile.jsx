@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import profile from "../assets/address.jpg";
 import { Link } from "react-router-dom";
+import { FaFileAlt } from "react-icons/fa";
 
 function Profile({ user }) {
   const [workExperience, setWorkExperience] = useState([
@@ -31,6 +32,18 @@ function Profile({ user }) {
       graduationYear: "2025",
       levelOfStudy: "Bachelor",
       major: "Computer Engineer",
+    },
+  ]);
+  const [portfolio, setPortfolio] = useState([
+    {
+      projectName: "Blinka Projevy",
+      description: "sjdhv sdig ytdssjhg",
+      files: ["goat.jpg", "portal.png"],
+    },
+    {
+      projectName: "Oja app",
+      description: "sk tdk uctcl ",
+      files: ["git.zip"],
     },
   ]);
   return (
@@ -132,6 +145,57 @@ function Profile({ user }) {
                             <p>
                               <strong>Major:</strong> {edu.major}
                             </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Portfolio Section */}
+              <div className="card gigprofile-section">
+                <div
+                  style={{ background: "goldenrod", color: "black" }}
+                  className="card-header d-flex justify-content-between align-items-center"
+                >
+                  <h2>Portfolio</h2>
+                </div>
+                <br />
+                <div className="card-body">
+                  <div className="gigprofile-section-content">
+                    <div className="portfolio-list row">
+                      {portfolio.map((project, index) => (
+                        <div className="col-md-6" key={index}>
+                          <div
+                            style={{
+                              border: "1px solid white",
+                              borderRadius: "10px",
+                              padding: "10px",
+                            }}
+                            id="portfolio-item"
+                          >
+                            <p>
+                              <strong>Project Name:</strong>{" "}
+                              {project.projectName}
+                            </p>
+                            <p>
+                              <strong>Description:</strong>{" "}
+                              {project.description}
+                            </p>
+                            <div className="file-list">
+                              {project.files.map((file, i) => (
+                                <div key={i} className="file-item">
+                                  <FaFileAlt className="file-icon" />
+                                  <p
+                                    style={{ color: "black" }}
+                                    className="filetag-name"
+                                  >
+                                    {file.name}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       ))}

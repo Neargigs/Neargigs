@@ -1,9 +1,9 @@
 import React from "react";
-import AddQuestForm from "../components/organizer/AddQuizForm";
-import Quizlist from "../components/organizer/Quizlist";
 import Editprofile from "../components/Editprofile";
 import Subscribe from "../components/Subscribe";
 import Profile from "../components/Profile";
+import Freelancepro from "../components/organizer/Freelancepro";
+import Fulltimeprofile from "../components/organizer/Fulltimeprofile";
 
 function Settings() {
   return (
@@ -53,7 +53,7 @@ function Settings() {
                         data-toggle="tab"
                         data-target="#game-settings"
                       >
-                        Host
+                        Freelance
                       </button>
                     </li>
 
@@ -67,7 +67,7 @@ function Settings() {
                         data-toggle="tab"
                         data-target="#game-list"
                       >
-                        Host List
+                        Full Time
                       </button>
                     </li>
 
@@ -97,11 +97,11 @@ function Settings() {
                     </div>
 
                     <div className="tab-pane fade pt-3" id="game-settings">
-                      <AddQuestForm />
+                      <Freelancepro />
                     </div>
 
                     <div className="tab-pane fade pt-3" id="game-list">
-                      <Quizlist />
+                      <Fulltimeprofile />
                     </div>
 
                     <div className="tab-pane fade pt-3" id="profile-settings">
