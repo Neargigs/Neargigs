@@ -12,7 +12,7 @@ import Mygigs from "./my/Mygigs.jsx";
 import Settings from "../views/Settings";
 import Topquiz from "./Freelance.jsx";
 import Footer from "../components/Footer";
-import QuizInfo from "./Gigdetails";
+import Gigdetails from "./Gigdetails";
 import Referrals from "./referrals/Referrals.jsx";
 import Wallet from "./Wallet.jsx";
 
@@ -57,7 +57,7 @@ const Approutes = () => {
               <Route path="/Wallet" element={<Topquiz />} />
               <Route path="/Profile" element={<Settings />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/quizInfo" element={<QuizInfo />} />
+              <Route path="/gigdetails" element={<Gigdetails />} />
               <Route path="/referrals" element={<Referrals />} />
             </Routes>
           </div>

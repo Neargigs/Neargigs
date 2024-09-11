@@ -1,9 +1,10 @@
 import React from "react";
-import Editprofile from "../components/Editprofile";
+import Editprofile from "../components/profile/Editprofile";
 import Subscribe from "../components/Subscribe";
-import Profile from "../components/Profile";
-import Freelancepro from "../components/organizer/Freelancepro";
-import Fulltimeprofile from "../components/organizer/Fulltimeprofile";
+import Profile from "../components/profile/Profile";
+import Freelancepro from "../components/profile/Freelancepro";
+import Fulltimeprofile from "../components/profile/Fulltimeprofile";
+import Changepassword from "../components/Changepassword";
 
 function Settings() {
   return (
@@ -81,7 +82,20 @@ function Settings() {
                         data-toggle="tab"
                         data-target="#profile-settings"
                       >
-                        Settings
+                        Email Settings
+                      </button>
+                    </li>
+                    <li className="nav-item">
+                      <button
+                        style={{
+                          color: "whitesmoke",
+                          background: "transparent",
+                        }}
+                        className="nav-link"
+                        data-toggle="tab"
+                        data-target="#profile-change-password"
+                      >
+                        Change Password
                       </button>
                     </li>
                   </ul>
@@ -106,6 +120,12 @@ function Settings() {
 
                     <div className="tab-pane fade pt-3" id="profile-settings">
                       <Subscribe />
+                    </div>
+                    <div
+                      className="tab-pane fade pt-3"
+                      id="profile-change-password"
+                    >
+                      <Changepassword />
                     </div>
                   </div>
                 </div>

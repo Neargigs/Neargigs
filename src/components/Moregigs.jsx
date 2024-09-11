@@ -1,87 +1,90 @@
 import React from "react";
+import person from "../assets/address.jpg";
 
-const tableData = [
+const gigsData = [
   {
-    seria: 1,
-    name: "cole gas",
-    passed: 12,
-    failed: 6,
-    Points: 600,
-    grade: "40%",
+    id: 1,
+    logo: person,
+    title: "Junior Frontend Developer",
+    assigner: "John Doe",
+    description: "Promoting memecoin, crypto social media & investment sites",
+    tags: ["React", "JavaScript", "HTML/CSS"],
+    price: "$1200",
+    rating: "★★★★☆",
   },
   {
-    seria: 2,
-    name: "Favour",
-    passed: 15,
-    failed: 10,
-    Points: 400,
-    grade: "30%",
+    id: 2,
+    logo: person,
+    title: "Backend Developer",
+    assigner: "Jane Smith",
+    description: "Promoting memecoin, crypto social media & investment sites",
+    tags: ["Node.js", "API", "MongoDB"],
+    price: "$2500",
+    rating: "★★★★☆",
   },
   {
-    seria: 3,
-    name: "Nasty",
-    passed: 6,
-    failed: 12,
-    Points: 500,
-    grade: "98%",
+    id: 3,
+    logo: person,
+    title: "Junior Frontend Developer",
+    assigner: "John Doe",
+    description: "Promoting memecoin, crypto social media & investment sites",
+    tags: ["React", "JavaScript", "HTML/CSS"],
+    price: "$1200",
+    rating: "★★★★☆",
   },
-  {
-    seria: 4,
-    name: "Kole man",
-    passed: 16,
-    failed: 2,
-    Points: 100,
-    grade: "54%",
-  },
+
+  // Add more gigs as needed
 ];
 
 const Moregigs = () => {
   return (
-    <div className="col-lg-12">
-      <h1 className="card-title">PARTICIPANTS</h1>
-      <div style={{ overflowX: "auto" }} className="col-12">
-        <table className="responsive-table">
-          <thead>
-            <tr className="table-header">
-              <th className="col col-1">Seria</th>
-              <th className="col col-2 text-center">Name</th>
-              <th className="col col-3">Passed</th>
-              <th className="col col-3">Failed</th>
-              <th className="col col-5">Points</th>
-              <th className="col col-6">Grade</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tableData.map((row, index) => (
-              <tr key={index} className="table-row">
-                <td className="col col-1" data-label="Customer Name">
-                  <div className="text-center">
-                    <h5>{row.seria}</h5>
-                  </div>
-                </td>
-
-                <td className="col col-2" data-label="Customer Name">
-                  <div className="text-center">
-                    <h5>{row.name}</h5>
-                  </div>
-                </td>
-                <td className="col col-3" data-label="Amount">
-                  <h5>{row.passed}</h5>
-                </td>
-                <td className="col col-3" data-label="Amount">
-                  <h5>{row.failed}</h5>
-                </td>
-
-                <td className="col col-5" data-label="Job Ids">
-                  <h5>{row.Points}</h5>
-                </td>
-                <td className="col col-6" data-label="Job Id">
-                  <h5>{row.grade}</h5>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="giginfo">
+      <div className="gig-job-header">
+        <h3 className="gig-job-sitename">New Gigs</h3>
+        <a href="#" className="gig-job-show-all">
+          Show all gig jobs
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-arrow-right"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fillRule="evenodd"
+              d="M8.5 4.5a.5.5 0 0 1 .5.5v3H12a.5.5 0 0 1 0 1H9v3a.5.5 0 0 1-.8.4l-5-4a.5.5 0 0 1 0-.8l5-4a.5.5 0 0 1 .8.4z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div className="gig-job-list">
+        {gigsData.map((gig) => (
+          <div className="gig-job-card" key={gig.id}>
+            <div className="gig-job-card-body">
+              <img
+                src={gig.logo}
+                alt="Company Logo"
+                className="gig-job-company-logo"
+              />
+              <div className="gig-job-details">
+                <h4 className="gig-job-title">{gig.title}</h4>
+                <p className="gig-job-task-assigner">{gig.assigner}</p>
+                <p className="gig-job-description">{gig.description}</p>
+                <div className="gig-job-tags">
+                  {gig.tags.map((tag, index) => (
+                    <span key={index}>{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="gig-job-card-footer">
+              <span className="gig-job-price">{gig.price}</span>
+              <button className="freelance-more-info-btn">More Info</button>
+            </div>
+            <div className="gig-job-rating">{gig.rating}</div>
+          </div>
+        ))}
       </div>
     </div>
   );

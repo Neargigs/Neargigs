@@ -87,7 +87,7 @@ const Freelancepro = () => {
                     <input
                       type="text"
                       name="specialization"
-                       placeholder="Full stack Software"
+                      placeholder="Full stack Software"
                       value={personalInfo.specialization}
                       onChange={handlePersonalInfoChange}
                       className="form-control"
@@ -163,21 +163,18 @@ const Freelancepro = () => {
             </div>
           ) : (
             <div className="gigprofile-section-content">
-            
-                  <div>
-                  <p>
-                    <strong>Specialization:</strong>{" "}
-                    {personalInfo.specialization}
-                  </p>
-                  <p>
-                    <strong>Hourly Rate:</strong> {personalInfo.hourlyRate}
-                  </p>
-                  <p>
-                    <strong>Preferred Payment Options:</strong>{" "}
-                    {personalInfo.preferredPaymentOptions.join(", ")}
-                  </p>
-                  </div>
-               
+              <div>
+                <p>
+                  <strong>Specialization:</strong> {personalInfo.specialization}
+                </p>
+                <p>
+                  <strong>Hourly Rate:</strong> {personalInfo.hourlyRate}
+                </p>
+                <p>
+                  <strong>Preferred Payment Options:</strong>{" "}
+                  {personalInfo.preferredPaymentOptions.join(", ")}
+                </p>
+              </div>
             </div>
           )}
         </div>

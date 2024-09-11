@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import person from "../assets/address.jpg";
+import person from "../../assets/address.jpg";
 
 import {
   FaEdit,

@@ -1,149 +1,126 @@
-import React, { useState } from "react";
+import React from "react";
 import xp from "../assets/img/xp.jpg";
 import useimage from "../assets/address.jpg";
-import Modal from "./Modal";
-import { BsCheckCircle } from "react-icons/bs";
-import Quiztheory from "./Quiztheory";
-import Paticipants from "./Moregigs";
+import Moregigs from "./Moregigs";
+import { FaFacebook, FaTwitter, FaTelegram, FaLinkedin } from "react-icons/fa";
 
-const cardData = [
-  {
-    badgeColor: "primary",
-    badgeText: "Bronze 10STX",
-    range: "60% - 69%",
-    items: ["Naccy buu", "sia funky", "Pinat van"],
-  },
-  {
-    badgeColor: "success",
-    badgeText: "Silver 20STX",
-    range: "70% - 79%",
-    items: ["Natmas", "Tolujohn", "Huun gss"],
-  },
-  {
-    badgeColor: "warning",
-    badgeText: "Gold 50STX",
-    range: "80% - 100%",
-    items: ["Tolujohn", "Faih jon", "Percy mat"],
-  },
+const Hiring = [
+  { id: 1, title: "Tolujohn Bob", jobs: "1" },
+  { id: 2, title: "Fabrre don", jobs: "6" },
+  { id: 3, title: "Naccy colen", jobs: "3" },
+  { id: 4, title: "Petter collin", jobs: "5" },
+  { id: 5, title: "Rugberbs", jobs: "2" },
 ];
 
 const Gigdetails = () => {
-  const [isGamemodalOpen, setIsGamemodalOpen] = useState(false);
-
-  const handleGamemodalClick = () => {
-    setIsGamemodalOpen(true);
-  };
-
-  const handleCloseGamemodal = () => {
-    setIsGamemodalOpen(false);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // claim
-    handleCloseGamemodal();
-  };
   return (
-    <>
-      <div className="col-lg-12">
-        <div className="row">
-          <div className="col-lg-12">
-            <div
-              style={{ background: "#213743" }}
-              className="card info-card revenue-card d-flex align-items-stretch"
-            >
-              <div
-                style={{ width: "100%" }}
-                className="card-body d-flex align-items-center justify-content-between flex-wrap"
-              >
-                <div style={{ width: "50%" }} className="ps-3 flex-grow-1">
-                  <h4>
-                    <a href="#">Meta Quest Presence Platform quiz 2024</a>
-                  </h4>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      {/* First tag with icon */}
-                      <span className="badge bg-warning">upcoming</span>
-                    </div>
-                    <div className="d-flex align-items-center">
-                      {/* Second tag with icon */}
-                      <i className="bi bi-globe"> </i>{" "}
-                      <span className="badge me-2">Public</span>
-                      <span style={{ color: "#b1bad3" }}>12 April 2024</span>
-                    </div>
-                  </div>
-                  <br />
-                  <div className="d-flex justify-content-between align-items-center">
-                    {/* First word with icon */}
-                    <div>
-                      <span style={{ color: "#b1bad3" }}>Fee: 5 STX</span>
-                    </div>
-                    {/* Second word */}
-                    <div>
-                      <span style={{ color: "#b1bad3" }}>300 participants</span>
-                      <br />
-                      <span style={{ color: "#b1bad3" }}>Pool: 2500 STX</span>
-                    </div>
-                  </div>
+    <div className="giginfo gig-details-container row">
+      {/* Gig Info Section */}
+      <div className="col-lg-8 gig-info">
+        <div className="gig-info-header d-flex align-items-center">
+          <img src={xp} alt="Gig" className="gig-image" />
+          <div className="gig-info-text">
+            <h2 className="gig-name">Tolu John</h2>
+            <div className="gig-rating">Rating: ★★★★☆</div>
+          </div>
+        </div>
+        <h3 className="gig-title">Professional Gig Title</h3>
+        <p style={{ color: "whitesmoke" }} className="gig-description">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula
+          malesuada orci non venenatis. Sed hendrerit ut risus nec consectetur.
+          Curabitur sit amet nisl ut quam egestas facilisis. Nulla ut orci in
+          nisl laoreet venenatis non at eros.
+        </p>
+        <div className="job-tags">
+          <span className="tag">Design</span>
+          <span className="tag">Development</span>
+          <span className="tag">Marketing</span>
+        </div>
+      </div>
 
-                  <button onClick={handleGamemodalClick} id="enterquiz">
-                    Enter Quiz
-                  </button>
-                </div>
-                <div className="ms-auto" style={{ width: "50%" }}>
-                  <img
-                    src={useimage}
-                    style={{
-                      height: "10rem",
-                      width: "100%",
-                      borderRadius: "5px",
-                      marginLeft: "10px",
-                    }}
-                    alt=""
-                  />
-                </div>
+      {/* Sidebar Section */}
+      <div className="col-lg-4 gig-sidebar">
+        <div style={{ border: "1px solid white" }} className="card info-card">
+          <div className="card-body">
+            <h5 className="card-title">Balance:</h5>
+            <p className="gig-balance">$ 250</p>
+
+            <div className="gig-actions">
+              <button
+                style={{
+                  borderRadius: "20px",
+                  width: "100%",
+                  marginBottom: "15px",
+                }}
+                className="usbutton"
+              >
+                Apply for this job
+              </button>
+              <button
+                style={{ borderRadius: "20px", width: "100%" }}
+                className="usbutton"
+              >
+                Save for later
+              </button>
+            </div>
+
+            <div className="gig-share">
+              <p>Share this job:</p>
+              <div className="social-icons">
+                <FaFacebook />
+                <FaTwitter />
+                <FaTelegram />
+                <FaLinkedin />
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="col-xl-12">
-        <h5 className="card-title">Genius</h5>
-        <div className="row">
-          {cardData.map((card, index) => (
-            <div key={index} className="col-lg-4">
-              <div className="info-box card" style={{ background: "#213743" }}>
-                <span className={`badge bg-${card.badgeColor}`}>
-                  {card.badgeText}
-                </span>
-                <h3 className="text-white text-center">{card.range}</h3>
-                <ul style={{ listStyleType: "none", padding: 0 }}>
-                  {card.items.map((item, i) => (
-                    <li
-                      key={i}
-                      style={{ marginLeft: "20px", color: "#b1bad3" }}
-                    >
-                      <BsCheckCircle
-                        style={{ color: card.badgeColor }}
-                        size={16}
-                      />{" "}
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+
+        {/* Top Hiring Managers */}
+        <div className="card">
+          <div className="card-body pb-0">
+            <h5 className="card-title">Top Hiring manager</h5>
+            <div className="news">
+              {Hiring.map((card) => (
+                <div
+                  key={card.id}
+                  className="post-item clearfix"
+                  style={{
+                    borderBottom: "1px solid gray",
+                    paddingBottom: "5px",
+                  }}
+                >
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <img
+                        style={{ height: "60px", width: "60px" }}
+                        src={useimage}
+                        alt=""
+                      />
+                      <h4>
+                        <a href="#">{card.title}</a>
+                      </h4>
+                      <span style={{ color: "#b1bad3", marginLeft: "10px" }}>
+                        Jobs: {card.jobs}
+                      </span>
+                    </div>
+                    <div>
+                      <button className="usbutton">Follow</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+            {/* End sidebar recent posts */}
+          </div>
         </div>
       </div>
-      <Quiztheory />
-      <Paticipants />
-      <>
-        {/* Render the Gamemodal if isGamemodalOpen is true */}
-        {isGamemodalOpen && (
-          <Modal onClose={handleCloseGamemodal} onSubmit={handleSubmit} />
-        )}
-      </>
-    </>
+
+      {/* More Gigs Section */}
+      <div className="col-lg-12">
+        <Moregigs />
+      </div>
+    </div>
   );
 };
 

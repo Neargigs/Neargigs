@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import profile from "../assets/address.jpg";
+import profile from "../../assets/address.jpg";
 import { Link } from "react-router-dom";
 import { FaFileAlt } from "react-icons/fa";
 

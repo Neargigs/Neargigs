@@ -883,3 +883,232 @@
   font-size: 14px;
   font-weight: bold;
 }
+
+.giginfo .gig-details-container {
+  margin: 20px 0;
+}
+
+.giginfo .gig-info {
+  margin-bottom: 20px;
+}
+
+.giginfo .gig-info-header {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.giginfo .gig-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.giginfo .gig-info-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.giginfo .gig-name {
+  font-size: 24px;
+  margin: 0;
+}
+
+.giginfo .gig-rating {
+  font-size: 16px;
+  color: #f39c12;
+}
+
+.giginfo .gig-title {
+  font-size: 32px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.giginfo .gig-description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.giginfo .gig-share {
+  margin-top: 15px;
+}
+
+.giginfo .social-icons {
+  display: flex;
+  gap: 10px;
+}
+.giginfo .gig-balance {
+  font-size: larger;
+  font-weight: 400;
+  color: white;
+}
+
+/* Job List Styling */
+.gig-job-list-wrapper {
+  background-color: #1a2c38; /* Background color for the card container */
+  padding: 20px;
+  margin-top: 5rem;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.gig-job-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+/* Parent container for gig info */
+.giginfo {
+  padding: 20px;
+}
+
+.gig-job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.gig-job-sitename {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.gig-job-show-all {
+  font-size: 14px;
+  color: #00aaff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.gig-job-show-all svg {
+  margin-left: 5px;
+}
+
+/* Job List Container */
+.gig-job-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+/* Job Card Styling */
+.gig-job-card {
+  background-color: #2f4553;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex: 1 1 calc(33.33% - 20px); /* Three cards per row */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  max-width: calc(33.33% - 20px);
+}
+
+.gig-job-card-body {
+  display: flex;
+  padding: 15px;
+}
+
+.gig-job-company-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.gig-job-details {
+  flex-grow: 1;
+}
+
+.gig-job-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: left;
+  color: #fff;
+}
+
+.gig-job-task-assigner {
+  font-size: 12px;
+  color: #e7e1e1;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.gig-job-description {
+  font-size: 13px;
+  color: hsl(0, 33%, 98%);
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.gig-job-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.gig-job-tags span {
+  background-color: #404c57;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 11px;
+}
+
+/* Footer Styling */
+.gig-job-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.gig-job-price {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.freelance-more-info-btn {
+  background-color: #00aaff;
+  border: none;
+  padding: 8px 12px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.gig-job-rating {
+  font-size: 14px;
+  color: #ffd700;
+  padding: 10px;
+  text-align: right;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .gig-job-card {
+    flex: 1 1 calc(50% - 20px); /* Two cards per row on medium screens */
+    max-width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .gig-job-card {
+    flex: 1 1 100%; /* One card per row on smaller screens */
+    max-width: 100%;
+  }
+}
