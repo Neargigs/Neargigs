@@ -23,6 +23,20 @@ card
   color: white;
 }
 
+.sidebutton {
+  background-color: #5c7e90;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.sidebutton:hover {
+  background-color: #0f212e;
+  color: white;
+}
+
 .walletbtn {
   background-color: #5c7e90;
   border-radius: 10px;

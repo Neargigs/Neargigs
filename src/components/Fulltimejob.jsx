@@ -108,29 +108,31 @@ const Fulltimejob = () => {
             <div className="fulltime-job-list">
               {jobsData.map((job) => (
                 <div className="job-card" key={job.id}>
-                  <div className="job-card-header">
-                    <img
-                      src={job.logo}
-                      alt="Company Logo"
-                      className="company-logo"
-                    />
-                    <h4 className="job-hr">{job.hr}</h4>
-                    <div className="job-meta">
-                      <span className="job-date">{job.date}</span>
-                      <i className="save-icon">&#9734;</i>
+                  <Link to="/dashboard/gigdetails">
+                    <div className="job-card-header">
+                      <img
+                        src={job.logo}
+                        alt="Company Logo"
+                        className="company-logo"
+                      />
+                      <h4 className="job-hr">{job.hr}</h4>
+                      <div className="job-meta">
+                        <span className="job-date">{job.date}</span>
+                        <i className="save-icon">&#9734;</i>
+                      </div>
                     </div>
-                  </div>
-                  <div className="job-info">
-                    <h4 className="job-title">{job.title}</h4>
-                    <p>{job.paragraph}</p>
+                    <div className="job-info">
+                      <h4 className="job-title">{job.title}</h4>
+                      <p>{job.paragraph}</p>
 
-                    <p>{job.location}</p>
-                    <div className="job-tags">
-                      {job.tags.map((tag, index) => (
-                        <span key={index}>{tag}</span>
-                      ))}
+                      <p>{job.location}</p>
+                      <div className="job-tags">
+                        {job.tags.map((tag, index) => (
+                          <span key={index}>{tag}</span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               ))}
             </div>

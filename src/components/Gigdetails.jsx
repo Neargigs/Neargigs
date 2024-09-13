@@ -40,7 +40,10 @@ const Gigdetails = () => {
 
       {/* Sidebar Section */}
       <div className="col-lg-4 gig-sidebar">
-        <div style={{ border: "1px solid white" }} className="card info-card">
+        <div
+          style={{ border: "1px solid whitesmoke" }}
+          className="card info-card"
+        >
           <div className="card-body">
             <h5 className="card-title">Balance:</h5>
             <p className="gig-balance">$ 250</p>
@@ -52,25 +55,35 @@ const Gigdetails = () => {
                   width: "100%",
                   marginBottom: "15px",
                 }}
-                className="usbutton"
+                className="sidebutton"
               >
                 Apply for this job
               </button>
               <button
                 style={{ borderRadius: "20px", width: "100%" }}
-                className="usbutton"
+                className="sidebutton"
               >
                 Save for later
               </button>
             </div>
 
             <div className="gig-share">
-              <p>Share this job:</p>
-              <div className="social-icons">
-                <FaFacebook />
-                <FaTwitter />
-                <FaTelegram />
-                <FaLinkedin />
+              <p style={{ color: "whitesmoke" }}>Share this job:</p>
+              <div class="share-container">
+                <div class="social-icons">
+                  <a href="#" class="icon facebook" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#" class="icon twitter" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                  <a href="#" class="icon telegram" aria-label="Telegram">
+                    <i class="fab fa-telegram-plane"></i>
+                  </a>
+                  <a href="#" class="icon linkedin" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>

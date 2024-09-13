@@ -89,37 +89,39 @@ const Dash = () => {
         <div className="row">
           {jobData[selectedTab].map((job) => (
             <div key={job.id} className="col-lg-12">
-              <div className="card job-card">
-                <div className="card-body">
-                  <div className="d-flex flex-wrap justify-content-between align-items-start">
-                    <div className="job-details">
-                      <span className="badge job-type">{job.jobType}</span>
-                      <h4>{job.title}</h4>
-                      <p className="job-date">{job.datePosted}</p>
-                    </div>
-                    <div className="hr-info d-flex align-items-center">
-                      <div className="pe-3 text-left">
-                        <p className="hr-name">{job.hrName}</p>
-                        <span className="rating">
-                          {job.rating} stars ({job.reviews})
-                        </span>
-                        <div className="star-rating">
-                          {"★".repeat(Math.floor(job.rating))}
-                          {"☆".repeat(5 - Math.floor(job.rating))}
-                        </div>
+              <Link to="/dashboard/gigdetails">
+                <div className="card job-card">
+                  <div className="card-body">
+                    <div className="d-flex flex-wrap justify-content-between align-items-start">
+                      <div className="job-details">
+                        <span className="badge job-type">{job.jobType}</span>
+                        <h4>{job.title}</h4>
+                        <p className="job-date">{job.datePosted}</p>
                       </div>
-                      <img src={useImage} className="hr-image" alt="HR" />
+                      <div className="hr-info d-flex align-items-center">
+                        <div className="pe-3 text-left">
+                          <p className="hr-name">{job.hrName}</p>
+                          <span className="rating">
+                            {job.rating} stars ({job.reviews})
+                          </span>
+                          <div className="star-rating">
+                            {"★".repeat(Math.floor(job.rating))}
+                            {"☆".repeat(5 - Math.floor(job.rating))}
+                          </div>
+                        </div>
+                        <img src={useImage} className="hr-image" alt="HR" />
+                      </div>
                     </div>
-                  </div>
-                  <p className="job-description">{job.description}</p>
-                  <div className="d-flex justify-content-between align-items-center mt-3">
-                    <span className="job-amount">{job.amount}</span>
-                    <button className="btn chat-button">
-                      <i className="bi bi-chat"></i> Chat
-                    </button>
+                    <p className="job-description">{job.description}</p>
+                    <div className="d-flex justify-content-between align-items-center mt-3">
+                      <span className="job-amount">{job.amount}</span>
+                      <button className="btn chat-button">
+                        <i className="bi bi-chat"></i> Chat
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
           ))}
         </div>

@@ -86,40 +86,46 @@ const Freelance = () => {
             <div className="freelance-job-list">
               {freelanceJobsData.map((job) => (
                 <div className="freelance-job-card" key={job.id}>
-                  <div className="freelance-job-card-body">
-                    <img
-                      src={job.logo}
-                      alt="Company Logo"
-                      className="freelance-company-logo"
-                    />
-                    <div className="freelance-job-details">
-                      <h4 className="freelance-job-title">{job.title}</h4>
-                      <p className="freelance-task-assigner">{job.assigner}</p>
-                      <span style={{ color: "#ddd", fontSize: "12px" }}>
-                        May 26, 2024
-                      </span>
-                      <div
-                        style={{ color: "goldenrod" }}
-                        className="gig-job-rating"
-                      >
-                        {job.rating}
-                      </div>
+                  <Link to="/dashboard/gigdetails">
+                    <div className="freelance-job-card-body">
+                      <img
+                        src={job.logo}
+                        alt="Company Logo"
+                        className="freelance-company-logo"
+                      />
+                      <div className="freelance-job-details">
+                        <h4 className="freelance-job-title">{job.title}</h4>
+                        <p className="freelance-task-assigner">
+                          {job.assigner}
+                        </p>
+                        <span style={{ color: "#ddd", fontSize: "12px" }}>
+                          May 26, 2024
+                        </span>
+                        <div
+                          style={{ color: "goldenrod" }}
+                          className="gig-job-rating"
+                        >
+                          {job.rating}
+                        </div>
 
-                      <p className="freelance-job-description">
-                        {job.description}
-                      </p>
-                      <div className="freelance-job-tags">
-                        {job.tags.map((tag, index) => (
-                          <span key={index}>{tag}</span>
-                        ))}
+                        <p className="freelance-job-description">
+                          {job.description}
+                        </p>
+                        <div className="freelance-job-tags">
+                          {job.tags.map((tag, index) => (
+                            <span key={index}>{tag}</span>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                   <div className="freelance-job-card-footer">
                     <p className="freelance-job-price">{job.price}</p>
-                    <button className="freelance-more-info-btn">
-                      See details
-                    </button>
+                    <Link to="/dashboard/gigdetails">
+                      <button className="freelance-more-info-btn">
+                        See details
+                      </button>
+                    </Link>
                   </div>
                 </div>
               ))}

@@ -139,37 +139,39 @@ const Myfulltime = () => {
           <div className="fulltime-job-list">
             {jobData[selectedTab].map((job) => (
               <div className="job-card" key={job.id}>
-                <div className="job-card-header">
-                  <img
-                    src={job.logo}
-                    alt="Company Logo"
-                    className="company-logo"
-                  />
-                  <div className="job-hr">
-                    <h4 className="job-head">{job.hr}</h4>
-                    {/* rating */}
-                    <div className="job-rating">
-                      <span className="stars">★★★★☆</span>
-                      <span className="rating-count">(25)</span>
+                <Link to="/dashboard/gigdetails">
+                  <div className="job-card-header">
+                    <img
+                      src={job.logo}
+                      alt="Company Logo"
+                      className="company-logo"
+                    />
+                    <div className="job-hr">
+                      <h4 className="job-head">{job.hr}</h4>
+                      {/* rating */}
+                      <div className="job-rating">
+                        <span className="stars">★★★★☆</span>
+                        <span className="rating-count">(25)</span>
+                      </div>
+                    </div>
+
+                    <div className="job-meta">
+                      <span className="job-date">{job.date}</span>
+                      <i className="save-icon">&#9734;</i>
                     </div>
                   </div>
+                  <div className="job-info">
+                    <h4 className="job-title">{job.title}</h4>
 
-                  <div className="job-meta">
-                    <span className="job-date">{job.date}</span>
-                    <i className="save-icon">&#9734;</i>
+                    <p>{job.location}</p>
+                    <div className="job-tags">
+                      {job.tags.map((tag, index) => (
+                        <span key={index}>{tag}</span>
+                      ))}
+                    </div>
+                    <p>{job.paragraph}</p>
                   </div>
-                </div>
-                <div className="job-info">
-                  <h4 className="job-title">{job.title}</h4>
-
-                  <p>{job.location}</p>
-                  <div className="job-tags">
-                    {job.tags.map((tag, index) => (
-                      <span key={index}>{tag}</span>
-                    ))}
-                  </div>
-                  <p>{job.paragraph}</p>
-                </div>
+                </Link>
                 <div className="d-flex justify-content-between align-items-center mt-3">
                   <span className="job-amount">{job.amount}</span>
                   <button className="btn chat-button">
