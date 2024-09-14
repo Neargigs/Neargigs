@@ -1,5 +1,6 @@
 import React from "react";
 import person from "../assets/address.jpg";
+import { Link } from "react-router-dom";
 
 const gigsData = [
   {
@@ -61,28 +62,30 @@ const Moregigs = () => {
       <div className="gig-job-list">
         {gigsData.map((gig) => (
           <div className="gig-job-card" key={gig.id}>
-            <div className="gig-job-card-body">
-              <img
-                src={gig.logo}
-                alt="Company Logo"
-                className="gig-job-company-logo"
-              />
-              <div className="gig-job-details">
-                <h4 className="gig-job-title">{gig.title}</h4>
-                <p className="gig-job-task-assigner">{gig.assigner}</p>
-                <p className="gig-job-description">{gig.description}</p>
-                <div className="gig-job-tags">
-                  {gig.tags.map((tag, index) => (
-                    <span key={index}>{tag}</span>
-                  ))}
+            <Link to="/dashboard/gigdetails">
+              <div className="gig-job-card-body">
+                <img
+                  src={gig.logo}
+                  alt="Company Logo"
+                  className="gig-job-company-logo"
+                />
+                <div className="gig-job-details">
+                  <h4 className="gig-job-title">{gig.title}</h4>
+                  <p className="gig-job-task-assigner">{gig.assigner}</p>
+                  <p className="gig-job-description">{gig.description}</p>
+                  <div className="gig-job-tags">
+                    {gig.tags.map((tag, index) => (
+                      <span key={index}>{tag}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="gig-job-card-footer">
-              <span className="gig-job-price">{gig.price}</span>
-              <button className="freelance-more-info-btn">More Info</button>
-            </div>
-            <div className="gig-job-rating">{gig.rating}</div>
+              <div className="gig-job-card-footer">
+                <span className="gig-job-price">{gig.price}</span>
+                <button className="freelance-more-info-btn">More Info</button>
+              </div>
+              <div className="gig-job-rating">{gig.rating}</div>
+            </Link>
           </div>
         ))}
       </div>

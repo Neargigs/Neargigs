@@ -39,7 +39,9 @@ const Login = () => {
         <div className="auth-box">
           <div className="d-flex justify-content-between align-items-center">
             <div>
-              <h2>Login</h2>
+              <Link to="/dashboard">
+                <h2>Login</h2>
+              </Link>
             </div>
             <div>
               <span style={{ color: "white" }}>Welcome back!</span>
@@ -68,6 +70,7 @@ const Login = () => {
                 onChange={handleInputChange}
               />
             </div>
+
             <button
               style={{ width: "100%" }}
               type="submit"
