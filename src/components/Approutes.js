@@ -5,12 +5,18 @@ import Navbar from "../components/Navbar";
 import Freelance from "./Freelance.jsx";
 import Sidenav from "./Sidenav";
 import Fulltimejob from "./Fulltimejob.jsx";
-import Myfreelance from "./my/Myfreelance.jsx";
-import Myfulltime from "./my/Myfulltime.jsx";
-import Mygigs from "./my/Mygigs.jsx";
+import Myfreelance from "./freelancer/Myfreelance.jsx";
+import Myfulltime from "./freelancer/Myfulltime.jsx";
+import Mygigs from "./freelancer/Mygigs.jsx";
+
+import Customerdash from "./customers/Customerdash.jsx";
+import Cusfreelance from "./customers/Cusfreelance.jsx";
+import Cusfulltime from "./customers/Cusfulltime.jsx";
+import Cusgigs from "./customers/Cusgigs.jsx";
+import Browsegigs from "./customers/Browsegigs.jsx";
+import Postjob from "./customers/Postjob.jsx";
 
 import Settings from "../views/Settings";
-import Topquiz from "./Freelance.jsx";
 import Footer from "../components/Footer";
 import Gigdetails from "./Gigdetails";
 import Referrals from "./referrals/Referrals.jsx";
@@ -39,6 +45,7 @@ const Approutes = () => {
           <div className="row">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/browsegigs" element={<Browsegigs />} />
               <Route path="/freelance" element={<Freelance />} />
               <Route path="/wallet" element={<Wallet />} />
               <Route path="/mygigs" element={<Mygigs />} />
@@ -46,15 +53,12 @@ const Approutes = () => {
               <Route path="/myfreelance" element={<Myfreelance />} />
               <Route path="/fulltimejob" element={<Fulltimejob />} />
 
-              <Route path="/Home" element={<Topquiz />} />
-              <Route path="/Science" element={<Topquiz />} />
-              <Route path="/Art" element={<Topquiz />} />
-              <Route path="/Commerce" element={<Topquiz />} />
-              <Route path="/Blockchain" element={<Topquiz />} />
-              <Route path="/History" element={<Topquiz />} />
-              <Route path="/Sport" element={<Topquiz />} />
-              <Route path="/Notification" element={<Topquiz />} />
-              <Route path="/Wallet" element={<Topquiz />} />
+              <Route path="/customerdash" element={<Customerdash />} />
+              <Route path="/cusfreelance" element={<Cusfreelance />} />
+              <Route path="/cusfulltime" element={<Cusfulltime />} />
+              <Route path="/cusgigs" element={<Cusgigs />} />
+              <Route path="/postjob" element={<Postjob />} />
+
               <Route path="/Profile" element={<Settings />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/gigdetails" element={<Gigdetails />} />

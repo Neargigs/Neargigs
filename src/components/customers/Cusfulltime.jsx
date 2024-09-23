@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import person from "../../assets/address.jpg";
 
 const jobData = {
-  all: [
+  Published: [
     {
       id: 1,
       hr: "Tom Bornr",
@@ -42,7 +42,7 @@ const jobData = {
       tags: ["Design & Creative", "Motion Design", "Graphic Design"],
     },
   ],
-  apply: [
+  Drafts: [
     {
       id: 1,
       hr: "Tom Janeth",
@@ -68,20 +68,6 @@ const jobData = {
       tags: ["Design & Creative", "Motion Design", "Graphic Design"],
     },
   ],
-  progress: [
-    {
-      id: 1,
-      hr: "Tom Janeth",
-      logo: person,
-      title: "Blockchain Developer",
-      paragraph:
-        "About the RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "5 days ago",
-      location: "San Francisco, USA | Full-time | On-site",
-      amount: "$90,000/year",
-      tags: ["Development", "Blockchain", "Solidity"],
-    },
-  ],
 
   archive: [
     {
@@ -98,8 +84,8 @@ const jobData = {
   ],
 };
 
-const Myfulltime = () => {
-  const [selectedTab, setSelectedTab] = useState("all");
+const Cusfulltime = () => {
+  const [selectedTab, setSelectedTab] = useState("Published");
 
   return (
     <>
@@ -109,22 +95,16 @@ const Myfulltime = () => {
       <div className="job-list">
         <div className="nav-toggle">
           <button
-            className={selectedTab === "all" ? "active" : ""}
-            onClick={() => setSelectedTab("all")}
+            className={selectedTab === "Published" ? "active" : ""}
+            onClick={() => setSelectedTab("Published")}
           >
-            All
+            Published
           </button>
           <button
-            className={selectedTab === "apply" ? "active" : ""}
-            onClick={() => setSelectedTab("apply")}
+            className={selectedTab === "Drafts" ? "active" : ""}
+            onClick={() => setSelectedTab("Drafts")}
           >
-            Apply
-          </button>
-          <button
-            className={selectedTab === "progress" ? "active" : ""}
-            onClick={() => setSelectedTab("progress")}
-          >
-            In Progress
+            Drafts
           </button>
 
           <button
@@ -187,4 +167,4 @@ const Myfulltime = () => {
   );
 };
 
-export default Myfulltime;
+export default Cusfulltime;

@@ -3,7 +3,7 @@ import useImage from "../../assets/address.jpg";
 import { Link } from "react-router-dom";
 
 const jobData = {
-  all: [
+  Offers: [
     {
       id: 1,
       title: "Software Engineer",
@@ -28,7 +28,7 @@ const jobData = {
       amount: "$100,000/year",
     },
   ],
-  Offers: [
+  progress: [
     {
       id: 3,
       title: "Data Scientist",
@@ -41,33 +41,8 @@ const jobData = {
       amount: "$90,000/year",
     },
   ],
-  progress: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
+
   completed: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
-  archive: [
     {
       id: 4,
       title: "UI/UX Designer",
@@ -82,22 +57,16 @@ const jobData = {
   ],
 };
 
-const Myfreelance = () => {
-  const [selectedTab, setSelectedTab] = useState("all");
+const Cusgigs = () => {
+  const [selectedTab, setSelectedTab] = useState("Offers");
 
   return (
     <>
       <div className="pagetitle">
-        <h1>My Jobs</h1>
+        <h1>My Gigs</h1>
       </div>
       <div className="job-list">
         <div className="nav-toggle">
-          <button
-            className={selectedTab === "all" ? "active" : ""}
-            onClick={() => setSelectedTab("all")}
-          >
-            All
-          </button>
           <button
             className={selectedTab === "Offers" ? "active" : ""}
             onClick={() => setSelectedTab("Offers")}
@@ -110,17 +79,12 @@ const Myfreelance = () => {
           >
             In Progress
           </button>
+
           <button
             className={selectedTab === "completed" ? "active" : ""}
             onClick={() => setSelectedTab("completed")}
           >
             Completed
-          </button>
-          <button
-            className={selectedTab === "archive" ? "active" : ""}
-            onClick={() => setSelectedTab("archive")}
-          >
-            Archive
           </button>
         </div>
 
@@ -168,4 +132,4 @@ const Myfreelance = () => {
   );
 };
 
-export default Myfreelance;
+export default Cusgigs;

@@ -3,17 +3,13 @@ import useImage from "../../assets/img/ngig-logo.png";
 import { Link } from "react-router-dom";
 import person from "../../assets/address.jpg";
 
-const Customerdash = () => {
+const Postjob = () => {
   const [selectedTab, setSelectedTab] = useState("all");
 
   return (
     <>
       <div className="pagetitle">
-        <h1>Get work done with LaborX</h1>
-        <p>
-          On LaborX, you can publish Freelance & Full-time Jobs or choose from
-          over 30,000 Gigs!
-        </p>
+        <h1>Post a Job</h1>
       </div>
       <div className="job-list">
         <div className="row">
@@ -27,18 +23,17 @@ const Customerdash = () => {
                 />
               </div>
               <div className="job-info">
-                <h4 className="job-title">Post a Job</h4>
+                <h4 className="job-title">Freelance Job</h4>
 
-                <p>
-                  Post Freelance & Full-time Jobs to hire talent specific for
-                  what you need!
-                </p>
+                <p>I'm looking for a freelancer to complete a task for me.</p>
               </div>
 
               <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="job-amount"></span>
-                <Link to="/dashboard/postjob">
-                  <button className="btn chat-button">Post Job</button>
+                <Link to="/dashboard/gigdetails">
+                  <button className="btn chat-button">
+                    Post Freelance Job
+                  </button>
                 </Link>
               </div>
             </div>
@@ -51,18 +46,17 @@ const Customerdash = () => {
                 />
               </div>
               <div className="job-info">
-                <h4 className="job-title">Browse our Gigs</h4>
+                <h4 className="job-title">Full-time Job</h4>
 
-                <p>
-                  Choose from more than 56 categories of fixed-price services to
-                  find an expert who can meet your needs today!
-                </p>
+                <p>I'm looking to hire talent for a long-term position.</p>
               </div>
 
               <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="job-amount"></span>
                 <Link to="/dashboard/browsegigs">
-                  <button className="btn chat-button">Browse Gigs</button>
+                  <button className="btn chat-button">
+                    Post Full-time Job
+                  </button>
                 </Link>
               </div>
             </div>
@@ -73,4 +67,4 @@ const Customerdash = () => {
   );
 };
 
-export default Customerdash;
+export default Postjob;

@@ -28,7 +28,7 @@ const jobData = {
       amount: "$100,000/year",
     },
   ],
-  Offers: [
+  Posted: [
     {
       id: 3,
       title: "Data Scientist",
@@ -67,41 +67,15 @@ const jobData = {
       amount: "$80,000/year",
     },
   ],
-  draft: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
-  archive: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
 };
 
-const Mygigs = () => {
+const Cusfreelance = () => {
   const [selectedTab, setSelectedTab] = useState("all");
 
   return (
     <>
       <div className="pagetitle">
-        <h1>My Gigs</h1>
+        <h1>My Jobs</h1>
       </div>
       <div className="job-list">
         <div className="nav-toggle">
@@ -109,13 +83,13 @@ const Mygigs = () => {
             className={selectedTab === "all" ? "active" : ""}
             onClick={() => setSelectedTab("all")}
           >
-            Posted
+            All
           </button>
           <button
-            className={selectedTab === "Offers" ? "active" : ""}
-            onClick={() => setSelectedTab("Offers")}
+            className={selectedTab === "Posted" ? "active" : ""}
+            onClick={() => setSelectedTab("Posted")}
           >
-            Offers
+            Posted
           </button>
           <button
             className={selectedTab === "progress" ? "active" : ""}
@@ -123,24 +97,11 @@ const Mygigs = () => {
           >
             In Progress
           </button>
-
           <button
             className={selectedTab === "completed" ? "active" : ""}
             onClick={() => setSelectedTab("completed")}
           >
             Completed
-          </button>
-          <button
-            className={selectedTab === "draft" ? "active" : ""}
-            onClick={() => setSelectedTab("draft")}
-          >
-            Draft
-          </button>
-          <button
-            className={selectedTab === "archive" ? "active" : ""}
-            onClick={() => setSelectedTab("archive")}
-          >
-            Archive
           </button>
         </div>
 
@@ -188,4 +149,4 @@ const Mygigs = () => {
   );
 };
 
-export default Mygigs;
+export default Cusfreelance;
