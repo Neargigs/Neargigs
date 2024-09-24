@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/ngig-logo.png";
 import { Toaster, toast } from "sonner";
+import near from "../assets/img/nearlogo.jpg";
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -83,6 +84,19 @@ const Login = () => {
           <p>
             Don't have an account? <Link to="/register">Register</Link>
           </p>
+          <button id="connbtn">
+            <img
+              src={near}
+              alt="Wallet"
+              style={{
+                width: "24px",
+                height: "24px",
+                borderRadius: "50%",
+                marginRight: "8px",
+              }}
+            />
+            Connect Wallet
+          </button>
         </div>
         <Toaster />
       </div>

@@ -111,6 +111,7 @@ table.custom-table th {
   color: whitesmoke;
   border-radius: 5px;
   padding: 7px;
+  transition: 0.2s;
 }
 
 #optionbut:hover,
@@ -118,7 +119,21 @@ table.custom-table th {
   color: white;
   background-color: #557086;
 }
+#connbtn {
+  background: #557086;
+  width: 100%;
+  border: 1px solid whitesmoke;
+  color: whitesmoke;
+  border-radius: 5px;
+  padding: 7px;
+  transition: 0.2s;
+}
 
+#connbtn:hover,
+#connbtn:active {
+  color: white;
+  background-color: #213743;
+}
 #enterquiz {
   background: transparent;
   border: 1px solid whitesmoke;

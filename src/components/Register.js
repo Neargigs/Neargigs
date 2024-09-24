@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/ngig-logo.png";
+import near from "../assets/img/nearlogo.jpg";
+
 import { Toaster, toast } from "sonner";
 
 const Register = () => {
@@ -105,6 +107,19 @@ const Register = () => {
           <p>
             Already have an account? <Link to="/login">Login</Link>
           </p>
+          <button id="connbtn">
+            <img
+              src={near}
+              alt="Wallet"
+              style={{
+                width: "24px",
+                height: "24px",
+                borderRadius: "50%",
+                marginRight: "8px",
+              }}
+            />
+            Connect Wallet
+          </button>
         </div>
         <Toaster />
       </div>
