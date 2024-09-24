@@ -16,6 +16,7 @@ card
   border: none;
   padding: 10px;
   cursor: pointer;
+  transition: 0.2;
 }
 
 .usbutton:hover {
@@ -30,6 +31,7 @@ card
   border: none;
   padding: 10px;
   cursor: pointer;
+  transition: 0.2;
 }
 
 .sidebutton:hover {
@@ -44,6 +46,7 @@ card
   border: none;
   padding: 10px;
   cursor: pointer;
+  transition: 0.2;
 }
 
 .walletbtn:hover {

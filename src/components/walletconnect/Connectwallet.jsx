@@ -94,7 +94,7 @@ const Connectwallet = () => {
             <Link
               style={{ fontSize: "large" }}
               className="nav-link nav-icon d-none d-md-block"
-              to="/settings"
+              to="/dashboard/postgig"
             >
               Post Gig
             </Link>

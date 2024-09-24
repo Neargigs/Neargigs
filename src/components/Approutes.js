@@ -15,6 +15,9 @@ import Cusfulltime from "./customers/Cusfulltime.jsx";
 import Cusgigs from "./customers/Cusgigs.jsx";
 import Browsegigs from "./customers/Browsegigs.jsx";
 import Postjob from "./customers/Postjob.jsx";
+import Postgig from "./freelancer/Postgig.jsx";
+import Freelanceform from "./customers/jobform/Freelanceform.jsx";
+import Fulltimeform from "./customers/jobform/Fulltimeform.jsx";
 
 import Settings from "../views/Settings";
 import Footer from "../components/Footer";
@@ -58,6 +61,9 @@ const Approutes = () => {
               <Route path="/cusfulltime" element={<Cusfulltime />} />
               <Route path="/cusgigs" element={<Cusgigs />} />
               <Route path="/postjob" element={<Postjob />} />
+              <Route path="/postgig" element={<Postgig />} />
+              <Route path="/freelanceform" element={<Freelanceform />} />
+              <Route path="/fulltimeform" element={<Fulltimeform />} />
 
               <Route path="/Profile" element={<Settings />} />
               <Route path="/settings" element={<Settings />} />

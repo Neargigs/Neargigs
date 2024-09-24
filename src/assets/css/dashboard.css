@@ -1112,3 +1112,189 @@
     max-width: 100%;
   }
 }
+
+/* Job forms */
+
+.freelform {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: transparent;
+}
+
+.freelform__group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.freelform__group input[type="text"],
+.freelform__group input[type="number"],
+.freelform__group input[type="date"],
+.react-quill {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Skills Dropdown */
+.freelform__skills-dropdown {
+  position: absolute;
+  background-color: #213743;
+  border: 1px solid #ddd;
+  max-height: 150px;
+  overflow-y: auto;
+  width: 50%;
+  border-radius: 5px;
+  z-index: 999; /* Ensures dropdown appears above other elements */
+}
+
+.freelform__skills-dropdown li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.freelform__skills-dropdown li:hover {
+  background-color: #557086;
+  border-radius: 20px;
+}
+
+.freelform__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: #5c7e90;
+  border-radius: 15px;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.freelform__remove-tag {
+  background: none;
+  border: none;
+  margin-left: 8px;
+  font-size: 14px;
+  color: #ff0000;
+  cursor: pointer;
+}
+
+.freelform__remove-tag:hover {
+  color: #d00000;
+}
+/* File Upload Styles */
+.freelform__file-drop-area {
+  position: relative;
+}
+
+.freelform__drop-zone {
+  border: 2px dashed #aaa;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.freelform__drop-zone.dragging {
+  background-color: #f0f8ff;
+}
+
+.freelform__drop-zone input[type="file"] {
+  display: none;
+}
+
+.freelform__file-names p {
+  margin-top: 5px;
+}
+
+/* Buttons */
+.freelform__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.freelform__draft-button,
+.freelform__publish-button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.freelform__draft-button {
+  background-color: #f0f0f0;
+}
+
+.freelform__publish-button {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+  .freelform {
+    padding: 15px;
+  }
+}
+
+/* Full time post */
+.fulltimeform {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: transparent;
+}
+
+.fulltimeform__group {
+  margin-bottom: 20px;
+}
+
+.fulltimeform__group input[type="text"],
+.fulltimeform__group input[type="number"],
+.fulltimeform__group input[type="date"],
+.fulltimeform__group select,
+.react-quill {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.full-width {
+  grid-column: span 12;
+}
+
+.half-width {
+  grid-column: span 6;
+}
+
+/* Compensation Toggle Styles */
+.compensation-toggle {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+.compensation-toggle button {
+  padding: 8px 20px;
+  width: 50%;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+
+.compensation-toggle button.active {
+  background-color: #557086;
+  color: #fff;
+  border-color: #557086;
+}

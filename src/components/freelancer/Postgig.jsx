@@ -16,7 +16,7 @@ const availableSkills = [
   // Add more skills as needed
 ];
 
-const Freelanceform = () => {
+const Postgig = () => {
   const [jobTitle, setJobTitle] = useState("");
   const [description, setDescription] = useState("");
   const [budget, setBudget] = useState("");
@@ -231,4 +231,4 @@ const Freelanceform = () => {
   );
 };
 
-export default Freelanceform;
+export default Postgig;

@@ -30,7 +30,7 @@ const Postjob = () => {
 
               <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="job-amount"></span>
-                <Link to="/dashboard/gigdetails">
+                <Link to="/dashboard/freelanceform">
                   <button className="btn chat-button">
                     Post Freelance Job
                   </button>
@@ -53,7 +53,7 @@ const Postjob = () => {
 
               <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="job-amount"></span>
-                <Link to="/dashboard/browsegigs">
+                <Link to="/dashboard/fulltimeform">
                   <button className="btn chat-button">
                     Post Full-time Job
                   </button>
