@@ -1,23 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Toaster, toast } from "sonner";
+import axios from "axios";
 
-const Changepassword = () => {
+const ChangePassword = () => {
+  const [formData, setFormData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    renewPassword: "",
+  });
+  const navigate = useNavigate();
+  const userId = "66f5843129f82d210873dbb7"; 
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.newPassword !== formData.renewPassword) {
+      toast.error("New passwords do not match!");
+      return;
+    }
+
+    try {
+      const response = await axios.post(`http://localhost:8080/api/v1/user/change-password/${userId}`, {
+        oldPassword: formData.currentPassword,
+        newPassword: formData.newPassword,
+      });
+
+      toast.success(response.data.msg);
+      navigate("/dashboard"); // Redirect after successful password change
+    } catch (error) {
+      console.log("Change password error:", error);
+      toast.error(error.response.data.msg || "An error occurred while changing the password!");
+    }
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="row mb-3">
           <label
             style={{ color: "#b1bad3" }}
-            for="currentPassword"
+            htmlFor="currentPassword"
             className="col-md-4 col-lg-3 col-form-label"
           >
             Current Password
           </label>
           <div className="col-md-8 col-lg-9">
             <input
-              name="password"
+              name="currentPassword"
               type="password"
               className="form-control"
               id="currentPassword"
+              value={formData.currentPassword}
+              onChange={handleInputChange}
+              required
             />
           </div>
         </div>
@@ -25,17 +66,20 @@ const Changepassword = () => {
         <div className="row mb-3">
           <label
             style={{ color: "#b1bad3" }}
-            for="newPassword"
+            htmlFor="newPassword"
             className="col-md-4 col-lg-3 col-form-label"
           >
             New Password
           </label>
           <div className="col-md-8 col-lg-9">
             <input
-              name="newpassword"
+              name="newPassword"
               type="password"
               className="form-control"
               id="newPassword"
+              value={formData.newPassword}
+              onChange={handleInputChange}
+              required
             />
           </div>
         </div>
@@ -43,17 +87,20 @@ const Changepassword = () => {
         <div className="row mb-3">
           <label
             style={{ color: "#b1bad3" }}
-            for="renewPassword"
+            htmlFor="renewPassword"
             className="col-md-4 col-lg-3 col-form-label"
           >
             Re-enter New Password
           </label>
           <div className="col-md-8 col-lg-9">
             <input
-              name="renewpassword"
+              name="renewPassword"
               type="password"
               className="form-control"
               id="renewPassword"
+              value={formData.renewPassword}
+              onChange={handleInputChange}
+              required
             />
           </div>
         </div>
@@ -64,8 +111,9 @@ const Changepassword = () => {
           </button>
         </div>
       </form>
+      <Toaster />
     </>
   );
 };
 
-export default Changepassword;
+export default ChangePassword;

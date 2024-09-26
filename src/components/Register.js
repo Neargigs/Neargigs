@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/img/ngig-logo.png";
-import near from "../assets/img/nearlogo.jpg";
-
+import axios from "axios"; 
 import { Toaster, toast } from "sonner";
 
 const Register = () => {
@@ -19,7 +17,7 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
@@ -37,18 +35,32 @@ const Register = () => {
       return;
     }
 
-    // Store data in localStorage
-    localStorage.setItem("registrationData", JSON.stringify(formData));
+    try {
+      const response = await axios.post("http://localhost:8080/api/v1/user/signup", {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword:formData.confirmPassword
+      });
 
-    // Proceed to step 2
-    navigate("/completereg");
+      if (response.status === 200) {
+        toast.success("User registered successfully!");
+        navigate("/dashboard");  // Redirect to dashboard page
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        toast.error(error.response.data.msg || "Error during registration");
+      } else {
+        toast.error("Something went wrong!");
+      }
+    }
   };
 
   return (
     <div>
       <div id="boxit">
         <div id="logodiv">
-          <img id="logoimg" className="mx-auto" src={logo} alt="Logo" />
+          <img id="logoimg" className="mx-auto" src={""} alt="Logo" />
         </div>
 
         <div className="auth-box">
@@ -107,18 +119,9 @@ const Register = () => {
           <p>
             Already have an account? <Link to="/login">Login</Link>
           </p>
-          <button id="connbtn">
-            <img
-              src={near}
-              alt="Wallet"
-              style={{
-                width: "24px",
-                height: "24px",
-                borderRadius: "50%",
-                marginRight: "8px",
-              }}
-            />
-            Connect Wallet
+          <button id="connbtn">      
+           <img src={""} alt="Wallet"style={{width: "24px", height: "24px", borderRadius: "50%", marginRight: "8px",  }}  />  
+             Connect Wallet           
           </button>
         </div>
         <Toaster />

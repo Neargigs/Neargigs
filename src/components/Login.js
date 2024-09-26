@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/ngig-logo.png";
 import { Toaster, toast } from "sonner";
-import near from "../assets/img/nearlogo.jpg";
+// import near from "../assets/img/nearlogo.jpg";
+import axios from "axios";
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -13,6 +14,7 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -22,8 +24,16 @@ const Login = () => {
     }
 
     try {
-      navigate("/dashboard");
-      toast.success("Login successful!");
+      const response = await axios.post("http://localhost:8080/api/v1/user/signin", {
+        username: formData.username,
+        password: formData.password,
+      });
+      console.log(response.data)
+
+      if (response.status === 200) {
+        toast.success("Login successful!");
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.log("login error", error);
       toast.error("Invalid credentials!");
@@ -86,7 +96,7 @@ const Login = () => {
           </p>
           <button id="connbtn">
             <img
-              src={near}
+              src={""}
               alt="Wallet"
               style={{
                 width: "24px",
