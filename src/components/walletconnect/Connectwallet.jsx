@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/address.jpg";
-import { ethers } from "ethers";
 
 const Connectwallet = () => {
   const [connected, setConnected] = useState(true);
   const [account, setAccount] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // For dropdown visibility
+  const dropdownRef = useRef(null); // Ref to track the dropdown element
 
   useEffect(() => {
     if (window.ethereum) {
@@ -36,7 +37,6 @@ const Connectwallet = () => {
       });
       setAccount(accounts[0]);
       setConnected(true);
-      await switchNetwork();
     } catch (error) {
       console.error("Failed to connect wallet:", error);
     }
@@ -47,44 +47,31 @@ const Connectwallet = () => {
     setAccount("");
   };
 
-  const switchNetwork = async () => {
-    const chainId = "0x169"; // 361 in hexadecimal
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId }],
-      });
-    } catch (switchError) {
-      // This error code indicates that the chain has not been added to MetaMask
-      if (switchError.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId,
-                chainName: "Theta Mainnet",
-                rpcUrls: ["https://eth-rpc-api.thetatoken.org/rpc"],
-                nativeCurrency: {
-                  name: "TFUEL",
-                  symbol: "TFUEL",
-                  decimals: 18,
-                },
-                blockExplorerUrls: ["https://explorer.thetatoken.org/"],
-              },
-            ],
-          });
-        } catch (addError) {
-          console.error("Failed to add network:", addError);
-        }
-      }
-    }
-  };
-
   const shortenAddress = (address) => {
     if (!address) return "";
     return `${address.slice(0, 6)}...${address.slice(address.length - 4)}`;
   };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen); // Toggle dropdown visibility
+  };
+
+  // Close the dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false); // Close dropdown if clicked outside
+      }
+    };
+
+    // Add event listener for clicks outside
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      // Cleanup event listener on component unmount
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   return (
     <>
@@ -100,30 +87,66 @@ const Connectwallet = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link nav-icon" to="/settings">
-              <i className="bi bi-gear"></i>
+            <Link className="nav-link nav-icon" to="/dashboard/setting">
+              <i className="bi bi-chat-dots"></i>
             </Link>
           </li>
-          <li className="nav-item pe-3">
-            <Link
+          <li className="nav-item">
+            <Link className="nav-link nav-icon" to="/dashboard/setting">
+              <i className="bi bi-bell"></i>
+            </Link>
+          </li>
+          <li className="nav-item pe-3 position-relative" ref={dropdownRef}>
+            <button
               className="nav-link nav-profile d-flex align-items-center pe-0"
-              to="/settings"
-              data-bs-toggle="dropdown"
+              onClick={toggleDropdown}
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                padding: 0,
+              }}
             >
               <img src={logo} alt="Profile" className="rounded-circle" />
               <span className="d-none d-md-block ps-2">
-                {shortenAddress(account)}
+                {/* {shortenAddress(account)} */} Oxsjbi...ssdjh
               </span>
-            </Link>
-          </li>
-          <li className="nav-item pe-3">
-            <button
-              onClick={disconnectWallet}
-              type="button"
-              className="walletbtn"
-            >
-              Disconnect
+              {/* Dropdown Icon */}
+              <i className="bi bi-caret-down-fill ps-1"></i>
             </button>
+
+            {/* Custom Dropdown */}
+            {isDropdownOpen && (
+              <ul className="custom-dropdown">
+                <li>
+                  <Link className="dropdown-item" to="/dashboard/profile">
+                    View your Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/dashboard/settings">
+                    Settings
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/dashboard">
+                    Change to Customer
+                  </Link>
+                </li>
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li>
+                  <button
+                    className="dropdown-item"
+                    onClick={disconnectWallet}
+                    style={{ background: "none", border: "none" }}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            )}
           </li>
         </ul>
       ) : (

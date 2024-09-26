@@ -1298,3 +1298,56 @@ label {
   color: #fff;
   border-color: #557086;
 }
+
+/* nav dropdown */
+/* Custom Dropdown */
+.custom-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0; /* Ensure the dropdown opens to the left */
+  background-color: #213743;
+  list-style-type: none;
+  border: 1px solid gray;
+  padding: 0;
+  margin: 0;
+  margin-right: 5px;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-dropdown li {
+  padding: 2px;
+}
+
+.custom-dropdown li .dropdown-item {
+  display: block;
+  width: 100%;
+  color: whitesmoke;
+  text-decoration: none;
+  padding: 10px;
+  transition: background 0.2s ease-in-out;
+}
+
+.custom-dropdown li .dropdown-item:hover {
+  background-color: #2f4553;
+  border-radius: 10px;
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: 5px 0;
+  background-color: #ddd;
+}
+
+.custom-dropdown li button {
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* For the dropdown icon (optional, for aesthetics) */
+.bi-caret-down-fill {
+  font-size: 0.9rem;
+  margin-left: 5px;
+}

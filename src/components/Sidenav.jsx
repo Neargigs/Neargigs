@@ -43,10 +43,8 @@ const Sidenav = ({ activeLink, setActive }) => {
   ];
 
   const userlist = [
-    { id: 1, path: "wallet", name: "Wallet", icon: "bi-wallet" },
-    { id: 2, path: "wnj", name: "Governance", icon: "bi-bank" },
-    { id: 3, path: "referrals", name: "Referrals", icon: "bi-people" },
-    { id: 4, path: "settings", name: "Settings", icon: "bi-gear" },
+    { id: 1, path: "referrals", name: "Referrals", icon: "bi-people" },
+    { id: 2, path: "settings", name: "Settings", icon: "bi-gear" },
   ];
 
   const location = useLocation();
@@ -119,6 +117,22 @@ const Sidenav = ({ activeLink, setActive }) => {
       <br />
       {/* Everyone side navigation */}
       <ul className="sidebar-nav" id="sidebar-nav">
+        <li className="nav-item">
+          <Link className="nav-link gap-1 collapsed" to="/dashboard/wallet">
+            <i className="bi bi-wallet"></i>
+            <span>Wallet</span>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <a
+            className="nav-link gap-1 collapsed"
+            href="https://dev.near.org/"
+            target="_blank"
+          >
+            <i className="bi bi-bank"></i>
+            <span>Governance</span>
+          </a>
+        </li>
         {userlist.map((user) => (
           <li key={user.id} className="nav-item">
             <Link
