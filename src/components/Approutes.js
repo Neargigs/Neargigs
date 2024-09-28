@@ -19,6 +19,9 @@ import Postgig from "./freelancer/Postgig.jsx";
 import Freelanceform from "./customers/jobform/Freelanceform.jsx";
 import Fulltimeform from "./customers/jobform/Fulltimeform.jsx";
 
+import Chat from "./chat/Chat.jsx";
+import Chatdetails from "./chat/chatdetails/Chatdetails.jsx";
+
 import Settings from "../views/Settings";
 import Footer from "../components/Footer";
 import Gigdetails from "./Gigdetails";
@@ -55,6 +58,9 @@ const Approutes = () => {
               <Route path="/myfulltime" element={<Myfulltime />} />
               <Route path="/myfreelance" element={<Myfreelance />} />
               <Route path="/fulltimejob" element={<Fulltimejob />} />
+
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/chatdetails" element={<Chatdetails />} />
 
               <Route path="/customerdash" element={<Customerdash />} />
               <Route path="/cusfreelance" element={<Cusfreelance />} />
