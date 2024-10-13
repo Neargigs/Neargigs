@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/ngig-logo.png";
 import near from "../assets/img/nearlogo.jpg";
 import { Toaster, toast } from "sonner";
+import axios from "axios";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,11 +14,9 @@ const Register = () => {
     role: "",
   });
   const [roleSelected, setRoleSelected] = useState(false);
-  const [selectedRole, setSelectedRole] = useState("");
   const navigate = useNavigate();
 
   const handleRoleSelect = (role) => {
-    setSelectedRole(role);
     setFormData({ ...formData, role });
     setRoleSelected(true);
   };
@@ -27,15 +26,19 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.role) {
+      toast.error("Please select your role!");
+      return;
+    }
 
     if (
       !formData.email ||
       !formData.username ||
       !formData.password ||
-      !formData.confirmPassword ||
-      !formData.role
+      !formData.confirmPassword
     ) {
       toast.error("Please fill all fields!");
       return;
@@ -46,11 +49,33 @@ const Register = () => {
       return;
     }
 
-    // Store data in localStorage
-    localStorage.setItem("registrationData", JSON.stringify(formData));
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/user/signup', {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+        role: formData.role,
+      });
 
-    // Proceed to step 2
-    navigate("/completereg");
+      if (response.status === 200) {
+        toast.success('User registered successfully!');
+        setTimeout(() => {
+          navigate("/dashboard");
+
+        }, 2000);
+      }
+    } catch (e) {
+      if (e.response && e.response.data.errors) {
+        e.response.data.errors.forEach((error) => {
+          toast.error(error.message); 
+        });
+      } else if (e.response && e.response.data.msg) {
+        toast.error(e.response.data.msg || "Error during registration");
+      } else {
+        toast.error("Something went wrong!");
+      }
+    }
   };
 
   return (

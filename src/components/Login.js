@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/ngig-logo.png";
 import { Toaster, toast } from "sonner";
 import near from "../assets/img/nearlogo.jpg";
+import axios from "axios";
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -13,20 +15,50 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const validateForm = () => {
+    if (!formData.username || !formData.password) {
+      toast.error("Please fill all fields!");
+      return false;
+    }
+    if (formData.password.length < 6) {
+      toast.error("Password must be at least 6 characters long.");
+      return false;
+    }
+    return true;
+  };
+
+  // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.username || !formData.password) {
-      toast.error("Please fill all fields!");
-      return;
-    }
+    if (!validateForm()) return;
 
+    setLoading(true); 
     try {
-      navigate("/dashboard");
-      toast.success("Login successful!");
+      const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+
+      const response = await axios.post(`${API_URL}/api/v1/user/signin`, {
+        username: formData.username,
+        password: formData.password,
+      });
+
+      if (response.status === 200) {
+        toast.success("Login successful!");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
+            }
     } catch (error) {
-      console.log("login error", error);
-      toast.error("Invalid credentials!");
+      console.error("Login error", error);
+
+      if (error.response) {
+        const errorMsg = error.response.data.msg || "Invalid credentials!";
+        toast.error(errorMsg);
+      } else {
+        toast.error("An error occurred. Please try again later.");
+      }
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -77,8 +109,9 @@ const Login = () => {
               type="submit"
               id="optionbut"
               onClick={handleSubmit}
+              disabled={loading} 
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </button>
           </div>
           <p>
