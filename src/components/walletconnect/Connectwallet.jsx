@@ -1,13 +1,32 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/address.jpg";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import { toast, Toaster } from "sonner";
 
 const Connectwallet = () => {
   const [connected, setConnected] = useState(true);
   const [account, setAccount] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // For dropdown visibility
   const dropdownRef = useRef(null); // Ref to track the dropdown element
+  const navigate = useNavigate();
 
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  let userId;
+  let userRole;
+
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    userId = decodedToken.userId;
+    // console.log(userId);
+  }
+  if (user && user.role) {
+    userRole = user.role
+    // console.log(user.role)
+  }
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", (accounts) => {
@@ -72,9 +91,47 @@ const Connectwallet = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
+  const changeUserRole = async (newRole) => {
+    try {
+      toast(`Switching to ${newRole === "Customer" ? "Customer" : "Freelancer"}...`, {
+       
+        icon: "🔄",
+        duration: 3000,
+      });
+
+      const response = await axios.post("http://localhost:8080/api/v1/user/change-role", {
+        userId,
+        role: newRole,
+      });
+
+      if (response.status === 200) {
+        const updatedUser = { ...user, role: newRole };
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+
+        toast.success(`Role switched to ${newRole === "Customer" ? "Customer" : "Freelancer"}!`, {
+          duration: 2000,
+         
+          icon: "✅",
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2500);
+      }
+    } catch (error) {
+      console.error("Failed to change role:", error);
+      toast.error("Failed to switch roles. Please try again.", {
+        duration: 3000,
+       
+        icon: "❌",
+      });
+    }
+  };
+  
 
   return (
     <>
+     <Toaster />
       {connected ? (
         <ul className="d-flex align-items-center">
           <li className="nav-item">
@@ -83,8 +140,9 @@ const Connectwallet = () => {
               className="nav-link nav-icon d-none d-md-block"
               to="/dashboard/postgig"
             >
-              Post Gig
+              {userRole === "Customer" ? "Post Job" : "Post Gig"}
             </Link>
+
           </li>
           <li className="nav-item">
             <Link className="nav-link nav-icon" to="/dashboard/chat">
@@ -129,9 +187,16 @@ const Connectwallet = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/dashboard">
-                    Change to Customer
-                  </Link>
+                <button
+                    className="dropdown-item"
+                    onClick={() =>
+                      changeUserRole(userRole === "Customer" ? "Talent" : "Customer")
+                    }
+                  >
+                    {userRole === "Customer"
+                      ? "Switch to Talent"
+                      : "Switch to Customer"}
+                  </button>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />

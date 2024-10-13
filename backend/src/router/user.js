@@ -106,12 +106,34 @@ router.post("/signin", async (req, res) => {
     }
 });
 
+
 router.post("/logout", (req, res) => {
   res.clearCookie("token"); 
   return res.status(200).json({
       msg: "Logout successful",
   });
 });
+
+
+router.post('/change-role', async (req, res) => {
+    const { userId, role } = req.body;
+  
+    try {
+      const user = await User.findById(userId); // Assuming you're using MongoDB or any other database
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      user.role = role;
+      await user.save();
+  
+      res.status(200).json({ message: 'Role updated successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+
+
 
 router.post("/change-password/:userId", async (req, res) => {
     const parsed = changePasswordBody.safeParse(req.body);

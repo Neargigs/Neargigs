@@ -12,12 +12,12 @@ const Sidenav = ({ activeLink, setActive }) => {
   if (token) {
     const decodedToken = jwtDecode(token);
     userId = decodedToken.userId;
-    console.log(userId);
+    // console.log(userId);
   }
 
   if (user && user.role) {
     userRole = user.role;
-    console.log(userRole);
+    // console.log(userRole);
   }
 
   const gigcategory = [
