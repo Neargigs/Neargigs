@@ -58,12 +58,12 @@ router.post("/signup", async (req, res) => {
 
         const userId = user._id;
 
-        const token = jwt.sign({ userId }, JWT_SECRET);
+        const token = jwt.sign({ userId }, JWT_SECRET,{ expiresIn: '1h' });
 
         return res.status(200).json({
             msg: "User account created successfully",
             token,
-            user: { username: user.username, email: user.email, id: userId },
+            user: { username: user.username, email: user.email, id: userId, role:user.role },
         });
     } catch (error) {
         console.error("Error during signup:", error);
@@ -98,7 +98,7 @@ router.post("/signin", async (req, res) => {
         return res.status(200).json({
             msg: "Signin successful",
             token,
-            user: { username: user.username, email: user.email },
+            user: { username: user.username, email: user.email,role: user.role },
         });
     } catch (err) {
         console.error("Error during signin:", err.message);

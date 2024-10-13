@@ -1,7 +1,25 @@
+import { jwtDecode } from "jwt-decode";
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Sidenav = ({ activeLink, setActive }) => {
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  let userId;
+  let userRole;
+
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    userId = decodedToken.userId;
+    console.log(userId);
+  }
+
+  if (user && user.role) {
+    userRole = user.role;
+    console.log(userRole);
+  }
+
   const gigcategory = [
     { id: 1, path: "freelance", name: "Freelance Jobs", icon: "bi-briefcase" },
     {
@@ -24,21 +42,15 @@ const Sidenav = ({ activeLink, setActive }) => {
       icon: "bi-briefcase-fill",
     },
   ];
+
   const customercategory = [
     { id: 1, path: "browsegigs", name: "Browse Gigs", icon: "bi-briefcase" },
-
     { id: 2, path: "cusgigs", name: "My Gigs", icon: "bi-clipboard-check" },
     {
-      id: 3,
-      path: "cusfreelance",
-      name: "My Freelance Jobs",
-      icon: "bi-briefcase",
+      id: 3, path: "cusfreelance", name: "My Freelance Jobs", icon: "bi-briefcase",
     },
     {
-      id: 4,
-      path: "cusfulltime",
-      name: "My Full-time Jobs",
-      icon: "bi-briefcase-fill",
+      id: 4, path: "cusfulltime", name: "My Full-time Jobs", icon: "bi-briefcase-fill",
     },
   ];
 
@@ -58,64 +70,61 @@ const Sidenav = ({ activeLink, setActive }) => {
   };
 
   return (
-    <aside id="sidebar" className={`sidebar ${"ml-[300px]"}`}>
-      {/* freelance side navigation */}
-      <ul className="sidebar-nav" id="sidebar-nav">
-        <li className="nav-item">
-          <Link className="nav-link gap-1 collapsed" to="/dashboard">
-            <i className="bi bi-house"></i>
-            <span>Dashboard</span>
-          </Link>
-        </li>
-        {gigcategory.map((gignav) => (
-          <li key={gignav.id} className="nav-item">
-            <Link
-              className={`nav-link gap-1 collapsed ${
-                isActive(`/dashboard/${gignav.path.toLowerCase()}`)
-                  ? "active"
-                  : ""
-              }`}
-              to={`/dashboard/${gignav.path.toLowerCase()}`}
-            >
-              <i className={`bi ${gignav.icon}`}></i>
-              <span>{gignav.name}</span>
+    <aside id="sidebar" className={`sidebar ml-[300px]`}>
+      {userRole === "Talent" && (
+        <ul className="sidebar-nav" id="sidebar-nav">
+          <li className="nav-item">
+            <Link className="nav-link gap-1 collapsed" to="/dashboard">
+              <i className="bi bi-house"></i>
+              <span>Dashboard</span>
             </Link>
           </li>
-        ))}
-      </ul>
-      {/* end freelance side navigation */}
+          {gigcategory.map((gignav) => (
+            <li key={gignav.id} className="nav-item">
+              <Link
+                className={`nav-link gap-1 collapsed ${
+                  isActive(`/dashboard/${gignav.path.toLowerCase()}`)
+                    ? "active"
+                    : ""
+                }`}
+                to={`/dashboard/${gignav.path.toLowerCase()}`}
+              >
+                <i className={`bi ${gignav.icon}`}></i>
+                <span>{gignav.name}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
 
-      {/* customer side navigation */}
-      <ul className="sidebar-nav" id="sidebar-nav">
-        <li className="nav-item">
-          <Link
-            className="nav-link gap-1 collapsed"
-            to="/dashboard/customerdash"
-          >
-            <i className="bi bi-house"></i>
-            <span>Dashboard</span>
-          </Link>
-        </li>
-        {customercategory.map((customer) => (
-          <li key={customer.id} className="nav-item">
-            <Link
-              className={`nav-link gap-1 collapsed ${
-                isActive(`/dashboard/${customer.path.toLowerCase()}`)
-                  ? "active"
-                  : ""
-              }`}
-              to={`/dashboard/${customer.path.toLowerCase()}`}
-            >
-              <i className={`bi ${customer.icon}`}></i>
-              <span>{customer.name}</span>
+      {userRole === "Customer" && (
+        <ul className="sidebar-nav" id="sidebar-nav">
+          <li className="nav-item">
+            <Link className="nav-link gap-1 collapsed" to="/dashboard/customerdash">
+              <i className="bi bi-house"></i>
+              <span>Dashboard</span>
             </Link>
           </li>
-        ))}
-      </ul>
-      {/* end customer side navigation */}
+          {customercategory.map((customer) => (
+            <li key={customer.id} className="nav-item">
+              <Link
+                className={`nav-link gap-1 collapsed ${
+                  isActive(`/dashboard/${customer.path.toLowerCase()}`)
+                    ? "active"
+                    : ""
+                }`}
+                to={`/dashboard/${customer.path.toLowerCase()}`}
+              >
+                <i className={`bi ${customer.icon}`}></i>
+                <span>{customer.name}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <br />
-      {/* Everyone side navigation */}
+
       <ul className="sidebar-nav" id="sidebar-nav">
         <li className="nav-item">
           <Link className="nav-link gap-1 collapsed" to="/dashboard/wallet">
@@ -124,11 +133,7 @@ const Sidenav = ({ activeLink, setActive }) => {
           </Link>
         </li>
         <li className="nav-item">
-          <a
-            className="nav-link gap-1 collapsed"
-            href="https://dev.near.org/"
-            target="_blank"
-          >
+          <a className="nav-link gap-1 collapsed" href="https://dev.near.org/" target="_blank">
             <i className="bi bi-bank"></i>
             <span>Governance</span>
           </a>
@@ -150,7 +155,6 @@ const Sidenav = ({ activeLink, setActive }) => {
           </li>
         ))}
       </ul>
-      {/* end everyone side navigation */}
     </aside>
   );
 };
