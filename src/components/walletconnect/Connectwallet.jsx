@@ -167,7 +167,7 @@ const Connectwallet = () => {
             >
               <img src={logo} alt="Profile" className="rounded-circle" />
               <span className="d-none d-md-block ps-2">
-                {/* {shortenAddress(account)} */} Oxsjbi...ssdjh
+                {/* {shortenAddress(account)} */} tolujohn.near
               </span>
               {/* Dropdown Icon */}
               <i className="bi bi-caret-down-fill ps-1"></i>
