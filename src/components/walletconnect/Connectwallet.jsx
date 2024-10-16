@@ -12,8 +12,8 @@ const Connectwallet = () => {
   const dropdownRef = useRef(null); // Ref to track the dropdown element
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('token');
-  const user = JSON.parse(localStorage.getItem('user'));
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   let userId;
   let userRole;
@@ -24,7 +24,7 @@ const Connectwallet = () => {
     // console.log(userId);
   }
   if (user && user.role) {
-    userRole = user.role
+    userRole = user.role;
     // console.log(user.role)
   }
   useEffect(() => {
@@ -93,26 +93,36 @@ const Connectwallet = () => {
   }, [dropdownRef]);
   const changeUserRole = async (newRole) => {
     try {
-      toast(`Switching to ${newRole === "Customer" ? "Customer" : "Freelancer"}...`, {
-       
-        icon: "🔄",
-        duration: 3000,
-      });
+      toast(
+        `Switching to ${newRole === "Customer" ? "Customer" : "Freelancer"}...`,
+        {
+          icon: "🔄",
+          duration: 3000,
+        }
+      );
 
-      const response = await axios.post("http://localhost:8080/api/v1/user/change-role", {
-        userId,
-        role: newRole,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/user/change-role",
+        {
+          userId,
+          role: newRole,
+        }
+      );
 
       if (response.status === 200) {
         const updatedUser = { ...user, role: newRole };
         localStorage.setItem("user", JSON.stringify(updatedUser));
 
-        toast.success(`Role switched to ${newRole === "Customer" ? "Customer" : "Freelancer"}!`, {
-          duration: 2000,
-         
-          icon: "✅",
-        });
+        toast.success(
+          `Role switched to ${
+            newRole === "Customer" ? "Customer" : "Freelancer"
+          }!`,
+          {
+            duration: 2000,
+
+            icon: "✅",
+          }
+        );
 
         setTimeout(() => {
           window.location.reload();
@@ -122,27 +132,29 @@ const Connectwallet = () => {
       console.error("Failed to change role:", error);
       toast.error("Failed to switch roles. Please try again.", {
         duration: 3000,
-       
+
         icon: "❌",
       });
     }
   };
-  
 
   return (
     <>
-     <Toaster />
+      <Toaster />
       {connected ? (
         <ul className="d-flex align-items-center">
           <li className="nav-item">
             <Link
               style={{ fontSize: "large" }}
               className="nav-link nav-icon d-none d-md-block"
-              to="/dashboard/postgig"
+              to={
+                userRole === "Customer"
+                  ? "/dashboard/postjob"
+                  : "/dashboard/postgig"
+              }
             >
               {userRole === "Customer" ? "Post Job" : "Post Gig"}
             </Link>
-
           </li>
           <li className="nav-item">
             <Link className="nav-link nav-icon" to="/dashboard/chat">
@@ -187,10 +199,12 @@ const Connectwallet = () => {
                   </Link>
                 </li>
                 <li>
-                <button
+                  <button
                     className="dropdown-item"
                     onClick={() =>
-                      changeUserRole(userRole === "Customer" ? "Talent" : "Customer")
+                      changeUserRole(
+                        userRole === "Customer" ? "Talent" : "Customer"
+                      )
                     }
                   >
                     {userRole === "Customer"
