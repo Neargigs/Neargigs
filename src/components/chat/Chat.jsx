@@ -102,35 +102,43 @@ const Chat = () => {
             </div>
 
             <div className="row">
-              <div className="chat-list">
-                {dummyChats
-                  .filter((category) => category.category === activeCategory)
-                  .map((category) =>
-                    category.chats.map((chat) => (
-                      <div
-                        key={chat.id}
-                        className={`chat-item ${
-                          chat.isUnread ? "unread" : "read"
-                        }`}
-                      >
-                        <img src={logo} alt="profile" className="chat-image" />
-                        <div className="chat-details">
-                          <div className="chat-header">
-                            <span className="chat-name">{chat.name}</span>
-                            <span className="chat-date">{chat.dateSent}</span>
+              <Link to="/dashboard/chatdetails">
+                <div className="chat-list">
+                  {dummyChats
+                    .filter((category) => category.category === activeCategory)
+                    .map((category) =>
+                      category.chats.map((chat) => (
+                        <div
+                          key={chat.id}
+                          className={`chat-item ${
+                            chat.isUnread ? "unread" : "read"
+                          }`}
+                        >
+                          <img
+                            src={logo}
+                            alt="profile"
+                            className="chat-image"
+                          />
+                          <div className="chat-details">
+                            <div className="chat-header">
+                              <span className="chat-name">{chat.name}</span>
+                              <span className="chat-date">{chat.dateSent}</span>
+                            </div>
+                            <div className="chat-job">{chat.jobTitle}</div>
+                            <div className="chat-message">
+                              {chat.lastMessage}
+                            </div>
                           </div>
-                          <div className="chat-job">{chat.jobTitle}</div>
-                          <div className="chat-message">{chat.lastMessage}</div>
+                          {chat.unreadMessages > 0 && (
+                            <div className="unread-count">
+                              {chat.unreadMessages}
+                            </div>
+                          )}
                         </div>
-                        {chat.unreadMessages > 0 && (
-                          <div className="unread-count">
-                            {chat.unreadMessages}
-                          </div>
-                        )}
-                      </div>
-                    ))
-                  )}
-              </div>
+                      ))
+                    )}
+                </div>
+              </Link>
             </div>
           </div>
         </div>

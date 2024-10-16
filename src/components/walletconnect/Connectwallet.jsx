@@ -150,7 +150,7 @@ const Connectwallet = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link nav-icon" to="/dashboard/setting">
+            <Link className="nav-link nav-icon" to="/dashboard">
               <i className="bi bi-bell"></i>
             </Link>
           </li>
