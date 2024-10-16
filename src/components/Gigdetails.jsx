@@ -1,7 +1,9 @@
-import React from "react";
+// Gigdetails.js
+import React, { useState } from "react";
 import xp from "../assets/img/xp.jpg";
 import useimage from "../assets/address.jpg";
 import Moregigs from "./Moregigs";
+import Gigdetailsmodal from "./Gigdetailsmodal";
 import { FaFacebook, FaTwitter, FaTelegram, FaLinkedin } from "react-icons/fa";
 
 const Hiring = [
@@ -13,6 +15,11 @@ const Hiring = [
 ];
 
 const Gigdetails = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <div className="giginfo gig-details-container row">
       {/* Gig Info Section */}
@@ -56,6 +63,7 @@ const Gigdetails = () => {
                   marginBottom: "15px",
                 }}
                 className="sidebutton"
+                onClick={openModal} // Open modal on button click
               >
                 Apply for this job
               </button>
@@ -69,19 +77,19 @@ const Gigdetails = () => {
 
             <div className="gig-share">
               <p style={{ color: "whitesmoke" }}>Share this job:</p>
-              <div class="share-container">
-                <div class="social-icons">
-                  <a href="#" class="icon facebook" aria-label="Facebook">
-                    <i class="fab fa-facebook-f"></i>
+              <div className="share-container">
+                <div className="social-icons">
+                  <a href="#" className="icon facebook" aria-label="Facebook">
+                    <i className="fab fa-facebook-f"></i>
                   </a>
-                  <a href="#" class="icon twitter" aria-label="Twitter">
-                    <i class="fab fa-twitter"></i>
+                  <a href="#" className="icon twitter" aria-label="Twitter">
+                    <i className="fab fa-twitter"></i>
                   </a>
-                  <a href="#" class="icon telegram" aria-label="Telegram">
-                    <i class="fab fa-telegram-plane"></i>
+                  <a href="#" className="icon telegram" aria-label="Telegram">
+                    <i className="fab fa-telegram-plane"></i>
                   </a>
-                  <a href="#" class="icon linkedin" aria-label="LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
+                  <a href="#" className="icon linkedin" aria-label="LinkedIn">
+                    <i className="fab fa-linkedin-in"></i>
                   </a>
                 </div>
               </div>
@@ -92,7 +100,7 @@ const Gigdetails = () => {
         {/* Top Hiring Managers */}
         <div className="card">
           <div className="card-body pb-0">
-            <h5 className="card-title">Top Hiring manager</h5>
+            <h5 className="card-title">Top Hiring Manager</h5>
             <div className="news">
               {Hiring.map((card) => (
                 <div
@@ -133,6 +141,15 @@ const Gigdetails = () => {
       <div className="col-lg-12">
         <Moregigs />
       </div>
+
+      {/* Job Application Modal */}
+      <Gigdetailsmodal
+        recruiterImage={xp} // Use the gig image as the recruiter's image
+        recruiterName="Tolu John" // Replace with the appropriate name
+        jobTitle="Professional Gig Title" // Replace with the appropriate job title
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 };

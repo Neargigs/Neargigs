@@ -206,3 +206,91 @@
     flex: 1 1 100%;
   }
 }
+
+/* Escrow */
+/* Container for buttons */
+.progress-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+/* Rope element between buttons */
+.progress-rope {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 5px;
+  background-color: gold;
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+/* Styling for individual buttons */
+.progress-btn {
+  background-color: #f4f4f4;
+  color: #333;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.progress-btn.highlight {
+  box-shadow: 0px 4px 15px rgba(255, 223, 0, 0.8);
+}
+
+.progress-btn.active {
+  background-color: gold;
+  color: #fff;
+  box-shadow: none;
+}
+
+/* Arrow head styling */
+.arrow-btn {
+  background-color: #f4f4f4;
+  clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
+  padding: 12px 25px;
+  transition: all 0.3s ease;
+}
+
+.arrow-btn.active {
+  background-color: gold;
+  color: white;
+  clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
+}
+
+/* Responsive layout for mobile */
+@media (max-width: 768px) {
+  .progress-container {
+    flex-direction: column;
+  }
+
+  .progress-btn {
+    width: 100%;
+  }
+
+  .arrow-btn {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  .progress-rope {
+    top: auto;
+    left: 50%;
+    width: 5px;
+    height: calc((100% / 3) * var(--rope-progress));
+    transition: height 0.3s ease;
+  }
+}

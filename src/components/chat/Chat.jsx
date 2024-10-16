@@ -76,6 +76,14 @@ const Chat = () => {
     <>
       <div className="pagetitle">
         <h1>Chats</h1>
+        <nav>
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <a href="/dashboard">Home</a>
+            </li>
+            <li className="breadcrumb-item active">chat</li>
+          </ol>
+        </nav>
       </div>
       <div className="col-lg-8">
         <div className="row">
