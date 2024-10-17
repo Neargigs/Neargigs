@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Sidenav = ({ activeLink, setActive }) => {
-  const token = localStorage.getItem('token');
-  const user = JSON.parse(localStorage.getItem('user'));
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   let userId;
   let userRole;
@@ -47,10 +47,16 @@ const Sidenav = ({ activeLink, setActive }) => {
     { id: 1, path: "browsegigs", name: "Browse Gigs", icon: "bi-briefcase" },
     { id: 2, path: "cusgigs", name: "My Gigs", icon: "bi-clipboard-check" },
     {
-      id: 3, path: "cusfreelance", name: "My Freelance Jobs", icon: "bi-briefcase",
+      id: 3,
+      path: "cusfreelance",
+      name: "My Freelance Jobs",
+      icon: "bi-briefcase",
     },
     {
-      id: 4, path: "cusfulltime", name: "My Full-time Jobs", icon: "bi-briefcase-fill",
+      id: 4,
+      path: "cusfulltime",
+      name: "My Full-time Jobs",
+      icon: "bi-briefcase-fill",
     },
   ];
 
@@ -100,7 +106,10 @@ const Sidenav = ({ activeLink, setActive }) => {
       {userRole === "Customer" && (
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
-            <Link className="nav-link gap-1 collapsed" to="/dashboard/customerdash">
+            <Link
+              className="nav-link gap-1 collapsed"
+              to="/dashboard/customerdash"
+            >
               <i className="bi bi-house"></i>
               <span>Dashboard</span>
             </Link>
@@ -133,7 +142,11 @@ const Sidenav = ({ activeLink, setActive }) => {
           </Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link gap-1 collapsed" href="https://dev.near.org/" target="_blank">
+          <a
+            className="nav-link gap-1 collapsed"
+            href="https://dev.near.org/astraplusplus.ndctools.near/widget/home?tab=proposals&daoId=neargigs.sputnik-dao.near&page=dao"
+            target="_blank"
+          >
             <i className="bi bi-bank"></i>
             <span>Governance</span>
           </a>
