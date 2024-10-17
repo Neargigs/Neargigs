@@ -142,5 +142,6 @@ const Fulltimejob = () => {
     </>
   );
 };
-
 export default Fulltimejob;
+
+

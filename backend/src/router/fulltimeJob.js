@@ -67,4 +67,17 @@ router.get('/getAlljobs',async(req,res)=>{
     }
    })
 
+
+   router.get('/getAlljobs/:userId',async(req,res)=>{
+      
+    try{
+        const jobs = await FullTimeJob.find({ postedBy: req.params.userId }).populate('postedBy', 'username');
+        console.log(jobs)
+        return res.status(200).json(jobs)
+
+    }
+    catch(err){
+       return res.status(500).json({error:"Error in fetching jobs"})
+    }
+   })
 module.exports = router;
