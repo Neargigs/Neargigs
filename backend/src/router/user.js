@@ -106,6 +106,25 @@ router.post("/signin", async (req, res) => {
     }
 });
 
+router.post("/userid",async(req,res)=>{
+    try{
+        const {userId}=req.body
+        const user=await User.findById(
+            userId
+    
+        )
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        return res.status(200).json({user})
+    }
+  
+    catch(e){
+        return res.status(500).json({Eroro })
+    }
+
+})
+
 
 router.post("/logout", (req, res) => {
   res.clearCookie("token"); 
@@ -119,7 +138,7 @@ router.post('/change-role', async (req, res) => {
     const { userId, role } = req.body;
   
     try {
-      const user = await User.findById(userId); // Assuming you're using MongoDB or any other database
+      const user = await User.findById(userId); 
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
