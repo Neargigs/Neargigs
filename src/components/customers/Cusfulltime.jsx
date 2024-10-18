@@ -102,8 +102,8 @@ const Cusfulltime = () => {
           <div className="fulltime-job-list">
             {jobs.map((job) => (
               <div className="job-card" key={job._id}>
-                <Link to="/dashboard/gigdetails">
-                  <div className="job-card-header">
+                <Link to={`/dashboard/gigdetails/${job._id}`}>
+                <div className="job-card-header">
                     <img
                       src={job.logo || person}
                       alt="Company Logo"

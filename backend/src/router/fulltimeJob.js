@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const FullTimeJob = require('../models/FullTimeJob'); 
+const FreelanceJob = require('../models/FreelancingJob');
 const router = express.Router();
 
 router.use(express.json());
@@ -72,7 +73,7 @@ router.get('/getAlljobs',async(req,res)=>{
       
     try{
         const jobs = await FullTimeJob.find({ postedBy: req.params.userId }).populate('postedBy', 'username');
-        console.log(jobs)
+        // console.log(jobs)
         return res.status(200).json(jobs)
 
     }
@@ -80,4 +81,29 @@ router.get('/getAlljobs',async(req,res)=>{
        return res.status(500).json({error:"Error in fetching jobs"})
     }
    })
+   
+
+   router.get('/jobdetails/:jobId', async (req, res) => {
+    const jobId = req.params.jobId;
+  
+    try {
+      const fulltime = await FullTimeJob.findById(jobId).populate('postedBy', 'username');
+      console.log(fulltime)
+      if (fulltime) {
+        return res.status(200).json(fulltime);
+      }
+  
+      const freelance = await FreelanceJob.findById(jobId).populate('postedBy', 'username');
+      if (freelance) {
+        return res.status(200).json(freelance);
+      }
+  
+      return res.status(404).json({ message: "Job not found" });
+  
+    } catch (error) {
+      console.error('Error fetching job details:', error);
+      return res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
 module.exports = router;

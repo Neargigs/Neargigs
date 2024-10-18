@@ -99,8 +99,8 @@ const Cusfreelance = () => {
             return (
               <div key={job._id} className="col-lg-12">
                 <div className="card job-card">
-                  <Link to="/dashboard/gigdetails">
-                    <div className="card-body">
+                <Link to={`/dashboard/gigdetails/${job._id}`}>
+                <div className="card-body">
                     <span className="badge job-type">Freelance</span>
 
                       <div className="d-flex flex-wrap justify-content-between align-items-start">
