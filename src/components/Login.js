@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/ngig-logo.png";
 import { Toaster, toast } from "sonner";
 import near from "../assets/img/nearlogo.jpg";
 import axios from "axios";
+import { NearContext } from "../components/utils/near";
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { signedAccountId, wallet } = useContext(NearContext);
+  const [action, setAction] = useState(() => {});
+  const [label, setLabel] = useState("Loading...");
+
+  useEffect(() => {
+    if (!wallet) return;
+
+    if (signedAccountId) {
+      setAction(() => wallet.signOut);
+      setLabel(`Logout ${signedAccountId}`);
+    } else {
+      setAction(() => wallet.signIn);
+      setLabel("Login");
+    }
+  }, [signedAccountId, wallet]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +49,7 @@ const Login = () => {
 
     if (!validateForm()) return;
 
-    setLoading(true); 
+    setLoading(true);
     try {
       const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
@@ -43,13 +59,13 @@ const Login = () => {
       });
 
       if (response.status === 200) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         toast.success("Login successful!");
         setTimeout(() => {
           navigate("/dashboard");
         }, 2000);
-            }
+      }
     } catch (error) {
       console.error("Login error", error);
 
@@ -60,7 +76,7 @@ const Login = () => {
         toast.error("An error occurred. Please try again later.");
       }
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -111,7 +127,7 @@ const Login = () => {
               type="submit"
               id="optionbut"
               onClick={handleSubmit}
-              disabled={loading} 
+              disabled={loading}
             >
               {loading ? "Logging in..." : "Login"}
             </button>
@@ -119,7 +135,7 @@ const Login = () => {
           <p>
             Don't have an account? <Link to="/register">Register</Link>
           </p>
-          <button id="connbtn">
+          <button id="connbtn" onClick={action}>
             <img
               src={near}
               alt="Wallet"
@@ -130,7 +146,8 @@ const Login = () => {
                 marginRight: "8px",
               }}
             />
-            Connect Wallet
+            {label}
+            {/* Connect Wallet */}
           </button>
         </div>
         <Toaster />
