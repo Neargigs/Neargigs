@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import near from "../assets/img/nearlogo.jpg";
 import neargig from "../assets/img/neargig-logo.png";
 import useimage from "../assets/address.jpg";
-import Modal from "./Modal";
 
 const Hiring = [
   { id: 1, title: "Tolujohn Bob", jobs: "1" },
@@ -105,12 +104,7 @@ const Sidebar = () => {
         </div>
         {/* End News & Updates */}
       </div>
-      <>
-        {/* Render the Gamemodal if isGamemodalOpen is true */}
-        {isGamemodalOpen && (
-          <Modal onClose={handleCloseGamemodal} onSubmit={handleSubmit} />
-        )}
-      </>
+      <></>
     </>
   );
 };

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import useImage from "../assets/address.jpg";
 import { Link } from "react-router-dom";
-import Modal from "./Modal"; // Assuming Modal is still required
 import Notification from "./Notification";
 
 const jobData = {

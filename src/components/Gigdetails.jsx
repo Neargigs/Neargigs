@@ -4,6 +4,7 @@ import xp from "../assets/img/xp.jpg";
 import useimage from "../assets/address.jpg";
 import Moregigs from "./Moregigs";
 import Gigdetailsmodal from "./Gigdetailsmodal";
+import Buygigmodal from "./Buygigmodal";
 import { FaFacebook, FaTwitter, FaTelegram, FaLinkedin } from "react-icons/fa";
 
 const Hiring = [
@@ -52,8 +53,8 @@ const Gigdetails = () => {
           className="card info-card"
         >
           <div className="card-body">
-            <h5 className="card-title">Balance:</h5>
-            <p className="gig-balance">$ 250</p>
+            <h5 className="card-title">$ 250 (If talent)</h5>
+            <p className="gig-balance">NEAR, USDT</p>
 
             <div className="gig-actions">
               <button
@@ -66,6 +67,53 @@ const Gigdetails = () => {
                 onClick={openModal} // Open modal on button click
               >
                 Apply for this job
+              </button>
+              <button
+                style={{ borderRadius: "20px", width: "100%" }}
+                className="sidebutton"
+              >
+                Save for later
+              </button>
+            </div>
+
+            <div className="gig-share">
+              <p style={{ color: "whitesmoke" }}>Share this job:</p>
+              <div className="share-container">
+                <div className="social-icons">
+                  <a href="#" className="icon facebook" aria-label="Facebook">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#" className="icon twitter" aria-label="Twitter">
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a href="#" className="icon telegram" aria-label="Telegram">
+                    <i className="fab fa-telegram-plane"></i>
+                  </a>
+                  <a href="#" className="icon linkedin" aria-label="LinkedIn">
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{ border: "1px solid whitesmoke" }} className="card">
+          <div className="card-body">
+            <h5 className="card-title">Terms of work:(if customer)</h5>
+            <p className="gig-balance">$ 250</p>
+            <p className="gig-balance">6 purchases</p>
+
+            <div className="gig-actions">
+              <button
+                style={{
+                  borderRadius: "20px",
+                  width: "100%",
+                  marginBottom: "15px",
+                }}
+                className="sidebutton"
+                onClick={openModal} // Open modal on button click
+              >
+                Buy this gig
               </button>
               <button
                 style={{ borderRadius: "20px", width: "100%" }}
@@ -146,7 +194,16 @@ const Gigdetails = () => {
       <Gigdetailsmodal
         recruiterImage={xp} // Use the gig image as the recruiter's image
         recruiterName="Tolu John" // Replace with the appropriate name
-        jobTitle="Professional Gig Title" // Replace with the appropriate job title
+        jobTitle="UI/ux Designer" // Replace with the appropriate job title
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
+
+      {/* Buy gig Modal */}
+      <Buygigmodal
+        recruiterImage={xp}
+        recruiterName="Tolu John"
+        jobTitle="Transcriber"
         isOpen={isModalOpen}
         onClose={closeModal}
       />

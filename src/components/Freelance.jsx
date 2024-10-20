@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import person from "../assets/address.jpg";
-import Modal from "./Modal";
 import { Link } from "react-router-dom";
 
 const freelanceJobsData = [
