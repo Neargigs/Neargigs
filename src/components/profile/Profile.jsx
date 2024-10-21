@@ -2,8 +2,21 @@ import React, { useState } from "react";
 import profile from "../../assets/address.jpg";
 import { Link } from "react-router-dom";
 import { FaFileAlt } from "react-icons/fa";
+import { jwtDecode } from "jwt-decode";
 
 function Profile({ user }) {
+
+  const token=localStorage.getItem('token')
+  const us=JSON.parse(localStorage.getItem('user'))
+
+  let userName;
+
+  if(token){
+    const decodedToken=jwtDecode(token)
+  }
+  if(us && us.username){
+    userName=us.username
+  }
   const [workExperience, setWorkExperience] = useState([
     {
       company: "Company A",
@@ -55,7 +68,7 @@ function Profile({ user }) {
               <div className="card">
                 <div className="card-body profile-card pt-4 d-flex flex-column align-items-center">
                   <img src={profile} alt="Profile" className="rounded-circle" />
-                  <h2>Tolu John</h2>
+                  <h2>{userName}</h2>
                   {/* <h2>tolujohnofficial@gmail.com</h2> */}
                   <div className="social-links mt-2">
                     <a href="#" className="twitter" target="_blank">

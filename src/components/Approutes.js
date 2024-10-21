@@ -73,7 +73,7 @@ const Approutes = () => {
 
               <Route path="/Profile" element={<Settings />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/gigdetails" element={<Gigdetails />} />
+              <Route path="/gigdetails/:jobId" element={<Gigdetails />} />
               <Route path="/referrals" element={<Referrals />} />
             </Routes>
           </div>

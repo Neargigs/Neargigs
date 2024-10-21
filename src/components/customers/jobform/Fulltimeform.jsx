@@ -1,6 +1,10 @@
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const availableSkills = [
   "JavaScript",
@@ -29,7 +33,6 @@ const roles = {
   Sales: ["Sales Executive", "Account Manager"],
   "Customer Support": ["Support Specialist", "Customer Success Manager"],
   "Human Resources": ["HR Manager", "Talent Acquisition"],
-  // Add more categories and roles as needed
 };
 
 const Fulltimeform = () => {
@@ -49,10 +52,23 @@ const Fulltimeform = () => {
     max: "",
   });
   const [selectedRoles, setSelectedRoles] = useState([]);
+  const navigate=useNavigate();
 
-  const handleFormSubmit = (e) => {
+  const token=localStorage.getItem('token',)
+  let userId;
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    userId = decodedToken.userId;
+    // console.log(userId);
+  }
+  const stripHtmlTags = (html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+  };
+
+  const handleFormSubmit = async(e) => {
     e.preventDefault();
-    // Submit logic
+    const sanitizedDescription = stripHtmlTags(description);
     console.log({
       jobTitle,
       employmentType,
@@ -65,7 +81,32 @@ const Fulltimeform = () => {
       fixedCompensation,
       rangeCompensation,
       description,
+      userId
     });
+
+    const jobData={
+      jobTitle,employmentType,workplaceType,
+      role,workExperience,selectedSkills,compensationType,
+      compensationMode,fixedCompensation,rangeCompensation,
+      description:sanitizedDescription,userId
+
+    }
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+
+    try{
+      const response=await axios.post(`${API_URL}/api/v1/jobs/fulltimejob`,jobData)
+      console.log("Job posted successfully:", response.data);
+      if(response.status===200){
+        toast.success("Job Posted Successfully")
+        setTimeout(() => {
+          navigate('/dashboard/cusfulltime')
+        }, 2000);
+      }
+
+
+    } catch(e){
+      console.error("Error posting job:", e.response ? e.response.data : e.message);
+    }
   };
 
   const handleRoleCategoryChange = (e) => {

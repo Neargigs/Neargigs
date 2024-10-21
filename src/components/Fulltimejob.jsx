@@ -1,79 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import person from "../assets/address.jpg";
-import Modal from "./Modal";
 import { Link } from "react-router-dom";
-
-const jobsData = [
-  {
-    id: 1,
-    hr: "Tom Bornr",
-    logo: person,
-    title: "Senior Graphic Designer",
-    paragraph:
-      "About the RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-    date: "Posted 2 days ago",
-    location: "Boston, USA | Full-time | Remote",
-    tags: ["Design & Creative", "Motion Design", "Graphic Design"],
-  },
-  {
-    id: 2,
-    hr: "paul Janeth",
-    logo: person,
-    title: "Blockchain Developer",
-    paragraph:
-      "strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-    date: "Posted 5 days ago",
-    location: "San Francisco, USA | Full-time | On-site",
-    tags: ["Development", "Blockchain", "Solidity"],
-  },
-  {
-    id: 3,
-    hr: "Ahmed cane",
-    logo: person,
-    title: "Senior Graphic Designer",
-    paragraph:
-      "RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-    date: "Posted 2 days ago",
-    location: "Boston, USA | Full-time | Remote",
-    tags: ["Design & Creative", "Motion Design", "Graphic Design"],
-  },
-  {
-    id: 4,
-    hr: "Tom Janeth",
-    logo: person,
-    title: "Blockchain Developer",
-    paragraph:
-      "About the RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. ",
-    date: "Posted 5 days ago",
-    location: "San Francisco, USA | Full-time | On-site",
-    tags: ["Development", "Blockchain", "Solidity"],
-  },
-  {
-    id: 5,
-    hr: "Tom auther",
-    logo: person,
-    title: "Senior Graphic Designer",
-    paragraph:
-      "Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-    date: "Posted 2 days ago",
-    location: "Boston, USA | Full-time | Remote",
-    tags: ["Design & Creative", "Motion Design", "Graphic Design"],
-  },
-  {
-    id: 6,
-    hr: "Tom Janeth",
-    logo: person,
-    title: "Blockchain Developer",
-    paragraph:
-      "About the RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-    date: "Posted 5 days ago",
-    location: "San Francisco, USA | Full-time | On-site",
-    tags: ["Development", "Blockchain", "Solidity"],
-  },
-  // Add more jobs as needed
-];
+import axios from "axios";
 
 const Fulltimejob = () => {
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
+  const [sortBy, setSortBy] = useState("latest");
+
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/v1/jobs/getAlljobs`);
+        setJobs(response.data);
+      } catch (error) {
+        console.error("Error fetching job data:", error);
+        setJobs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
+  }, [API_URL]);
+
+  const timeSince = (date) => {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+    let interval;
+
+    if (seconds < 60) return `${seconds} seconds ago`; 
+    interval = Math.floor(seconds / 60);
+    if (interval < 60) return `${interval} minutes ago`; 
+    interval = Math.floor(interval / 60);
+    if (interval < 24) return `${interval} hours ago`; 
+    interval = Math.floor(interval / 24);
+    if (interval < 30) return `${interval} days ago`; 
+    interval = Math.floor(interval / 30);
+    if (interval < 12) return `${interval} months ago`; 
+    interval = Math.floor(interval / 12);
+    return `${interval} years ago`; 
+  };
+
+  const filteredJobs = jobs
+    .filter(
+      (job) =>
+        job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        job.description.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter(
+      (job) =>
+        selectedRole === "" || job.role.toLowerCase() === selectedRole.toLowerCase()
+    )
+    .sort((a, b) => {
+      if (sortBy === "latest") return new Date(b.createdAt) - new Date(a.createdAt);
+      if (sortBy === "oldest") return new Date(a.createdAt) - new Date(b.createdAt);
+      return 0;
+    });
+
+  if (loading) {
+    return <p>Loading jobs...</p>;
+  }
+
   return (
     <>
       <div className="col-lg-12">
@@ -81,67 +71,77 @@ const Fulltimejob = () => {
           <h1>Browse Full-time Jobs</h1>
         </div>
         <div className="row">
-          {/* jobs search */}
-
           <div className="col-lg-12">
-            {/* Filter Section */}
             <div className="filter-section">
               <input
                 type="text"
                 className="search-bar"
                 placeholder="Search for jobs..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <select className="role-filter">
+              <select
+                className="role-filter"
+                value={selectedRole}
+                onChange={(e) => setSelectedRole(e.target.value)}
+              >
                 <option value="">All Roles</option>
                 <option value="design">Design</option>
                 <option value="development">Development</option>
                 <option value="marketing">Marketing</option>
-                {/* Add more roles as needed */}
               </select>
-              <select className="sort-by-filter">
+              <select
+                className="sort-by-filter"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
                 <option value="latest">Latest</option>
                 <option value="oldest">Oldest</option>
                 <option value="relevance">Relevance</option>
-                {/* Add more sort options as needed */}
               </select>
             </div>
-            <div className="fulltime-job-list">
-              {jobsData.map((job) => (
-                <div className="job-card" key={job.id}>
-                  <Link to="/dashboard/gigdetails">
-                    <div className="job-card-header">
-                      <img
-                        src={job.logo}
-                        alt="Company Logo"
-                        className="company-logo"
-                      />
-                      <h4 className="job-hr">{job.hr}</h4>
-                      <div className="job-meta">
-                        <span className="job-date">{job.date}</span>
-                        <i className="save-icon">&#9734;</i>
-                      </div>
-                    </div>
-                    <div className="job-info">
-                      <h4 className="job-title">{job.title}</h4>
-                      <p>{job.paragraph}</p>
 
-                      <p>{job.location}</p>
-                      <div className="job-tags">
-                        {job.tags.map((tag, index) => (
-                          <span key={index}>{tag}</span>
-                        ))}
+            <div className="fulltime-job-list">
+              {filteredJobs.length === 0 ? (
+                <p>No jobs available at the moment.</p>
+              ) : (
+                filteredJobs.map((job) => (
+                  <div className="job-card" key={job._id}>
+                    <Link to={`/dashboard/gigdetails/${job._id}`}>
+                      <div className="job-card-header">
+                        <img
+                          src={job.logo || person}
+                          alt="Company Logo"
+                          className="company-logo"
+                        />
+                        <h4 className="job-hr">{job.postedBy.username}</h4>
+                        <div className="job-meta">
+                          <span className="job-date">
+                            {timeSince(job.createdAt)}
+                          </span>
+                          <i className="save-icon">&#9734;</i>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
+                      <div className="job-info">
+                        <h4 className="job-title">{job.jobTitle}</h4>
+                        <p>{job.description}</p>
+                        <div className="job-tags">
+                          {job.selectedSkills.map((tag, index) => (
+                            <span key={index}>{tag}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                ))
+              )}
             </div>
           </div>
-          {/* End games */}
         </div>
       </div>
     </>
   );
 };
-
 export default Fulltimejob;
+
+

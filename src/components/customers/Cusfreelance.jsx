@@ -1,76 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useImage from "../../assets/address.jpg";
 import { Link } from "react-router-dom";
-
-const jobData = {
-  all: [
-    {
-      id: 1,
-      title: "Software Engineer",
-      hrName: "John Doe",
-      rating: 4.5,
-      reviews: 120,
-      jobType: "Full-time",
-      datePosted: "17 Aug 2024, 1:11 AM",
-      description:
-        "Develop and maintain web applications using React Design user interfaces and improve user experience Design user interfaces and improve user experience.",
-      amount: "$120,000/year",
-    },
-    {
-      id: 2,
-      title: "Product Manager",
-      hrName: "Jane Smith",
-      rating: 4.0,
-      reviews: 85,
-      jobType: "Remote",
-      datePosted: "16 Aug 2024, 3:30 PM",
-      description: "Lead product development and strategy.",
-      amount: "$100,000/year",
-    },
-  ],
-  Posted: [
-    {
-      id: 3,
-      title: "Data Scientist",
-      hrName: "Alice Johnson",
-      rating: 4.8,
-      reviews: 150,
-      jobType: "Part-time",
-      datePosted: "15 Aug 2024, 9:45 AM",
-      description: "Analyze data trends and build predictive models.",
-      amount: "$90,000/year",
-    },
-  ],
-  progress: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
-  completed: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
-};
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const Cusfreelance = () => {
   const [selectedTab, setSelectedTab] = useState("all");
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+  const token = localStorage.getItem("token");
+
+  let userId;
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    userId = decodedToken.userId;
+  }
+
+  useEffect(() => {
+    const fetchCustomerJobs = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/api/v1/frjobs/getAllFreelance/${userId}`
+        );
+        setJobs(response.data);
+        console.log("Data type of jobs:", typeof response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching customer jobs:", error);
+        setJobs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCustomerJobs();
+  }, [API_URL, userId]);
+
+  if (loading) {
+    return <p>Loading jobs...</p>;
+  }
+
+  if (!jobs.length) {
+    return <p>No jobs found.</p>;
+  }
+
+  // Function to generate random reviews for each job
+  const generateRandomReviews = () => {
+    const ratings = Math.floor(Math.random() * 5) + 1; // Random rating between 1 and 5
+    const reviews = Math.floor(Math.random() * 100) + 1; // Random number of reviews between 1 and 100
+    return { ratings, reviews };
+  };
+
+  // Function to format budget as currency
+  const formatBudget = (amount) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(amount);
+  };
 
   return (
     <>
@@ -106,43 +93,53 @@ const Cusfreelance = () => {
         </div>
 
         <div className="row">
-          {jobData[selectedTab].map((job) => (
-            <div key={job.id} className="col-lg-12">
-              <div className="card job-card">
-                <Link to="/dashboard/gigdetails">
-                  <div className="card-body">
-                    <div className="d-flex flex-wrap justify-content-between align-items-start">
-                      <div className="job-details">
-                        <span className="badge job-type">{job.jobType}</span>
-                        <h4>{job.title}</h4>
-                        <p className="job-date">{job.datePosted}</p>
-                      </div>
-                      <div className="hr-info d-flex align-items-center">
-                        <div className="pe-3 text-left">
-                          <p className="hr-name">{job.hrName}</p>
-                          <span className="rating">
-                            {job.rating} stars ({job.reviews})
-                          </span>
-                          <div className="star-rating">
-                            {"★".repeat(Math.floor(job.rating))}
-                            {"☆".repeat(5 - Math.floor(job.rating))}
-                          </div>
+          {jobs.map((job) => {
+            const { ratings, reviews } = generateRandomReviews();
+
+            return (
+              <div key={job._id} className="col-lg-12">
+                <div className="card job-card">
+                <Link to={`/dashboard/gigdetails/${job._id}`}>
+                <div className="card-body">
+                    <span className="badge job-type">Freelance</span>
+
+                      <div className="d-flex flex-wrap justify-content-between align-items-start">
+
+                        <div className="job-details">
+                          <h4>{job.jobTitle}</h4>
+                          <p className="job-date">
+                            {new Date(job.createdAt).toLocaleString()}
+                          </p>
                         </div>
-                        <img src={useImage} className="hr-image" alt="HR" />
+                        <div className="hr-info d-flex align-items-center">
+                          <div className="pe-3 text-left">
+                            <p className="hr-name">{job.postedBy.username}</p>
+                            <span className="rating">
+                              {ratings} stars ({reviews} reviews)
+                            </span>
+                            <div className="star-rating">
+                              {"★".repeat(ratings)}
+                              {"☆".repeat(5 - ratings)}
+                            </div>
+                          </div>
+                          <img src={useImage} className="hr-image" alt="HR" />
+                        </div>
+                      </div>
+                      <p className="job-description">{job.description}</p>
+                      <div className="d-flex justify-content-between align-items-center mt-3">
+                        <span className="job-amount">
+                          {formatBudget(job.budget)}
+                        </span>
+                        <button className="btn chat-button">
+                          <i className="bi bi-chat"></i> Chat
+                        </button>
                       </div>
                     </div>
-                    <p className="job-description">{job.description}</p>
-                    <div className="d-flex justify-content-between align-items-center mt-3">
-                      <span className="job-amount">{job.amount}</span>
-                      <button className="btn chat-button">
-                        <i className="bi bi-chat"></i> Chat
-                      </button>
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </>

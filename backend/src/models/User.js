@@ -16,14 +16,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  role:{
-    type:String,
-    enum:['Customer','Talent'],
-    required:true
-  }
+  role: {
+    type: String,
+    enum: ['Customer', 'Talent'],
+    required: true
+  },
+  postedFullTimeJobs: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'FullTimeJob'
+  }],
+  postedFreelanceJobs: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'FreelanceJob'
+  }],
+}, {
+  timestamps: true 
 });
-
-
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

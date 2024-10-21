@@ -1,102 +1,89 @@
-import React, { useState } from "react";
-import useImage from "../../assets/address.jpg";
+import React, { useEffect, useState } from "react";
+import placeholderImage from "../../assets/address.jpg"; // Renamed the image import
 import { Link } from "react-router-dom";
-
-const jobData = {
-  all: [
-    {
-      id: 1,
-      title: "Software Engineer",
-      hrName: "John Doe",
-      rating: 4.5,
-      reviews: 120,
-      jobType: "Full-time",
-      datePosted: "17 Aug 2024, 1:11 AM",
-      description:
-        "Develop and maintain web applications using React Design user interfaces and improve user experience Design user interfaces and improve user experience.",
-      amount: "$120,000/year",
-    },
-    {
-      id: 2,
-      title: "Product Manager",
-      hrName: "Jane Smith",
-      rating: 4.0,
-      reviews: 85,
-      jobType: "Remote",
-      datePosted: "16 Aug 2024, 3:30 PM",
-      description: "Lead product development and strategy.",
-      amount: "$100,000/year",
-    },
-  ],
-  Offers: [
-    {
-      id: 3,
-      title: "Data Scientist",
-      hrName: "Alice Johnson",
-      rating: 4.8,
-      reviews: 150,
-      jobType: "Part-time",
-      datePosted: "15 Aug 2024, 9:45 AM",
-      description: "Analyze data trends and build predictive models.",
-      amount: "$90,000/year",
-    },
-  ],
-  progress: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
-  completed: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
-  draft: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
-  archive: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
-};
+import axios from "axios";
 
 const Mygigs = () => {
   const [selectedTab, setSelectedTab] = useState("all");
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("latest");
+  const [roleFilter, setRoleFilter] = useState("");
+
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+
+  useEffect(() => {
+    const fetchFrJobs = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/v1/gigJob/getAllGigJob`);
+        setJobs(response.data);
+      } catch (error) {
+        console.error("Error fetching job data:", error);
+        setJobs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFrJobs();
+  }, [API_URL]);
+
+  const formatPrice = (budget) => {
+    if (typeof budget === "number") {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 0,
+      }).format(budget);
+    }
+    return "N/A";
+  };
+
+  const timeSince = (date) => {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+    let interval;
+
+    if (seconds < 60) return `${seconds} seconds ago`;
+    interval = Math.floor(seconds / 60);
+    if (interval < 60) return `${interval} minutes ago`;
+    interval = Math.floor(interval / 60);
+    if (interval < 24) return `${interval} hours ago`;
+    interval = Math.floor(interval / 24);
+    if (interval < 30) return `${interval} days ago`;
+    interval = Math.floor(interval / 30);
+    if (interval < 12) return `${interval} months ago`;
+    interval = Math.floor(interval / 12);
+    return `${interval} years ago`;
+  };
+
+  const filteredJobs = jobs
+    .filter((job) => {
+      const searchMatch =
+        job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        job.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const roleMatch = roleFilter
+        ? job.role.toLowerCase() === roleFilter.toLowerCase()
+        : true;
+      return searchMatch && roleMatch;
+    })
+    .sort((a, b) => {
+      if (sortBy === "latest") return new Date(b.createdAt) - new Date(a.createdAt);
+      if (sortBy === "oldest") return new Date(a.createdAt) - new Date(b.createdAt);
+      return 0;
+    });
+
+  if (loading) {
+    return <p>Loading jobs...</p>;
+  }
+
+  const jobTabs = {
+    all: filteredJobs,
+    Offers: filteredJobs.filter((job) => job.status === "Offer"),
+    progress: filteredJobs.filter((job) => job.status === "In Progress"),
+    completed: filteredJobs.filter((job) => job.status === "Completed"),
+    draft: filteredJobs.filter((job) => job.status === "Draft"),
+    archive: filteredJobs.filter((job) => job.status === "Archived"),
+  };
 
   return (
     <>
@@ -145,34 +132,38 @@ const Mygigs = () => {
         </div>
 
         <div className="row">
-          {jobData[selectedTab].map((job) => (
+          {jobTabs[selectedTab].map((job) => (
             <div key={job.id} className="col-lg-12">
               <div className="card job-card">
                 <Link to="/dashboard/gigdetails">
                   <div className="card-body">
                     <div className="d-flex flex-wrap justify-content-between align-items-start">
                       <div className="job-details">
-                        <span className="badge job-type">{job.jobType}</span>
-                        <h4>{job.title}</h4>
-                        <p className="job-date">{job.datePosted}</p>
+                        <span className="badge job-type">Gig Worker</span>
+                        <h4>{job.jobTitle}</h4>
+                        <span style={{ color: "#ddd", fontSize: "12px" }}>
+                          {timeSince(job.createdAt)}
+                        </span>
                       </div>
                       <div className="hr-info d-flex align-items-center">
                         <div className="pe-3 text-left">
-                          <p className="hr-name">{job.hrName}</p>
-                          <span className="rating">
-                            {job.rating} stars ({job.reviews})
-                          </span>
+                          <p className="hr-name">{job.postedBy.username}</p>
+                          <span className="rating">★★★★☆ (4)</span>
                           <div className="star-rating">
                             {"★".repeat(Math.floor(job.rating))}
                             {"☆".repeat(5 - Math.floor(job.rating))}
                           </div>
                         </div>
-                        <img src={useImage} className="hr-image" alt="HR" />
+                        <img
+                          src={job.postedBy.image || placeholderImage}
+                          className="hr-image"
+                          alt="HR"
+                        />
                       </div>
                     </div>
                     <p className="job-description">{job.description}</p>
                     <div className="d-flex justify-content-between align-items-center mt-3">
-                      <span className="job-amount">{job.amount}</span>
+                      <span className="job-amount">{formatPrice(job.budget)}</span>
                       <button className="btn chat-button">
                         <i className="bi bi-chat"></i> Chat
                       </button>
