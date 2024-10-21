@@ -128,7 +128,7 @@ const Cusfulltime = () => {
                   <div className="job-info">
                     <h4 className="job-title">{job.jobTitle}</h4>
 
-                    <p>{job.location}</p>
+                    <p>{job.description}</p>
                     <div className="job-tags">
                       {job.selectedSkills.map((tag, index) => (
                         <span key={index}>{tag}</span>
