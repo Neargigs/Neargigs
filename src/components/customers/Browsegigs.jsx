@@ -118,8 +118,8 @@ const Browsegigs = () => {
           <div className="freelance-job-list">
             {filteredJobs.length > 0 ? (
               filteredJobs.map((job) => (
-                <div className="freelance-job-card" key={job.id}>
-                  <Link to={`/dashboard/gigdetails/${job.id}`}>
+                <div className="freelance-job-card" key={job._id}>
+                  <Link to={`/dashboard/gigdetails/${job._id}`}>
                     <div className="freelance-job-card-body">
                       <img
                         src={job.logo || person} 

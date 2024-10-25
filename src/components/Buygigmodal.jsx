@@ -1,34 +1,55 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Buygigmodal = ({
   recruiterImage,
   recruiterName,
   jobTitle,
+  jobId,
+  applicantId,
   isOpen,
   onClose,
 }) => {
-  const [paymentMethod, setPaymentMethod] = useState("USDT");
   const [cvFile, setCvFile] = useState(null);
   const [description, setDescription] = useState("");
-
+ 
+  const navigate=useNavigate();
   const handleFileChange = (e) => {
     setCvFile(e.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Logic for submitting the application (e.g., send data to the backend)
-    console.log("Application Submitted:", {
-      paymentMethod,
-      cvFile,
-      description,
-    });
-    // Redirect to the chat page
-    window.location.href = "/dashboard/chatdetails";
+
+    const formData = new FormData();
+    formData.append("jobId", jobId);
+    formData.append("applicantId", applicantId);
+    formData.append("description", description);
+    formData.append("cvFile", cvFile);
+
+    console.log("Form Data:", formData);
+
+    try {
+      const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+      const response = await axios.post(`${API_URL}/api/v1/application/buyGig`, formData, {
+        headers: { "Content-Type": "multipart/form-data" }, // Sending as form data
+      });
+
+      if (response.status === 200) {
+        toast.success("Application Submitted Successfully");
+        setTimeout(() => {
+          navigate("/dashboard/chatdetails");
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      toast.error("Failed to submit application");
+    }
   };
 
   if (!isOpen) return null;
-
   return (
     <div className="modal-overlay">
       <div className="modal-content">

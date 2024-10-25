@@ -7,6 +7,7 @@ import Buygigmodal from "./Buygigmodal";
 import { FaFacebook, FaTwitter, FaTelegram, FaLinkedin } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const Hiring = [
   { id: 1, title: "Tolujohn Bob", jobs: "1" },
@@ -17,17 +18,32 @@ const Hiring = [
 ];
 
 const Gigdetails = () => {
-  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
   const [jobs, setJobs] = useState(null);
   const [loading, setLoading] = useState(true);
   const { jobId } = useParams();
 
-  const openApplyModal = () => setIsApplyModalOpen(true);
-  const closeApplyModal = () => setIsApplyModalOpen(false);
+
 
   const openBuyModal = () => setIsBuyModalOpen(true);
   const closeBuyModal = () => setIsBuyModalOpen(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+
+  const token=localStorage.getItem('token',)
+
+  const user = JSON.parse(localStorage.getItem('user'));
+  // console.log(user)
+  let applicantId
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    applicantId = decodedToken.userId;
+    // console.log(userId);
+  }
 
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
@@ -78,15 +94,16 @@ const Gigdetails = () => {
           ))}
         </div>
       </div>
-
-      {/* Sidebar Section */}
       <div className="col-lg-4 gig-sidebar">
+
+      {user?.role==='Talent'?(
+
         <div
           style={{ border: "1px solid whitesmoke" }}
           className="card info-card"
         >
           <div className="card-body">
-            <h5 className="card-title">$ 250 (If talent)</h5>
+            <h5 className="card-title">$ 250</h5>
             <p className="gig-balance">NEAR, USDT</p>
 
             <div className="gig-actions">
@@ -97,7 +114,7 @@ const Gigdetails = () => {
                   marginBottom: "15px",
                 }}
                 className="sidebutton"
-                onClick={openApplyModal} // Open Apply modal on button click
+                onClick={openModal} 
               >
                 Apply for this job
               </button>
@@ -130,9 +147,12 @@ const Gigdetails = () => {
             </div>
           </div>
         </div>
+
+        ):(
+          
         <div style={{ border: "1px solid whitesmoke" }} className="card">
           <div className="card-body">
-            <h5 className="card-title">Terms of work:(if customer)</h5>
+            <h5 className="card-title">Terms of work:</h5>
             <p className="gig-balance">
               $ {jobs.budget} {jobs.fixedCompensation}
             </p>
@@ -179,6 +199,7 @@ const Gigdetails = () => {
             </div>
           </div>
         </div>
+        )}
 
         {/* Top Hiring Managers */}
         <div className="card">
@@ -225,20 +246,23 @@ const Gigdetails = () => {
         <Moregigs />
       </div>
 
-      {/* Job Application Modal */}
       <Gigdetailsmodal
-        recruiterImage={xp} // Use the gig image as the recruiter's image
-        recruiterName="Tolu John" // Replace with the appropriate name
-        jobTitle="UI/ux Designer" // Replace with the appropriate job title
-        isOpen={isApplyModalOpen}
-        onClose={closeApplyModal}
+       applicantId={applicantId}
+       jobId={jobId}
+        recruiterImage={xp}
+        recruiterName={jobs.postedBy.username}
+        jobTitle={jobs.jobTitle}
+        isOpen={isModalOpen}
+        onClose={closeModal}
       />
 
       {/* Buy gig Modal */}
       <Buygigmodal
+       applicantId={applicantId}
+       jobId={jobId}
         recruiterImage={xp}
-        recruiterName="Tolu John"
-        jobTitle="UI/ux Designer"
+        recruiterName={jobs.postedBy.username}
+        jobTitle={jobs.jobTitle}
         isOpen={isBuyModalOpen}
         onClose={closeBuyModal}
       />

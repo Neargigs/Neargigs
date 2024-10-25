@@ -125,13 +125,13 @@ router.post("/userid",async(req,res)=>{
 
 })
 
-
 router.post("/logout", (req, res) => {
-  res.clearCookie("token"); 
-  return res.status(200).json({
-      msg: "Logout successful",
-  });
+    return res.status(200).json({
+        msg: "Logout successful",
+    });
 });
+
+
 
 
 router.post('/change-role', async (req, res) => {
