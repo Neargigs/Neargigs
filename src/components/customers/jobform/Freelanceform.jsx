@@ -1,6 +1,10 @@
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const availableSkills = [
   "JavaScript",
@@ -13,7 +17,6 @@ const availableSkills = [
   "Smart Contracts",
   "AWS",
   "Docker",
-  // Add more skills as needed
 ];
 
 const Freelanceform = () => {
@@ -26,35 +29,33 @@ const Freelanceform = () => {
   const [skillInput, setSkillInput] = useState("");
   const [dragging, setDragging] = useState(false);
 
-  // Handle skill input changes
+  const navigate = useNavigate();
+
   const handleSkillInputChange = (e) => {
     setSkillInput(e.target.value);
   };
 
-  // Handle skill selection
   const handleSkillSelect = (skill) => {
     if (!selectedSkills.includes(skill)) {
       setSelectedSkills([...selectedSkills, skill]);
-      setSkillInput(""); // Clear input after selecting
+      setSkillInput(""); 
     }
   };
 
-  // Remove skill from selected list
   const handleRemoveSkill = (skill) => {
     setSelectedSkills(selectedSkills.filter((selected) => selected !== skill));
   };
 
-  // Handle file selection manually
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    if (files.length + fileList.length <= 10) {
-      setFileList([...fileList, ...files]);
+    const fileNames = files.map((file) => file.name); 
+    if (fileNames.length + fileList.length <= 10) {
+      setFileList([...fileList, ...fileNames]); 
     } else {
       alert("You can only upload a maximum of 10 files.");
     }
   };
 
-  // Handle drag and drop file upload
   const handleDragOver = (e) => {
     e.preventDefault();
     setDragging(true);
@@ -68,24 +69,56 @@ const Freelanceform = () => {
     e.preventDefault();
     setDragging(false);
     const files = Array.from(e.dataTransfer.files);
-    if (files.length + fileList.length <= 10) {
-      setFileList([...fileList, ...files]);
+    const fileNames = files.map((file) => file.name); 
+    if (fileNames.length + fileList.length <= 10) {
+      setFileList([...fileList, ...fileNames]); 
     } else {
       alert("You can only upload a maximum of 10 files.");
     }
   };
 
-  // Submit form logic (you can handle as per your needs)
-  const handleFormSubmit = (e) => {
+  const stripHtmlTags = (html) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  };
+
+  const token = localStorage.getItem("token");
+  let userId;
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    userId = decodedToken.userId;
+  }
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log({
+    const sanitizedDescription = stripHtmlTags(description);
+
+    const jobData = {
       jobTitle,
-      description,
+      description: sanitizedDescription,
       selectedSkills,
       budget,
       deadline,
-      fileList,
-    });
+      fileList, 
+      userId,
+    };
+
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/v1/frjobs/freelanceJob`,
+        jobData
+      );
+      console.log("Freelance post successfully", response.data);
+      if (response.status === 200) {
+        toast.success("Job Posted Successfully");
+        setTimeout(() => {
+          navigate("/dashboard/cusfreelance");
+        }, 2000);
+      }
+    } catch (e) {
+      console.error("Error posting job:", e.response ? e.response.data : e.message);
+    }
   };
 
   return (
@@ -180,7 +213,7 @@ const Freelanceform = () => {
             </div>
             <div className="freelform__file-names">
               {fileList.map((file, index) => (
-                <p key={index}>{file.name}</p>
+                <p key={index}>{file}</p>
               ))}
             </div>
           </div>

@@ -1,105 +1,48 @@
-import React, { useState } from "react";
-import useImage from "../../assets/address.jpg";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import person from "../../assets/address.jpg";
-
-const jobData = {
-  all: [
-    {
-      id: 1,
-      hr: "Tom Bornr",
-      logo: person,
-      title: "Senior Graphic Designer",
-      paragraph:
-        "About the RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "2 days ago",
-      location: "Boston, USA | Full-time | Remote",
-      amount: "$90,000/year",
-      tags: ["Design & Creative", "Motion Design", "Graphic Design"],
-    },
-    {
-      id: 2,
-      hr: "paul Janeth",
-      logo: person,
-      title: "Blockchain Developer",
-      paragraph:
-        "strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "5 days ago",
-      location: "San Francisco, USA | Full-time | On-site",
-      amount: "$90,000/year",
-      tags: ["Development", "Blockchain", "Solidity"],
-    },
-    {
-      id: 3,
-      hr: "Ahmed cane",
-      logo: person,
-      title: "Senior Graphic Designer",
-      paragraph:
-        "RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "2 days ago",
-      location: "Boston, USA | Full-time | Remote",
-      amount: "$90,000/year",
-      tags: ["Design & Creative", "Motion Design", "Graphic Design"],
-    },
-  ],
-  apply: [
-    {
-      id: 1,
-      hr: "Tom Janeth",
-      logo: person,
-      title: "Blockchain Developer",
-      paragraph:
-        "About the RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. ",
-      date: "5 days ago",
-      location: "San Francisco, USA | Full-time | On-site",
-      amount: "$90,000/year",
-      tags: ["Development", "Blockchain", "Solidity"],
-    },
-    {
-      id: 2,
-      hr: "Tom auther",
-      logo: person,
-      title: "Senior Graphic Designer",
-      paragraph:
-        "Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "2 days ago",
-      location: "Boston, USA | Full-time | Remote",
-      amount: "$90,000/year",
-      tags: ["Design & Creative", "Motion Design", "Graphic Design"],
-    },
-  ],
-  progress: [
-    {
-      id: 1,
-      hr: "Tom Janeth",
-      logo: person,
-      title: "Blockchain Developer",
-      paragraph:
-        "About the RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "5 days ago",
-      location: "San Francisco, USA | Full-time | On-site",
-      amount: "$90,000/year",
-      tags: ["Development", "Blockchain", "Solidity"],
-    },
-  ],
-
-  archive: [
-    {
-      id: 1,
-      hr: "Tom Janeth",
-      logo: person,
-      title: "Blockchain Developer",
-      paragraph:
-        "About the RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "Posted 5 days ago",
-      location: "San Francisco, USA | Full-time | On-site",
-      tags: ["Development", "Blockchain", "Solidity"],
-    },
-  ],
-};
+import axios from "axios";
+import person from "../../assets/address.jpg"; // Fallback image
 
 const Myfulltime = () => {
   const [selectedTab, setSelectedTab] = useState("all");
+  const [jobs, setJobs] = useState({
+    all: [],
+    apply: [],
+    progress: [],
+    archive: [],
+  });
+  const [loading, setLoading] = useState(true);
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/v1/jobs/getAlljobs`);
+        const allJobs = response.data;
+        
+        // Assuming the API returns all jobs and you categorize them into the tabs:
+        setJobs({
+          all: allJobs, // All jobs
+          apply: allJobs.filter(job => job.status === "apply"), // 'Apply' tab jobs
+          progress: allJobs.filter(job => job.status === "progress"), // 'In Progress' tab jobs
+          archive: allJobs.filter(job => job.status === "archive"), // 'Archive' tab jobs
+        });
+      
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching job data:", error);
+      }
+    };
+    
+    fetchJobs();
+  }, [API_URL]);
+
+  // Log the jobs data for debugging
+  // console.log("Jobs for current tab:", jobs[selectedTab]);
+
+  if (loading) {
+    return <p>Loading jobs...</p>;
+  }
 
   return (
     <>
@@ -126,7 +69,6 @@ const Myfulltime = () => {
           >
             In Progress
           </button>
-
           <button
             className={selectedTab === "archive" ? "active" : ""}
             onClick={() => setSelectedTab("archive")}
@@ -137,49 +79,58 @@ const Myfulltime = () => {
 
         <div className="row">
           <div className="fulltime-job-list">
-            {jobData[selectedTab].map((job) => (
-              <div className="job-card" key={job.id}>
-                <Link to="/dashboard/gigdetails">
-                  <div className="job-card-header">
-                    <img
-                      src={job.logo}
-                      alt="Company Logo"
-                      className="company-logo"
-                    />
-                    <div className="job-hr">
-                      <h4 className="job-head">{job.hr}</h4>
-                      {/* rating */}
-                      <div className="job-rating">
-                        <span className="stars">★★★★☆</span>
-                        <span className="rating-count">(25)</span>
+            {jobs[selectedTab].length > 0 ? (
+              jobs[selectedTab].map((job) => {
+                console.log(job); // Debugging each job
+
+                return (
+                  <div className="job-card" key={job.id || Math.random()}>
+                    <Link to="/dashboard/gigdetails">
+                      <div className="job-card-header">
+                        <img
+                          src={job.logo || person} // Fallback to default image
+                          alt="Company Logo"
+                          className="company-logo"
+                        />
+                        <div className="job-hr">
+                          <h4 className="job-head">{job.hr || "HR Name"}</h4>
+                          {/* rating */}
+                          <div className="job-rating">
+                            <span className="stars">★★★★☆</span>
+                            <span className="rating-count">(25)</span>
+                          </div>
+                        </div>
+
+                        <div className="job-meta">
+                          <span className="job-date">{job.date || "No Date"}</span>
+                          <i className="save-icon">&#9734;</i>
+                        </div>
                       </div>
-                    </div>
+                      <div className="job-info">
+                        <h4 className="job-title">{job.jobTitle || "Job Title"}</h4>
 
-                    <div className="job-meta">
-                      <span className="job-date">{job.date}</span>
-                      <i className="save-icon">&#9734;</i>
+                        <p>{job.location || "Location not available"}</p>
+                        <div className="job-tags">
+                          {/* Uncomment this once tags are available */}
+                          {/* {job.tags && job.tags.map((tag, index) => (
+                            <span key={index}>{tag}</span>
+                          ))} */}
+                        </div>
+                        <p>{job.paragraph || "Job description not available"}</p>
+                      </div>
+                    </Link>
+                    <div className="d-flex justify-content-between align-items-center mt-3">
+                      <span className="job-amount">{job.amount || "N/A"}</span>
+                      <button className="btn chat-button">
+                        <i className="bi bi-chat"></i> Chat
+                      </button>
                     </div>
                   </div>
-                  <div className="job-info">
-                    <h4 className="job-title">{job.title}</h4>
-
-                    <p>{job.location}</p>
-                    <div className="job-tags">
-                      {job.tags.map((tag, index) => (
-                        <span key={index}>{tag}</span>
-                      ))}
-                    </div>
-                    <p>{job.paragraph}</p>
-                  </div>
-                </Link>
-                <div className="d-flex justify-content-between align-items-center mt-3">
-                  <span className="job-amount">{job.amount}</span>
-                  <button className="btn chat-button">
-                    <i className="bi bi-chat"></i> Chat
-                  </button>
-                </div>
-              </div>
-            ))}
+                );
+              })
+            ) : (
+              <p>No jobs found for the selected tab.</p>
+            )}
           </div>
         </div>
       </div>

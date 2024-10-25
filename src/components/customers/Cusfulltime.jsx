@@ -1,91 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useImage from "../../assets/address.jpg";
 import { Link } from "react-router-dom";
 import person from "../../assets/address.jpg";
-
-const jobData = {
-  Published: [
-    {
-      id: 1,
-      hr: "Tom Bornr",
-      logo: person,
-      title: "Senior Graphic Designer",
-      paragraph:
-        "About the RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "2 days ago",
-      location: "Boston, USA | Full-time | Remote",
-      amount: "$90,000/year",
-      tags: ["Design & Creative", "Motion Design", "Graphic Design"],
-    },
-    {
-      id: 2,
-      hr: "paul Janeth",
-      logo: person,
-      title: "Blockchain Developer",
-      paragraph:
-        "strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "5 days ago",
-      location: "San Francisco, USA | Full-time | On-site",
-      amount: "$90,000/year",
-      tags: ["Development", "Blockchain", "Solidity"],
-    },
-    {
-      id: 3,
-      hr: "Ahmed cane",
-      logo: person,
-      title: "Senior Graphic Designer",
-      paragraph:
-        "RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "2 days ago",
-      location: "Boston, USA | Full-time | Remote",
-      amount: "$90,000/year",
-      tags: ["Design & Creative", "Motion Design", "Graphic Design"],
-    },
-  ],
-  Drafts: [
-    {
-      id: 1,
-      hr: "Tom Janeth",
-      logo: person,
-      title: "Blockchain Developer",
-      paragraph:
-        "About the RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. ",
-      date: "5 days ago",
-      location: "San Francisco, USA | Full-time | On-site",
-      amount: "$90,000/year",
-      tags: ["Development", "Blockchain", "Solidity"],
-    },
-    {
-      id: 2,
-      hr: "Tom auther",
-      logo: person,
-      title: "Senior Graphic Designer",
-      paragraph:
-        "Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "2 days ago",
-      location: "Boston, USA | Full-time | Remote",
-      amount: "$90,000/year",
-      tags: ["Design & Creative", "Motion Design", "Graphic Design"],
-    },
-  ],
-
-  archive: [
-    {
-      id: 1,
-      hr: "Tom Janeth",
-      logo: person,
-      title: "Blockchain Developer",
-      paragraph:
-        "About the RoleWe are seeking a dynamic and strategic Marketing Manager with a strong focus on Web3 technologies. The ideal candidate will have a background in emergent consumer brand marketing and possess excellent brand",
-      date: "Posted 5 days ago",
-      location: "San Francisco, USA | Full-time | On-site",
-      tags: ["Development", "Blockchain", "Solidity"],
-    },
-  ],
-};
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const Cusfulltime = () => {
   const [selectedTab, setSelectedTab] = useState("Published");
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+  const token = localStorage.getItem("token");
+
+  let userId;
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    userId = decodedToken.userId;
+    // console.log(userId)
+  }
+
+  useEffect(() => {
+    const fetchCustomerJobs = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/api/v1/jobs/getAlljobs/${userId}`
+        );
+        setJobs(response.data);
+        console.log("Data type of jobs:", typeof response.data);
+
+        console.log(response.data)
+      } catch (error) {
+        console.error("Error fetching customer jobs:", error);
+        setJobs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCustomerJobs();
+  }, [API_URL, userId]);
+
+  if (loading) {
+    return <p>Loading jobs...</p>;
+  }
+
+  if (!jobs.length) {
+    return <p>No jobs found.</p>;
+  }
+
+  const timeSince = (date) => {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+    let interval;
+
+    if (seconds < 60) return `${seconds} seconds ago`; 
+    interval = Math.floor(seconds / 60);
+    if (interval < 60) return `${interval} minutes ago`; 
+    interval = Math.floor(interval / 60);
+    if (interval < 24) return `${interval} hours ago`; 
+    interval = Math.floor(interval / 24);
+    if (interval < 30) return `${interval} days ago`; 
+    interval = Math.floor(interval / 30);
+    if (interval < 12) return `${interval} months ago`; 
+    interval = Math.floor(interval / 12);
+    return `${interval} years ago`; 
+  };
+
+
+  // const jobData = {
+  //   Published: jobs.filter((job) => job.status === "published"),
+  //   Drafts: jobs.filter((job) => job.status === "draft"),
+  //   Archive: jobs.filter((job) => job.status === "archived"),
+  // };
 
   return (
     <>
@@ -106,10 +90,9 @@ const Cusfulltime = () => {
           >
             Drafts
           </button>
-
           <button
-            className={selectedTab === "archive" ? "active" : ""}
-            onClick={() => setSelectedTab("archive")}
+            className={selectedTab === "Archive" ? "active" : ""}
+            onClick={() => setSelectedTab("Archive")}
           >
             Archive
           </button>
@@ -117,17 +100,19 @@ const Cusfulltime = () => {
 
         <div className="row">
           <div className="fulltime-job-list">
-            {jobData[selectedTab].map((job) => (
-              <div className="job-card" key={job.id}>
-                <Link to="/dashboard/gigdetails">
-                  <div className="job-card-header">
+            {jobs.map((job) => (
+              <div className="job-card" key={job._id}>
+                <Link to={`/dashboard/gigdetails/${job._id}`}>
+                <div className="job-card-header">
                     <img
-                      src={job.logo}
+                      src={job.logo || person}
                       alt="Company Logo"
                       className="company-logo"
                     />
                     <div className="job-hr">
-                      <h4 className="job-head">{job.hr}</h4>
+                      <h4 className="job-head">
+                        {job.postedBy?.username || "Unknown"}
+                      </h4>
                       {/* rating */}
                       <div className="job-rating">
                         <span className="stars">★★★★☆</span>
@@ -136,16 +121,16 @@ const Cusfulltime = () => {
                     </div>
 
                     <div className="job-meta">
-                      <span className="job-date">{job.date}</span>
+                      <span className="job-date">{timeSince(job.createdAt)}</span>
                       <i className="save-icon">&#9734;</i>
                     </div>
                   </div>
                   <div className="job-info">
-                    <h4 className="job-title">{job.title}</h4>
+                    <h4 className="job-title">{job.jobTitle}</h4>
 
-                    <p>{job.location}</p>
+                    <p>{job.description}</p>
                     <div className="job-tags">
-                      {job.tags.map((tag, index) => (
+                      {job.selectedSkills.map((tag, index) => (
                         <span key={index}>{tag}</span>
                       ))}
                     </div>
@@ -153,7 +138,7 @@ const Cusfulltime = () => {
                   </div>
                 </Link>
                 <div className="d-flex justify-content-between align-items-center mt-3">
-                  <span className="job-amount">{job.amount}</span>
+                  <span className="job-amount">{job.budget}</span>
                   <button className="btn chat-button">
                     <i className="bi bi-chat"></i> Chat
                   </button>
