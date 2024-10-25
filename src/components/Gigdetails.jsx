@@ -7,6 +7,7 @@ import Buygigmodal from "./Buygigmodal";
 import { FaFacebook, FaTwitter, FaTelegram, FaLinkedin } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const Hiring = [
   { id: 1, title: "Tolujohn Bob", jobs: "1" },
@@ -17,17 +18,29 @@ const Hiring = [
 ];
 
 const Gigdetails = () => {
-  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
   const [jobs, setJobs] = useState(null);
   const [loading, setLoading] = useState(true);
   const { jobId } = useParams();
 
-  const openApplyModal = () => setIsApplyModalOpen(true);
-  const closeApplyModal = () => setIsApplyModalOpen(false);
+
 
   const openBuyModal = () => setIsBuyModalOpen(true);
   const closeBuyModal = () => setIsBuyModalOpen(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+
+  const token=localStorage.getItem('token',)
+  let applicantId
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    applicantId = decodedToken.userId;
+    // console.log(userId);
+  }
 
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
@@ -97,7 +110,7 @@ const Gigdetails = () => {
                   marginBottom: "15px",
                 }}
                 className="sidebutton"
-                onClick={openApplyModal} // Open Apply modal on button click
+                onClick={openModal} 
               >
                 Apply for this job
               </button>
@@ -225,13 +238,14 @@ const Gigdetails = () => {
         <Moregigs />
       </div>
 
-      {/* Job Application Modal */}
       <Gigdetailsmodal
-        recruiterImage={xp} // Use the gig image as the recruiter's image
-        recruiterName="Tolu John" // Replace with the appropriate name
-        jobTitle="UI/ux Designer" // Replace with the appropriate job title
-        isOpen={isApplyModalOpen}
-        onClose={closeApplyModal}
+       applicantId={applicantId}
+       jobId={jobId}
+        recruiterImage={xp}
+        recruiterName={jobs.postedBy.username}
+        jobTitle={jobs.jobTitle}
+        isOpen={isModalOpen}
+        onClose={closeModal}
       />
 
       {/* Buy gig Modal */}
