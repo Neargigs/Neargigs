@@ -64,5 +64,38 @@ router.get('/getAllBuyGig', async (req, res) => {
 
 
 
+router.get('/buy-gigjobs/:userId', async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      console.log("User ID:", userId);
+  
+      const applications = await GigApply.find({ 
+          applicant: userId, 
+        })
+        .populate({
+          path: 'jobId', 
+          model: 'PostGig', 
+          populate: {
+            path: 'postedBy', 
+            select: 'username' 
+          }
+        })
+        .exec();
+  
+      console.log("Applications with populated GigJob IDs:", applications);
+  
+      const appliedJobs = applications.map(application => ({
+        jobDetails: application.jobId,
+        application,
+      }));
+  
+      res.status(200).json({ appliedJobs });
+    } catch (error) {
+      console.error("Error fetching buy gig jobs:", error.message);
+      res.status(500).json({ error: 'Error fetching buygig jobs ' });
+    }
+  });
+
+
 
 module.exports = router;

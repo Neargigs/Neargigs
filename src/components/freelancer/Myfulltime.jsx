@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import person from "../../assets/address.jpg"; // Fallback image
+import { jwtDecode } from "jwt-decode";
 
 const Myfulltime = () => {
   const [selectedTab, setSelectedTab] = useState("all");
@@ -12,33 +13,39 @@ const Myfulltime = () => {
     archive: [],
   });
   const [loading, setLoading] = useState(true);
+
+  const token = localStorage.getItem("token");
+  let userId;
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    userId = decodedToken.userId;
+  }
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/v1/jobs/getAlljobs`);
-        const allJobs = response.data;
-        
-        // Assuming the API returns all jobs and you categorize them into the tabs:
-        setJobs({
-          all: allJobs, // All jobs
-          apply: allJobs.filter(job => job.status === "apply"), // 'Apply' tab jobs
-          progress: allJobs.filter(job => job.status === "progress"), // 'In Progress' tab jobs
-          archive: allJobs.filter(job => job.status === "archive"), // 'Archive' tab jobs
-        });
-      
+        const response = await axios.get(`${API_URL}/api/v1/jobs/applied-fulltimejobs/${userId}`);
+        console.log(response.data.appliedJobs); // Fix console log to see correct structure
+        const allAppliedJobs = response.data.appliedJobs;
+
+        // Sort the jobs into different categories based on application status
+        const categorizedJobs = {
+          all: allAppliedJobs, // All jobs
+          apply: allAppliedJobs.filter(job => job.application.status === "apply"), // 'Apply' tab jobs
+          progress: allAppliedJobs.filter(job => job.application.status === "progress"), // 'In Progress' tab jobs
+          archive: allAppliedJobs.filter(job => job.application.status === "archive"), // 'Archive' tab jobs
+        };
+
+        setJobs(categorizedJobs);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching job data:", error);
       }
     };
-    
-    fetchJobs();
-  }, [API_URL]);
 
-  // Log the jobs data for debugging
-  // console.log("Jobs for current tab:", jobs[selectedTab]);
+    fetchJobs();
+  }, [API_URL, userId]);
 
   if (loading) {
     return <p>Loading jobs...</p>;
@@ -81,20 +88,20 @@ const Myfulltime = () => {
           <div className="fulltime-job-list">
             {jobs[selectedTab].length > 0 ? (
               jobs[selectedTab].map((job) => {
-                console.log(job); // Debugging each job
+                const jobDetails = job.jobDetails || {}; // Ensure jobDetails exists
+                const postedBy = jobDetails.postedBy || {}; // Ensure postedBy exists
 
                 return (
-                  <div className="job-card" key={job.id || Math.random()}>
-                    <Link to="/dashboard/gigdetails">
+                  <div className="job-card" key={jobDetails._id}>
+                    <Link to={`/dashboard/gigdetails/${jobDetails._id}`}>
                       <div className="job-card-header">
                         <img
-                          src={job.logo || person} // Fallback to default image
+                          src={person} // Fallback to default image
                           alt="Company Logo"
                           className="company-logo"
                         />
                         <div className="job-hr">
-                          <h4 className="job-head">{job.hr || "HR Name"}</h4>
-                          {/* rating */}
+                          <h4 className="job-head">{postedBy.username || "HR Name"}</h4>
                           <div className="job-rating">
                             <span className="stars">★★★★☆</span>
                             <span className="rating-count">(25)</span>
@@ -102,25 +109,18 @@ const Myfulltime = () => {
                         </div>
 
                         <div className="job-meta">
-                          <span className="job-date">{job.date || "No Date"}</span>
+                          <span className="job-date">{new Date(jobDetails.createdAt).toLocaleDateString() || "No Date"}</span>
                           <i className="save-icon">&#9734;</i>
                         </div>
                       </div>
                       <div className="job-info">
-                        <h4 className="job-title">{job.jobTitle || "Job Title"}</h4>
-
-                        <p>{job.location || "Location not available"}</p>
-                        <div className="job-tags">
-                          {/* Uncomment this once tags are available */}
-                          {/* {job.tags && job.tags.map((tag, index) => (
-                            <span key={index}>{tag}</span>
-                          ))} */}
-                        </div>
-                        <p>{job.paragraph || "Job description not available"}</p>
+                        <h4 className="job-title">{jobDetails.jobTitle || "Job Title"}</h4>
+                        <p>{jobDetails.workplaceType || "Location not available"}</p>
+                        <p>{jobDetails.description || "Job description not available"}</p>
                       </div>
                     </Link>
                     <div className="d-flex justify-content-between align-items-center mt-3">
-                      <span className="job-amount">{job.amount || "N/A"}</span>
+                      <span className="job-amount">{jobDetails.fixedCompensation ? `$${jobDetails.fixedCompensation}` : "N/A"}</span>
                       <button className="btn chat-button">
                         <i className="bi bi-chat"></i> Chat
                       </button>
