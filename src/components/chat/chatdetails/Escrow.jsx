@@ -7,6 +7,7 @@ const Escrow = () => {
     false,
     false,
     false,
+    false,
   ]);
 
   const handleClick = (index) => {
@@ -26,7 +27,7 @@ const Escrow = () => {
       <div
         className="progress-rope"
         style={{
-          width: `calc((100% / 3) * ${ropeProgress})`, // Adjust width based on the progress
+          width: `calc((100% / 4) * ${ropeProgress})`, // Adjust width for five stages
         }}
       ></div>
 
@@ -60,13 +61,27 @@ const Escrow = () => {
       </button>
 
       <button
-        className={`progress-btn arrow-btn ${buttonStates[3] ? "active" : ""} ${
+        className={`progress-btn ${buttonStates[3] ? "active" : ""} ${
           !buttonStates[3] && buttonStates[2] ? "highlight" : ""
         }`}
         onClick={() => handleClick(3)}
         disabled={!buttonStates[2]}
       >
         Completed
+      </button>
+
+      <button
+        style={{
+          borderTopRightRadius: "100px",
+          borderBottomRightRadius: "100px",
+        }}
+        className={`progress-btn ${buttonStates[4] ? "active" : ""} ${
+          !buttonStates[4] && buttonStates[3] ? "highlight" : ""
+        }`}
+        onClick={() => handleClick(4)}
+        disabled={!buttonStates[3]}
+      >
+        Confirm
       </button>
     </div>
   );
