@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const FullTimeJob = require('../models/FullTimeJob'); 
 const FreelanceJob = require('../models/FreelancingJob');
+const PostGig = require('../models/postgig');
 const router = express.Router();
 
 router.use(express.json());
@@ -96,6 +97,10 @@ router.get('/getAlljobs',async(req,res)=>{
       const freelance = await FreelanceJob.findById(jobId).populate('postedBy', 'username');
       if (freelance) {
         return res.status(200).json(freelance);
+      }
+      const gigJob=await PostGig.findById(jobId).populate('postedBy', 'username');
+      if(gigJob){
+        return res.status(200).json(gigJob)
       }
   
       return res.status(404).json({ message: "Job not found" });

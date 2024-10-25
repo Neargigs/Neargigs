@@ -35,6 +35,9 @@ const Gigdetails = () => {
 
 
   const token=localStorage.getItem('token',)
+
+  const user = JSON.parse(localStorage.getItem('user'));
+  // console.log(user)
   let applicantId
   if (token) {
     const decodedToken = jwtDecode(token);
@@ -91,15 +94,16 @@ const Gigdetails = () => {
           ))}
         </div>
       </div>
-
-      {/* Sidebar Section */}
       <div className="col-lg-4 gig-sidebar">
+
+      {user?.role==='Talent'?(
+
         <div
           style={{ border: "1px solid whitesmoke" }}
           className="card info-card"
         >
           <div className="card-body">
-            <h5 className="card-title">$ 250 (If talent)</h5>
+            <h5 className="card-title">$ 250</h5>
             <p className="gig-balance">NEAR, USDT</p>
 
             <div className="gig-actions">
@@ -143,9 +147,12 @@ const Gigdetails = () => {
             </div>
           </div>
         </div>
+
+        ):(
+          
         <div style={{ border: "1px solid whitesmoke" }} className="card">
           <div className="card-body">
-            <h5 className="card-title">Terms of work:(if customer)</h5>
+            <h5 className="card-title">Terms of work:</h5>
             <p className="gig-balance">
               $ {jobs.budget} {jobs.fixedCompensation}
             </p>
@@ -192,6 +199,7 @@ const Gigdetails = () => {
             </div>
           </div>
         </div>
+        )}
 
         {/* Top Hiring Managers */}
         <div className="card">
@@ -250,9 +258,11 @@ const Gigdetails = () => {
 
       {/* Buy gig Modal */}
       <Buygigmodal
+       applicantId={applicantId}
+       jobId={jobId}
         recruiterImage={xp}
-        recruiterName="Tolu John"
-        jobTitle="UI/ux Designer"
+        recruiterName={jobs.postedBy.username}
+        jobTitle={jobs.jobTitle}
         isOpen={isBuyModalOpen}
         onClose={closeBuyModal}
       />
