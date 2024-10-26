@@ -57,10 +57,10 @@ router.post('/buyGig', upload.single('cvFile'), async (req, res) => {
           message: `Application: ${description}`,
           isRead: false
       });
-      await newChat.save();
+      const savedChat= await newChat.save();
 
 
-        res.status(200).json({ message: "BuyGig successfully", application: savedApplication });
+        res.status(200).json({ message: "BuyGig successfully", application: savedApplication ,chatId:savedChat._id});
     } catch (error) {
         console.error('Error submitting application:', error);
         res.status(500).json({ error: 'Failed to submit application. Please try again later.', details: error.message });
