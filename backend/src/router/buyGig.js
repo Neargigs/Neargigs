@@ -5,6 +5,8 @@ const path = require('path');
 const PostGig = require('../models/postgig');
 const GigApply = require('../models/GigApplication');
 const router = express.Router();
+const Chat = require('../models/Chat');
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -35,7 +37,9 @@ router.post('/buyGig', upload.single('cvFile'), async (req, res) => {
             return res.status(400).json({ error: 'Invalid jobId format.' });
         }
 
-     
+     const gigjob=await PostGig.findById(jobId).populate('postedBy')
+
+     const receiverId=gigjob.postedBy;
         const newApplication = new GigApply({
             jobId,
             applicant: applicantId,
@@ -44,7 +48,19 @@ router.post('/buyGig', upload.single('cvFile'), async (req, res) => {
         });
 
         const savedApplication = await newApplication.save();
-        res.status(200).json({ message: "BuyGig successfully", application: savedApplication });
+
+        const newChat = new Chat({
+          jobId,
+          sender: applicantId,
+          jobType:"GigJob",
+          receiver: receiverId,
+          message: `Application: ${description}`,
+          isRead: false
+      });
+      const savedChat= await newChat.save();
+
+
+        res.status(200).json({ message: "BuyGig successfully", application: savedApplication ,chatId:savedChat._id});
     } catch (error) {
         console.error('Error submitting application:', error);
         res.status(500).json({ error: 'Failed to submit application. Please try again later.', details: error.message });

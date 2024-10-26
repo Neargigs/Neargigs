@@ -187,4 +187,26 @@ router.post("/change-password/:userId", async (req, res) => {
     }
 });
 
+
+
+router.get("/userDetails", async (req, res) => {
+    const { senderId, receiverId } = req.query; 
+    try {
+        const [sender, receiver] = await Promise.all([
+            User.findById(senderId).select('-password'),
+            User.findById(receiverId).select('-password') 
+        ]);
+
+        if (!sender || !receiver) {
+            return res.status(404).json({ message: "Sender or Receiver not found" });
+        }
+
+        res.status(200).json({ sender, receiver });
+    } catch (error) {
+        console.error("Error fetching user details:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+
 module.exports = router;

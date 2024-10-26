@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import person from "../../assets/address.jpg"; // Fallback image
 import { jwtDecode } from "jwt-decode";
@@ -13,6 +13,7 @@ const Myfulltime = () => {
     archive: [],
   });
   const [loading, setLoading] = useState(true);
+  const navigate=useNavigate()
 
   const token = localStorage.getItem("token");
   let userId;
@@ -22,6 +23,23 @@ const Myfulltime = () => {
   }
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
+  const handleChat = async (jobId) => {
+    try {
+      const response = await axios.get(`${API_URL}/api/v1/chat/chatdetails`, {
+        params: { jobId },
+      });
+      console.log("yu h",response.data)
+      
+      if (response.data.length > 0) {
+        const chatId = response.data[0]._id; 
+        navigate(`/dashboard/chatdetails/${jobId}/chat/${chatId}`);
+      } else {
+        console.error("No chat found for this job");
+      }
+    } catch (error) {
+      console.error("Error navigating applied job data:", error);
+    }
+  }
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -121,7 +139,8 @@ const Myfulltime = () => {
                     </Link>
                     <div className="d-flex justify-content-between align-items-center mt-3">
                       <span className="job-amount">{jobDetails.fixedCompensation ? `$${jobDetails.fixedCompensation}` : "N/A"}</span>
-                      <button className="btn chat-button">
+                    <button className="btn chat-button" onClick={()=>{
+                        handleChat(jobDetails._id)}}>
                         <i className="bi bi-chat"></i> Chat
                       </button>
                     </div>

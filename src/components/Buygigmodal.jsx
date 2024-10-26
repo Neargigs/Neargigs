@@ -37,11 +37,14 @@ const Buygigmodal = ({
         headers: { "Content-Type": "multipart/form-data" }, // Sending as form data
       });
 
+   
+      const chatId=response.data.chatId;
       if (response.status === 200) {
         toast.success("Application Submitted Successfully");
+        console.log("Navigating to:", `/dashboard/chatdetails/${jobId}/chat/${chatId}`);
         setTimeout(() => {
-          navigate("/dashboard/chatdetails");
-        }, 2000);
+          navigate(`/dashboard/chatdetails/${jobId}/chat/${chatId}`);
+        }, 1000); 
       }
     } catch (error) {
       console.error("Error submitting application:", error);

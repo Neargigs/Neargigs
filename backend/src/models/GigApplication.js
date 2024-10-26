@@ -5,7 +5,6 @@ const gigApplySchema = new mongoose.Schema({
   jobId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    refPath: 'jobType'
   },
  
   applicant: {
