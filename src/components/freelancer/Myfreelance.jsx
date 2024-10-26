@@ -1,89 +1,62 @@
-import React, { useState } from "react";
-import useImage from "../../assets/address.jpg";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-const jobData = {
-  all: [
-    {
-      id: 1,
-      title: "Software Engineer",
-      hrName: "John Doe",
-      rating: 4.5,
-      reviews: 120,
-      jobType: "Full-time",
-      datePosted: "17 Aug 2024, 1:11 AM",
-      description:
-        "Develop and maintain web applications using React Design user interfaces and improve user experience Design user interfaces and improve user experience.",
-      amount: "$120,000/year",
-    },
-    {
-      id: 2,
-      title: "Product Manager",
-      hrName: "Jane Smith",
-      rating: 4.0,
-      reviews: 85,
-      jobType: "Remote",
-      datePosted: "16 Aug 2024, 3:30 PM",
-      description: "Lead product development and strategy.",
-      amount: "$100,000/year",
-    },
-  ],
-  Offers: [
-    {
-      id: 3,
-      title: "Data Scientist",
-      hrName: "Alice Johnson",
-      rating: 4.8,
-      reviews: 150,
-      jobType: "Part-time",
-      datePosted: "15 Aug 2024, 9:45 AM",
-      description: "Analyze data trends and build predictive models.",
-      amount: "$90,000/year",
-    },
-  ],
-  progress: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
-  completed: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
-  archive: [
-    {
-      id: 4,
-      title: "UI/UX Designer",
-      hrName: "Michael Brown",
-      rating: 4.2,
-      reviews: 60,
-      jobType: "Full-time",
-      datePosted: "14 Aug 2024, 11:00 AM",
-      description: "Design user interfaces and improve user experience.",
-      amount: "$80,000/year",
-    },
-  ],
-};
+import axios from "axios";
+import person from "../../assets/address.jpg"; // Fallback image
+import { jwtDecode } from "jwt-decode";
 
 const Myfreelance = () => {
   const [selectedTab, setSelectedTab] = useState("all");
+  const [jobs, setJobs] = useState({
+    all: [],
+    apply: [],
+    progress: [],
+    archive: [],
+  });
+  const [loading, setLoading] = useState(true);
+
+  const token = localStorage.getItem("token");
+  let userId;
+  if (token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      userId = decodedToken.userId;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+    }
+  }
+
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      if (!userId) return; // Prevent fetching if userId is undefined
+
+      try {
+        const response = await axios.get(`${API_URL}/api/v1/frjobs/applied-freelancejob/${userId}`);
+        const allAppliedJobs = response.data.appliedJobs || [];
+
+        // Sort the jobs into different categories based on application status
+        const categorizedJobs = {
+          all: allAppliedJobs,
+          apply: allAppliedJobs.filter(job => job.application?.status === "apply"),
+          progress: allAppliedJobs.filter(job => job.application?.status === "progress"),
+          archive: allAppliedJobs.filter(job => job.application?.status === "archive"),
+        };
+
+        setJobs(categorizedJobs);
+      } catch (error) {
+        console.error("Error fetching job data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, [API_URL, userId]);
+
+  if (loading) {
+    return <p>Loading jobs...</p>;
+  }
 
   return (
     <>
@@ -125,43 +98,52 @@ const Myfreelance = () => {
         </div>
 
         <div className="row">
-          {jobData[selectedTab].map((job) => (
-            <div key={job.id} className="col-lg-12">
-              <div className="card job-card">
-                <Link to="/dashboard/gigdetails">
-                  <div className="card-body">
-                    <div className="d-flex flex-wrap justify-content-between align-items-start">
-                      <div className="job-details">
-                        <span className="badge job-type">{job.jobType}</span>
-                        <h4>{job.title}</h4>
-                        <p className="job-date">{job.datePosted}</p>
-                      </div>
-                      <div className="hr-info d-flex align-items-center">
-                        <div className="pe-3 text-left">
-                          <p className="hr-name">{job.hrName}</p>
-                          <span className="rating">
-                            {job.rating} stars ({job.reviews})
-                          </span>
-                          <div className="star-rating">
-                            {"★".repeat(Math.floor(job.rating))}
-                            {"☆".repeat(5 - Math.floor(job.rating))}
+          <div className="fulltime-job-list">
+            {jobs[selectedTab]?.length > 0 ? (
+              jobs[selectedTab].map((job) => {
+                const jobDetails = job.jobDetails || {};
+                const postedBy = jobDetails.postedBy || {};
+
+                return (
+                  <div className="job-card" key={jobDetails._id}>
+                    <Link to={`/dashboard/gigdetails/${jobDetails._id}`}>
+                      <div className="job-card-header">
+                        <img
+                          src={person}
+                          alt="Company Logo"
+                          className="company-logo"
+                        />
+                        <div className="job-hr">
+                          <h4 className="job-head">{postedBy.username || "HR Name"}</h4>
+                          <div className="job-rating">
+                            <span className="stars">★★★★☆</span>
+                            <span className="rating-count">(25)</span>
                           </div>
                         </div>
-                        <img src={useImage} className="hr-image" alt="HR" />
+
+                        <div className="job-meta">
+                          <span className="job-date">{jobDetails.createdAt ? new Date(jobDetails.createdAt).toLocaleDateString() : "No Date"}</span>
+                          <i className="save-icon">&#9734;</i>
+                        </div>
                       </div>
-                    </div>
-                    <p className="job-description">{job.description}</p>
+                      <div className="job-info">
+                        <h4 className="job-title">{jobDetails.jobTitle || "Job Title"}</h4>
+                        <p>{jobDetails.description || "Job description not available"}</p>
+                      </div>
+                    </Link>
                     <div className="d-flex justify-content-between align-items-center mt-3">
-                      <span className="job-amount">{job.amount}</span>
+                      <span className="job-amount">$ {jobDetails.budget || "N/A"}</span>
                       <button className="btn chat-button">
                         <i className="bi bi-chat"></i> Chat
                       </button>
                     </div>
                   </div>
-                </Link>
-              </div>
-            </div>
-          ))}
+                );
+              })
+            ) : (
+              <p>No jobs found for the selected tab.</p>
+            )}
+          </div>
         </div>
       </div>
     </>

@@ -4,11 +4,18 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 const rootRouter = require("./src/router/index");
 const User = require('./src/models/User');
+const cookieParser = require("cookie-parser");
 const FullTimeJob = require('./src/models/FullTimeJob');
 
 const app = express();
 app.use(bodyParser.json()); 
-app.use(cors({}));
+app.use(
+  cors({
+      origin: "http://localhost:3000", 
+      credentials: true,
+  })
+);
+app.use(cookieParser());
 
 mongoose.connect('mongodb://localhost:27017/authDB')
   .then(() => console.log('Connected to MongoDB'))
