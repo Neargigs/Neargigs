@@ -91,7 +91,7 @@ const Chat = () => {
     const fetchCustomerJobs = async () => {
       try {
         const response = await axios.get(
-          `${API_URL}/api/v1/jobs/getAlljobs/${userId}`
+          `${API_URL}/api/v1/}`
         );
         setJobs(response.data);
 

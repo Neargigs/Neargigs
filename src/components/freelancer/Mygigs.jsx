@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import placeholderImage from "../../assets/address.jpg"; // Renamed the image import
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Mygigs = () => {
@@ -27,6 +27,27 @@ const Mygigs = () => {
     };
     fetchFrJobs();
   }, [API_URL]);
+
+  const navigate=useNavigate()
+
+  const handleChat = async (jobId) => {
+    console.log("Job ID:", jobId); 
+    try {
+      const response = await axios.get(`${API_URL}/api/v1/chat/chatdetails`, {
+        params: { jobId },
+      });
+      console.log("Chat response:", response.data);
+      
+      if (response.data.length > 0) {
+        const chatId = response.data[0]._id; 
+        navigate(`/dashboard/chatdetails/${jobId}/chat/${chatId}`);
+      } else {
+        console.error("No chat found for this job");
+      }
+    } catch (error) {
+      console.error("Error navigating applied job data:", error);
+    }
+  };
 
   const formatPrice = (budget) => {
     if (typeof budget === "number") {
@@ -135,7 +156,7 @@ const Mygigs = () => {
           {jobTabs[selectedTab].map((job) => (
             <div key={job.id} className="col-lg-12">
               <div className="card job-card">
-                <Link to="/dashboard/gigdetails">
+                <Link to={`/dashboard/gigdetails/${job._id}`}>
                   <div className="card-body">
                     <div className="d-flex flex-wrap justify-content-between align-items-start">
                       <div className="job-details">
@@ -164,7 +185,8 @@ const Mygigs = () => {
                     <p className="job-description">{job.description}</p>
                     <div className="d-flex justify-content-between align-items-center mt-3">
                       <span className="job-amount">{formatPrice(job.budget)}</span>
-                      <button className="btn chat-button">
+                      <button className="btn chat-button" onClick={()=>{
+                        handleChat(job._id)}}>
                         <i className="bi bi-chat"></i> Chat
                       </button>
                     </div>

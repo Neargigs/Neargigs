@@ -18,6 +18,7 @@ const Chatdetails = () => {
   const { jobId, chatId } = useParams();
   const [senderDet, setSenderDet] = useState();
   const [receiverDet, setReceiverDet] = useState();
+  const [jobDet,setJobDet]=useState();
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -62,11 +63,15 @@ const Chatdetails = () => {
         setReceiverDet(userDetailsResponse.data.receiver);
         setSenderDet(userDetailsResponse.data.sender);
 
+        const jobDetailsResponse=await axios.get(`${API_URL}/api/v1/jobs/jobdetails/${jobId}`)
+        console.log("Job ka ",jobDetailsResponse)
+        setJobDet(jobDetailsResponse?.data)
+
         // Add new message
         const newMessage = {
           text: response.data.message,
           sender: response.data.sender === applicantId ? "self" : "other",
-          time: new Date().toLocaleTimeString(),
+          createdAt: response.data.createdAt,
           type: "text",
         };
 
@@ -84,6 +89,23 @@ const Chatdetails = () => {
 
     fetchJobDetails();
   }, [API_URL, jobId, chatId, applicantId]);
+
+  const timeSince = (date) => {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+    let interval;
+
+    if (seconds < 60) return `${seconds} seconds ago`;
+    interval = Math.floor(seconds / 60);
+    if (interval < 60) return `${interval} minutes ago`;
+    interval = Math.floor(interval / 60);
+    if (interval < 24) return `${interval} hours ago`;
+    interval = Math.floor(interval / 24);
+    if (interval < 30) return `${interval} days ago`;
+    interval = Math.floor(interval / 30);
+    if (interval < 12) return `${interval} months ago`;
+    interval = Math.floor(interval / 12);
+    return `${interval} years ago`;
+  };
 
   const handleSendMessage = () => {
     if (inputMessage.trim() || mediaPreview) {
@@ -139,7 +161,7 @@ const Chatdetails = () => {
                   <span className="sender-name">{receiverDet?.username}</span>
                   <span className="sender-rating">⭐⭐⭐⭐⭐</span>
                   <div style={{ color: "whitesmoke" }} className="sender-job">
-                    Web Developer
+                    {jobDet?.jobTitle}
                   </div>
                 </div>
                 <a href="/dashboard/gigdetails">
@@ -180,7 +202,7 @@ const Chatdetails = () => {
                           ) : (
                             <p>{message.text}</p>
                           )}
-                          <span className="message-time">{ message.sender === "self" ? "You:" : ""} {message.time}</span>
+                          <span className="message-time">{ message.sender === "self" ? "You:" : ""} {timeSince(message.createdAt)}</span>
                         </div>
                       </div>
                     ))}
