@@ -60,7 +60,7 @@ const Approutes = () => {
               <Route path="/fulltimejob" element={<Fulltimejob />} />
 
               <Route path="/chat" element={<Chat />} />
-              <Route path="/chatdetails" element={<Chatdetails />} />
+              <Route path="/chatdetails/:jobId/chat/:chatId" element={<Chatdetails />} />
 
               <Route path="/customerdash" element={<Customerdash />} />
               <Route path="/cusfreelance" element={<Cusfreelance />} />

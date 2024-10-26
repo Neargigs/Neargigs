@@ -43,12 +43,17 @@ const Gigdetailsmodal = ({
         headers: { "Content-Type": "multipart/form-data" }, // Sending as form data
       });
 
+      console.log("chat id recieve",response.data.chatId)
+
+    const chatId=response.data.chatId;
       if (response.status === 200) {
         toast.success("Application Submitted Successfully");
+        console.log("Navigating to:", `/dashboard/chatdetails/${jobId}/chat/${chatId}`);
         setTimeout(() => {
-          navigate("/dashboard/chatdetails");
-        }, 2000);
+          navigate(`/dashboard/chatdetails/${jobId}/chat/${chatId}`);
+        }, 1000); 
       }
+      
     } catch (error) {
       console.error("Error submitting application:", error);
       toast.error("Failed to submit application");

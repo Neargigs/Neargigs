@@ -103,7 +103,7 @@ const Gigdetails = () => {
           className="card info-card"
         >
           <div className="card-body">
-            <h5 className="card-title">$ 250</h5>
+            <h5 className="card-title"> $ {jobs.budget} {jobs.fixedCompensation}</h5>
             <p className="gig-balance">NEAR, USDT</p>
 
             <div className="gig-actions">

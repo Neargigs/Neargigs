@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/address.jpg";
 import near from "../../assets/img/nearlogo.jpg";
 import neargig from "../../assets/img/neargig-logo.png";
 import "./chat.css";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 const dummyChats = [
   {
@@ -72,6 +74,37 @@ const Chat = () => {
   const [activeCategory, setActiveCategory] = useState("Freelance");
   const [nearBalance, setnearBalance] = useState("0");
   const [neargigBalance, setneargigBalance] = useState("0");
+
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+  const token = localStorage.getItem("token");
+
+  let userId;
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    userId = decodedToken.userId;
+    // console.log(userId)
+  }
+
+  useEffect(() => {
+    const fetchCustomerJobs = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/api/v1/jobs/getAlljobs/${userId}`
+        );
+        setJobs(response.data);
+
+        console.log(response.data)
+      } catch (error) {
+        console.error("Error fetching customer jobs:", error);
+        setJobs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCustomerJobs();
+  }, [API_URL, userId]);
   return (
     <>
       <div className="pagetitle">

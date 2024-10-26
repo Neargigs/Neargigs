@@ -4,6 +4,8 @@ const multer = require('multer');
 const path = require('path');
 const FullTimeJob = require('../models/FullTimeJob');
 const Application = require('../models/ApplicationSchema');
+const Chat = require('../models/Chat');
+const FreelanceJob = require('../models/FreelancingJob');
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -35,9 +37,26 @@ router.post('/applyjob', upload.single('cvFile'), async (req, res) => {
             return res.status(400).json({ error: 'Invalid jobId format.' });
         }
 
-        const fulltimeJob = await FullTimeJob.findById(jobId); 
+        const fulltimeJob = await FullTimeJob.findById(jobId).populate('postedBy')  
+        const freelanceJob=await FreelanceJob.findById(jobId).populate('postedBy')  
         const jobType = fulltimeJob ? "FullTimeJob" : "FreelanceJob";
         console.log(jobType)
+
+
+        let receiverId;
+        if (jobType === "FullTimeJob" && fulltimeJob.postedBy) {
+            receiverId = fulltimeJob.postedBy;
+        } else if (jobType === "FreelanceJob" && freelanceJob.postedBy) {
+            receiverId = freelanceJob.postedBy;
+        }
+
+        if (!receiverId) {
+            return res.status(500).json({ error: 'Job has no assigned poster (postedBy is missing).' });
+        }
+
+        console.log("Receiver ID:", receiverId);
+
+
         const newApplication = new Application({
             jobId,
             jobType,
@@ -48,8 +67,25 @@ router.post('/applyjob', upload.single('cvFile'), async (req, res) => {
         });
 
         const savedApplication = await newApplication.save();
-        res.status(200).json({ message: "Application submitted successfully", application: savedApplication });
-    } catch (error) {
+
+
+
+        const newChat = new Chat({
+            jobId,
+            sender: applicantId,
+            jobType:jobType,
+            receiver: receiverId,
+            message: `Application: ${description}`,
+            isRead: false
+        });
+        const savedChat = await newChat.save();
+
+       res.status(200).json({ 
+            message: "Application submitted successfully", 
+            application: savedApplication, 
+            chatId: savedChat._id  // Include chatId in the response
+        });
+        } catch (error) {
         console.error('Error submitting application:', error);
         res.status(500).json({ error: 'Failed to submit application. Please try again later.', details: error.message });
     }
