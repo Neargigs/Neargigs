@@ -158,7 +158,10 @@ const Chatdetails = () => {
               <div className="sender-preview">
                 <img src={logo} alt="profile" className="sender-image" />
                 <div className="sender-details">
-                  <span className="sender-name">{receiverDet?.username}</span>
+                  <span className="sender-name">
+                  {isTalent ? receiverDet?.username : senderDet?.username}
+
+                  </span>
                   <span className="sender-rating">⭐⭐⭐⭐⭐</span>
                   <div style={{ color: "whitesmoke" }} className="sender-job">
                     {jobDet?.jobTitle}
@@ -200,7 +203,8 @@ const Chatdetails = () => {
                           {message.type === "image" ? (
                             <img src={message.text} alt="sent media" className="sent-media" />
                           ) : (
-                            <p>{message.text}</p>
+                            
+                            <p> {message.text}</p>
                           )}
                           <span className="message-time">{ message.sender === "self" ? "You:" : ""} {timeSince(message.createdAt)}</span>
                         </div>

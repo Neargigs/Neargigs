@@ -1,5 +1,8 @@
 const express=require('express');
 const Chat = require('../models/Chat');
+const FullTimeJob = require('../models/FullTimeJob'); 
+const FreelanceJob = require('../models/FreelancingJob');
+const PostGig = require('../models/postgig');
 const router=express.Router();
 
 
@@ -50,5 +53,50 @@ router.get('/chatdetails/:jobId/chat/:chatId', async (req, res) => {
       return res.status(500).json({ message: 'Server error' });
     }
   });
+
+  router.get("/allchats/:userId", async (req, res) => {
+    const { userId } = req.params;
   
+    try {
+      // Fetch chats involving the user
+      const findChats = await Chat.find({
+        $or: [{ receiver: userId }, { sender: userId }]
+      })
+        .sort({ createdAt: -1 })
+        .populate("sender", "username")
+        .populate("receiver", "username");
+  
+      // Helper function to populate job title based on job type
+      const populateJobTitle = async (chat) => {
+        switch (chat.jobType) {
+          case "FullTimeJob":
+            const fullTimeJob = await FullTimeJob.findById(chat.jobId);
+            return fullTimeJob ? fullTimeJob.jobTitle : null;
+          case "FreelanceJob":
+            const freelanceJob = await FreelanceJob.findById(chat.jobId);
+            return freelanceJob ? freelanceJob.jobTitle : null;
+          case "GigJob":
+            const gigJob = await PostGig.findById(chat.jobId);
+            return gigJob ? gigJob.jobTitle : null;
+          default:
+            return null;
+        }
+      };
+  
+      // Populate job titles for each chat
+      const chatsWithJobTitles = await Promise.all(
+        findChats.map(async (chat) => {
+          const jobTitle = await populateJobTitle(chat);
+          return { ...chat.toObject(), jobTitle };
+        })
+      );
+  
+      res.status(200).json(chatsWithJobTitles);
+    } catch (error) {
+      console.error("Error fetching chats:", error);
+      res.status(500).json({ message: "Error fetching chats" });
+    }
+  });
+  
+
   module.exports=router;

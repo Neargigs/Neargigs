@@ -4,77 +4,13 @@ import logo from "../../assets/address.jpg";
 import near from "../../assets/img/nearlogo.jpg";
 import neargig from "../../assets/img/neargig-logo.png";
 import "./chat.css";
-import { jwtDecode } from "jwt-decode";
 import axios from "axios";
-
-const dummyChats = [
-  {
-    category: "Freelance",
-    chats: [
-      {
-        id: 1,
-        name: "John Doe",
-        jobTitle: "Web Developer",
-        lastMessage: "Looking forward to the next steps...",
-        dateSent: "2024-09-25",
-        unreadMessages: 3,
-        isUnread: true,
-      },
-      {
-        id: 2,
-        name: "Alice Cooper",
-        jobTitle: "UI/UX Designer",
-        lastMessage: "Please find attached the designs.",
-        dateSent: "2024-09-24",
-        unreadMessages: 1,
-        isUnread: true,
-      },
-      {
-        id: 3,
-        name: "Tolu jane",
-        jobTitle: "UI/UX Designer",
-        lastMessage: "Please find attached the designs.",
-        dateSent: "2024-09-24",
-        unreadMessages: 0,
-        isUnread: false,
-      },
-    ],
-  },
-  {
-    category: "Full-Time",
-    chats: [
-      {
-        id: 3,
-        name: "Mark Spencer",
-        jobTitle: "Full Stack Engineer",
-        lastMessage: "All good. Awaiting your approval.",
-        dateSent: "2024-09-23",
-        unreadMessages: 0,
-        isUnread: false,
-      },
-    ],
-  },
-  {
-    category: "Archived",
-    chats: [
-      {
-        id: 4,
-        name: "Chris Evans",
-        jobTitle: "Data Scientist",
-        lastMessage: "I'll send the report soon.",
-        dateSent: "2024-09-22",
-        unreadMessages: 0,
-        isUnread: false,
-      },
-    ],
-  },
-];
+import { jwtDecode } from "jwt-decode";
 
 const Chat = () => {
   const [activeCategory, setActiveCategory] = useState("Freelance");
-  const [nearBalance, setnearBalance] = useState("0");
-  const [neargigBalance, setneargigBalance] = useState("0");
-
+  const [nearBalance, setNearBalance] = useState("0");
+  const [neargigBalance, setNeargigBalance] = useState("0");
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
@@ -84,18 +20,13 @@ const Chat = () => {
   if (token) {
     const decodedToken = jwtDecode(token);
     userId = decodedToken.userId;
-    // console.log(userId)
   }
 
   useEffect(() => {
     const fetchCustomerJobs = async () => {
       try {
-        const response = await axios.get(
-          `${API_URL}/api/v1/}`
-        );
+        const response = await axios.get(`${API_URL}/api/v1/chat/allchats/${userId}`);
         setJobs(response.data);
-
-        console.log(response.data)
       } catch (error) {
         console.error("Error fetching customer jobs:", error);
         setJobs([]);
@@ -105,6 +36,15 @@ const Chat = () => {
     };
     fetchCustomerJobs();
   }, [API_URL, userId]);
+
+  const filteredChats = jobs.filter(chat => {
+    if (activeCategory === "Freelance") return chat.jobType === "FreelanceJob";
+    if (activeCategory === "Full-Time") return chat.jobType === "FullTimeJob";
+    if (activeCategory === "GigJob") return chat.jobType === "GigJob";
+    if (activeCategory === "Archived") return chat.isArchived;
+    return true;
+  });
+
   return (
     <>
       <div className="pagetitle">
@@ -114,7 +54,7 @@ const Chat = () => {
             <li className="breadcrumb-item">
               <a href="/dashboard">Home</a>
             </li>
-            <li className="breadcrumb-item active">chat</li>
+            <li className="breadcrumb-item active">Chat</li>
           </ol>
         </nav>
       </div>
@@ -135,6 +75,12 @@ const Chat = () => {
                 Full-Time
               </button>
               <button
+                className={activeCategory === "GigJob" ? "active" : ""}
+                onClick={() => setActiveCategory("GigJob")}
+              >
+                GigJob
+              </button>
+              <button
                 className={activeCategory === "Archived" ? "active" : ""}
                 onClick={() => setActiveCategory("Archived")}
               >
@@ -143,50 +89,51 @@ const Chat = () => {
             </div>
 
             <div className="row">
-              <Link to="/dashboard/chatdetails">
-                <div className="chat-list">
-                  {dummyChats
-                    .filter((category) => category.category === activeCategory)
-                    .map((category) =>
-                      category.chats.map((chat) => (
-                        <div
-                          key={chat.id}
-                          className={`chat-item ${
-                            chat.isUnread ? "unread" : "read"
-                          }`}
-                        >
-                          <img
-                            src={logo}
-                            alt="profile"
-                            className="chat-image"
-                          />
-                          <div className="chat-details">
-                            <div className="chat-header">
-                              <span className="chat-name">{chat.name}</span>
-                              <span className="chat-date">{chat.dateSent}</span>
+              <div className="chat-list">
+                {loading ? (
+                  <p>Loading chats...</p>
+                ) : (
+                  filteredChats.map(chat => (
+                    <Link
+                      key={chat._id}
+                      to={`/dashboard/chatdetails/${chat.jobId}/chat/${chat._id}`}
+                      className="chat-item-link"
+                    >
+                      <div className={`chat-item ${chat.isRead ? "read" : "unread"}`}>
+                        <img src={logo} alt="profile" className="chat-image" />
+                        <div className="chat-details">
+                          <div className="chat-header">
+                            <div className="chat-name">
+                              {chat.sender._id !== userId
+                                ? chat.sender.username
+                                : chat.receiver.username}
                             </div>
-                            <div className="chat-job">{chat.jobTitle}</div>
-                            <div className="chat-message">
-                              {chat.lastMessage}
-                            </div>
+                            <span className="chat-date">
+                              {new Date(chat.createdAt).toLocaleDateString()}
+                            </span>
                           </div>
-                          {chat.unreadMessages > 0 && (
-                            <div className="unread-count">
-                              {chat.unreadMessages}
-                            </div>
-                          )}
+                          <div className="chat-job">{chat.jobTitle}</div>
+                          <div className="chat-message">
+                            {chat.message.substring(0, 30)}
+                            {chat.message.length > 30 ? "..." : ""}
+                          </div>
                         </div>
-                      ))
-                    )}
-                </div>
-              </Link>
+                        {!chat.isRead && (
+                          <div className="unread-count">
+                            {chat.unreadMessages || 1} {/* Placeholder for unread messages */}
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div className="col-lg-4">
-        {/* Recent Activity */}
         <div className="card info-card revenue-card">
           <div className="card-body">
             <h5 className="card-title">Escrow Funds:</h5>
@@ -209,7 +156,6 @@ const Chat = () => {
             </div>
           </div>
         </div>
-        {/* End Recent Activity */}
       </div>
     </>
   );
